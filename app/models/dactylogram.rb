@@ -39,10 +39,6 @@ class Dactylogram < ActiveRecord::Base
         self.class.instance_methods.select { |m| metric? m }
     end
 
-    def average_sentence_length_metric
-        data.length.to_f / sentences.length
-    end
-
     def automated_readability_index_metric
         [
             4.71 * data.chars.reject(&:blank?).length.to_f / words.length,
@@ -53,6 +49,10 @@ class Dactylogram < ActiveRecord::Base
 
     def characters_per_paragraph_metric
         data.chars.length.to_f / paragraphs.length
+    end
+
+    def characters_per_sentence_metric
+        data.length.to_f / sentences.length
     end
 
     def coleman_liau_index_metric
