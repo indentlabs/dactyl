@@ -16,6 +16,14 @@ class Dactylogram < ActiveRecord::Base
 		data.length
 	end
 
+	def sentences_metric
+		sentences.length
+	end
+
+	def average_sentence_length_metric
+		data.length.to_f / sentences.length
+	end
+
 	# ... more stuffs ... #
 
 	private
@@ -33,6 +41,10 @@ class Dactylogram < ActiveRecord::Base
 			results[metric.to_s.chomp '_metric'] = send(metric)
 		}
 		results
+	end
+
+	def sentences
+		data.split(/[!\?\.]/).map(&:squish)
 	end
 
 end
