@@ -20,6 +20,6 @@ class ApiController < ApplicationController
 	def dactyl
 		return unless @analysis_string.present?
 
-		render :json => Dactylogram.new(data: @analysis_string).metrics
+		render :json => Dactylogram.new(data: @analysis_string).metric_report
 	end
 end
