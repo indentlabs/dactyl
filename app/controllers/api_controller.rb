@@ -20,6 +20,9 @@ class ApiController < ApplicationController
 	def dactyl
 		return unless @analysis_string.present?
 
-		render :json => Dactylogram.new(data: @analysis_string).metric_report
+		d = Dactylogram.new(data: @analysis_string)
+		d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+
+		render :json => d.metric_report
 	end
 end
