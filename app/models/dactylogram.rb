@@ -20,6 +20,22 @@ class Dactylogram < ActiveRecord::Base
         data.length.to_f / sentences.length
     end
 
+    def automated_readability_index_metric
+        [
+            4.71 * data.chars.reject(&:blank?).length.to_f / words.length,
+            0.5 * words.length.to_f / sentences.length,
+            -21.43
+        ].sum
+    end
+
+    def coleman_liau_index_metric
+        [
+            0.0588 * 100 * data.chars.length.to_f / words.length,
+            -0.296 * 100 / (words.length.to_f / sentences.length),
+            -15.8
+        ].sum
+    end
+
     def data_length_metric
         data.length
     end
@@ -54,8 +70,25 @@ class Dactylogram < ActiveRecord::Base
         ].sum
     end
 
+    def forcast_grade_level_metric
+        20 - (words_with_syllables(1).length.to_f / words.length / 10)
+    end
+
+    def gunning_fog_index_metric
+        #todo GFI word/suffix exclusions
+        0.4 * (words.length.to_f / sentences.length + 100 * (complex_words.length.to_f / words.length))
+    end
+
+    def letters_per_word_metric
+        data.chars.length.to_f / words.length
+    end
+
     def sentences_metric
         sentences.length
+    end
+
+    def smog_grade_metric
+        1.043 * Math.sqrt(complex_words.length.to_f * (30.0 / sentences.length)) + 3.1291
     end
 
     def spaces_after_sentence_metric
@@ -122,12 +155,21 @@ class Dactylogram < ActiveRecord::Base
         data.gsub(/[^\s\w]/, '').split(' ')
     end
 
+    # As defined by Robert Gunning in the GFI and SMOG
+    def complex_words
+        unique_words.select { |word| syllables_in(word) >= 3 }
+    end
+
     def unique_words
         words.map(&:downcase).uniq
     end
 
     def word_syllables
         words.map(&method(:syllables_in))
+    end
+
+    def words_with_syllables syllable_count
+        words.select { |word| syllables_in(word) == syllable_count }
     end
 
     def syllables_in word
