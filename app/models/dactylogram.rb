@@ -1,6 +1,10 @@
 class Dactylogram < ActiveRecord::Base
 	attr_accessor :data
 
+	SYLLABLE_COUNT_OVERRIDES = {
+		'ion' => 2
+	}
+
 	def metric_report
 		{
 			original_string: data,
@@ -30,8 +34,29 @@ class Dactylogram < ActiveRecord::Base
 		}.sum.to_f / (sentences.length - 1)
 	end
 
+	def syllable_count_metric
+		word_syllables.sum
+	end
+
+	def syllables_per_sentence_metric
+		total_syllables = 0
+		sentences.each do |sentence|
+			total_syllables += sentence.split(' ').map(&method(:syllables_in)).sum
+		end
+
+		total_syllables.to_f / sentences.length
+	end
+
 	def unique_words_percentage_metric
 		unique_words.length.to_f / words.length
+	end
+
+	def whitespace_percentage_metric
+		occurrences(of: ["\s", "\r", "\n"], within: data.chars).to_f / data.length
+	end
+
+	def word_count_metric
+		words.length
 	end
 
 	def words_per_sentence_metric
@@ -66,4 +91,25 @@ class Dactylogram < ActiveRecord::Base
 	def unique_words
 		words.map(&:downcase).uniq
 	end
+
+	def word_syllables
+		words.map(&method(:syllables_in))
+	end
+
+	def syllables_in word
+		word.downcase.gsub!(/[^a-z]/, '')
+
+		return 1 if word.length <= 3
+		return SYLLABLE_COUNT_OVERRIDES[word] if SYLLABLE_COUNT_OVERRIDES.key? word
+
+		word.sub(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').sub!(/^y/, '')
+		word.scan(/[aeiouy]{1,2}/).size
+	end
+
+	def occurrences of: needles, within: haystack
+		of = [of] unless of.is_a? Array
+
+		within.flatten.select { |hay| of.include? hay }.length
+	end
+
 end
