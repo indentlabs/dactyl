@@ -24,6 +24,36 @@ class Dactylogram < ActiveRecord::Base
         data.length
     end
 
+    def flesch_kincaid_age_minimum_metric
+        case flesch_kincaid_reading_ease_metric
+            when (90..100) then 11
+            when (71..89)  then 12
+            when (67..69)  then 13
+            when (64..66)  then 14
+            when (60..63)  then 15
+            when (50..59)  then 18
+            when (40..49)  then 21
+            when (31..39)  then 24
+            when (0..30)   then 25
+        end
+    end
+
+    def flesch_kincaid_grade_level_metric
+        [
+            0.38 * (words.length.to_f / sentences.length),
+            11.18 * (word_syllables.sum.to_f / words.length),
+            -15.59
+        ].sum
+    end
+
+    def flesch_kincaid_reading_ease_metric
+        [
+            206.835,
+            -(1.015 * words.length.to_f / sentences.length),
+            -(84.6 * word_syllables.sum.to_f / words.length)
+        ].sum
+    end
+
     def sentences_metric
         sentences.length
     end
@@ -45,6 +75,10 @@ class Dactylogram < ActiveRecord::Base
         end
 
         total_syllables.to_f / sentences.length
+    end
+
+    def syllables_per_word_metric
+        word_syllables.sum.to_f / words.length
     end
 
     def unique_words_percentage_metric
