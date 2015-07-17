@@ -1,6 +1,29 @@
 class Dactylogram < ActiveRecord::Base
     attr_accessor :data
 
+    validates :data, presence: true
+
+    PREPOSITIONS = ["about", "across", "against", "along", "around", "at", "behind",
+        "beside", "besides", "by", "despite", "down", "during", "for", "from", "in",
+        "inside", "into", "near", "of", "off", "on", "onto", "over", "through", "to",
+        "toward", "with", "within", "without"]
+
+    PRONOUNS = ["I", "you", "he", "me", "her", "him", "my", "mine", "her",
+        "hers", "his", "myself", "himself", "herself", "anything",
+        "everything", "anyone", "everyone", "ones", "such", "it",
+        "we", "they", "us", "them", "our", "ours", "their", "theirs",
+        "itself", "ourselves", "themselves", "something", "nothing", "someone"]
+
+    DETERMINERS = ["the", "some", "this", "that", "every", "all", "both", "one",
+        "first", "other", "next", "many", "much", "more", "most",
+        "several", "no", "a", "an", "any", "each", "half", "twice",
+        "two", "second", "another", "last", "few", "little", "less",
+        "least", "own"]
+
+    CONJUNCTIONS =  ["and", "but", "after", "when", "as", "because", "if", "what",
+        "which", "how", "than", "or", "so", "before", "since", "while", "where",
+        "although", "though", "who", "whose"]
+
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }
@@ -28,6 +51,10 @@ class Dactylogram < ActiveRecord::Base
         ].sum
     end
 
+    def characters_per_paragraph_metric
+        data.chars.length.to_f / paragraphs.length
+    end
+
     def coleman_liau_index_metric
         [
             0.0588 * 100 * data.chars.length.to_f / words.length,
@@ -36,8 +63,26 @@ class Dactylogram < ActiveRecord::Base
         ].sum
     end
 
+    def conjunction_frequency_metric
+        words.select { |word| CONJUNCTIONS.include? word }.length.to_f / words.length
+    end
+
+    def consonants_per_word_metric
+        squished_characters = words.join('')
+        squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
+    end
+
     def data_length_metric
         data.length
+    end
+
+    def digits_per_word_metric
+        squished_characters = words.join('')
+        squished_characters.scan(/[0-9]/).length.to_f / squished_characters.length
+    end
+
+    def determiner_frequency_metric
+        words.select { |word| DETERMINERS.include? word }.length.to_f / words.length
     end
 
     def flesch_kincaid_age_minimum_metric
@@ -83,8 +128,24 @@ class Dactylogram < ActiveRecord::Base
         data.chars.length.to_f / words.length
     end
 
+    def preposition_frequency_metric
+        words.select { |word| PREPOSITIONS.include? word }.length.to_f / words.length
+    end
+
+    def pronoun_frequency_metric
+        words.select { |word| PRONOUNS.include? word }.length.to_f / words.length
+    end
+
+    def punctuation_percentage_metric
+        data.scan(/[\.,;\?!\-"':\(\)\[\]"]/).length.to_f / data.chars.length
+    end
+
     def sentences_metric
         sentences.length
+    end
+
+    def sentences_per_paragraph_metric
+        sentences.length.to_f / paragraphs.length
     end
 
     def smog_grade_metric
@@ -95,6 +156,10 @@ class Dactylogram < ActiveRecord::Base
         spaces_per_sentence = sentences.map { |sentence|
             sentence.length - sentence.lstrip.length
         }.sum.to_f / (sentences.length - 1)
+    end
+
+    def special_character_percentage_metric
+        data.scan(/[\$\^#@%~]/).length.to_f / data.chars.length
     end
 
     def syllable_count_metric
@@ -114,8 +179,21 @@ class Dactylogram < ActiveRecord::Base
         word_syllables.sum.to_f / words.length
     end
 
+    def unique_words_per_paragraph_metric
+        unique_words.length.to_f / paragraphs.length
+    end
+
+    def unique_words_per_sentence_metric
+        unique_words.length.to_f / sentences.length
+    end
+
     def unique_words_percentage_metric
         unique_words.length.to_f / words.length
+    end
+
+    def vowels_per_word_metric
+        squished_characters = words.join('')
+        squished_characters.scan(/[aeiou]/).length.to_f / squished_characters.length
     end
 
     def whitespace_percentage_metric
@@ -124,6 +202,10 @@ class Dactylogram < ActiveRecord::Base
 
     def word_count_metric
         words.length
+    end
+
+    def words_per_paragraph_metric
+        words.length.to_f / paragraphs.length
     end
 
     def words_per_sentence_metric
@@ -179,7 +261,11 @@ class Dactylogram < ActiveRecord::Base
         return SYLLABLE_COUNT_OVERRIDES[word] if SYLLABLE_COUNT_OVERRIDES.key? word
 
         word.sub(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').sub!(/^y/, '')
-        word.scan(/[aeiouy]{1,2}/).size
+        word.scan(/[aeiouy]{1,2}/).length
+    end
+
+    def paragraphs
+        data.split(/[\r\n\t]+/)
     end
 
     def occurrences of: needles, within: haystack
