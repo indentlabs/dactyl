@@ -55,6 +55,10 @@ class Dactylogram < ActiveRecord::Base
         data.length.to_f / sentences.length
     end
 
+    def characters_per_word_metric
+        words.map(&:length).sum.to_f / words.length
+    end
+
     def coleman_liau_index_metric
         [
             0.0588 * 100 * data.chars.length.to_f / words.length,
@@ -72,6 +76,11 @@ class Dactylogram < ActiveRecord::Base
         squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
     end
 
+    def consonants_per_word_percentage_metric
+        squished_characters = words.join('')
+        squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
+    end
+
     def data_length_metric
         data.length
     end
@@ -81,7 +90,7 @@ class Dactylogram < ActiveRecord::Base
         squished_characters.scan(/[0-9]/).length.to_f / squished_characters.length
     end
 
-    def determiner_frequency_metric
+    def determiner_frequency_percentage_metric
         words.select { |word| DETERMINERS.include? word }.length.to_f / words.length
     end
 
@@ -96,6 +105,7 @@ class Dactylogram < ActiveRecord::Base
             when (40..49)  then 21
             when (31..39)  then 24
             when (0..30)   then 25
+            else "N/A"
         end
     end
 
@@ -128,6 +138,10 @@ class Dactylogram < ActiveRecord::Base
         data.chars.length.to_f / words.length
     end
 
+    def most_frequent_word_metric
+        word_frequency_table_metric.max_by { |k, v| v }.first
+    end
+
     def paragraphs_metric
         paragraphs.length
     end
@@ -144,12 +158,28 @@ class Dactylogram < ActiveRecord::Base
         data.scan(/[\.,;\?!\-"':\(\)\[\]"]/).length.to_f / data.chars.length
     end
 
-    def sentences_metric
+    def repeated_words_metric
+        words.select {|e| words.rindex(e) != words.index(e) }.uniq
+    end
+
+    def repeated_word_percentage_metric
+        repeated_words_metric.length.to_f / words.length
+    end
+
+    def sentence_count_metric
         sentences.length
+    end
+
+    def sentences_metric
+        sentences
     end
 
     def sentences_per_paragraph_metric
         sentences.length.to_f / paragraphs.length
+    end
+
+    def sentiment_metric
+        "not implemented"
     end
 
     def smog_grade_metric
@@ -183,19 +213,31 @@ class Dactylogram < ActiveRecord::Base
         word_syllables.sum.to_f / words.length
     end
 
+    def unique_words_metric
+        unique_words.sort
+    end
+
     def unique_words_per_paragraph_metric
         unique_words.length.to_f / paragraphs.length
+    end
+
+    def unique_words_per_paragraph_percentage_metric
+        unique_words_per_paragraph_metric.to_f / words_per_paragraph_metric
     end
 
     def unique_words_per_sentence_metric
         unique_words.length.to_f / sentences.length
     end
 
+    def unique_words_per_sentence_percentage_metric
+        unique_words_per_sentence_metric / words_per_sentence_metric
+    end
+
     def unique_words_percentage_metric
         unique_words.length.to_f / words.length
     end
 
-    def vowels_per_word_metric
+    def vowels_per_word_percentage_metric
         squished_characters = words.join('')
         squished_characters.scan(/[aeiou]/).length.to_f / squished_characters.length
     end
@@ -206,6 +248,14 @@ class Dactylogram < ActiveRecord::Base
 
     def word_count_metric
         words.length
+    end
+
+    def word_frequency_table_metric
+        words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    end
+
+    def words_metric
+        words
     end
 
     def words_per_paragraph_metric
@@ -238,7 +288,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def words
-        data.gsub(/[^\s\w]/, '').split(' ')
+        data.downcase.gsub(/[^\s\w]/, '').split(' ')
     end
 
     # As defined by Robert Gunning in the GFI and SMOG

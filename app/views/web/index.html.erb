@@ -8,7 +8,7 @@
 	<script src="//cdn.muicss.com/mui-0.1.18/js/mui.min.js"></script>
 </head>
 <style>
-	body { margin: 50px 0; }
+	body { margin: 50px 0; background: #dfefff;}
 	.logo { text-align: center; padding-bottom: 50px; }
 	.logo img { width: 200px; }
 </style>
@@ -37,15 +37,15 @@
 			<table class="mui-table mui-table-bordered mui-panel">
 				<thead>
 					<tr>
-						<th>Metric</th>
+						<th width="25%">Metric</th>
 						<th>Value</th>
 					</tr>
 				</thead>
 				<tbody>
 				<% @data[:metrics].each do |metric, value| %>
 					<tr>
-						<td><%= metric.try :humanize %></td>
-						<td><%= value %></td>
+						<td><%= metric.gsub('percentage', '%').try :humanize %></td>
+						<td><%= metric.end_with?('_percentage') ? "#{number_with_precision(value * 100, precision: 3)} %" : number_with_precision(value, precision: 3) %></td>
 					</tr>
 				<% end %>
 				</tbody>
