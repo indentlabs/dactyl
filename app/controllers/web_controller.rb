@@ -1,5 +1,7 @@
 class WebController < ApplicationController
 
+    skip_before_filter :verify_authenticity_token, :only => [:index]
+
     def index
         return unless @analysis_string.present?
 
