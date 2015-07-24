@@ -128,6 +128,10 @@ class Dactylogram < ActiveRecord::Base
         data.chars.length.to_f / words.length
     end
 
+    def paragraphs_metric
+        paragraphs.length
+    end
+
     def preposition_frequency_metric
         words.select { |word| PREPOSITIONS.include? word }.length.to_f / words.length
     end

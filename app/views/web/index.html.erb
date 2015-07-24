@@ -1,1 +1,18 @@
-Try hitting http://localhost:3000/api/v1/dactyl?text=Hello,%20world!
+<h1>Analyze text</h1>
+<form>
+	<textarea name="text"><%= @data[:original_string] %></textarea>
+	<input type="submit" value="Analyze" />
+</form>
+
+<table>
+	<tr>
+		<td>Metric</td>
+		<td>Value</td>
+	</tr>
+	<% @data[:metrics].each do |metric, value| %>
+		<tr>
+			<td><%= metric.try :humanize %></td>
+			<td><%= value %></td>
+		</tr>
+	<% end %>
+</table>
