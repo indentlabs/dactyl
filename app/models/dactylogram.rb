@@ -341,11 +341,11 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def stem_words_metric
-        words.select { |word| word.stem == word }
+        words.select { |word| word.try(:stem) == word }
     end
 
     def stemmed_words_metric
-        words.select { |word| word.stem != word }
+        words.select { |word| word.try(:stem) != word }
     end
 
     def stop_words_metric

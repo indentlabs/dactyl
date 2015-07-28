@@ -24,7 +24,7 @@ pre { white-space: pre-wrap; }
         </div>
         <% end %>
 
-        <%= form_tag(params.except(:text), method: 'post', class: 'mui-panel') do %>
+        <%= form_tag(params.except(:text), method: :post, class: 'mui-panel') do %>
             <legend>Analyze text 'n stuff with Dactyl</legend>
 
             <div class="mui-form-group">

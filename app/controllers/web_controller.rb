@@ -1,7 +1,5 @@
 class WebController < ApplicationController
 
-    skip_before_filter :verify_authenticity_token, :only => [:index]
-
     METRIC_CATEGORIES = {
         readability: [
             'automated_readability_index',
