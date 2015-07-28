@@ -8,7 +8,7 @@ class Dactylogram < ActiveRecord::Base
         "inside", "into", "near", "of", "off", "on", "onto", "over", "through", "to",
         "toward", "with", "within", "without"]
 
-    PRONOUNS = ["I", "you", "he", "me", "her", "him", "my", "mine", "her",
+    PRONOUNS = ["i", "you", "he", "me", "her", "him", "my", "mine", "her",
         "hers", "his", "myself", "himself", "herself", "anything",
         "everything", "anyone", "everyone", "ones", "such", "it",
         "we", "they", "us", "them", "our", "ours", "their", "theirs",
