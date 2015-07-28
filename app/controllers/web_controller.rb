@@ -15,6 +15,17 @@ class WebController < ApplicationController
             'combined_average_grade_level'
         ],
 
+        parts_of_speech: [
+            'nouns',
+            'adjectives',
+            'verbs',
+            'adverbs',
+            'conjunctions',
+            'prepositions',
+            'determiners',
+            'unrecognized_words'
+        ],
+
         analytics: [
             'data_length',
             'characters_per_word',
@@ -57,8 +68,7 @@ class WebController < ApplicationController
             'word_frequency_table',
             'unique_words',
             'repeated_words',
-            'most_frequent_word',
-            'word_tree'
+            'most_frequent_word'
         ],
 
         sentiment: [

@@ -41,6 +41,14 @@ class Dactylogram < ActiveRecord::Base
         self.class.instance_methods.select { |m| metric? m }
     end
 
+    def adjectives_metric
+        adjectives
+    end
+
+    def adverbs_metric
+        adverbs
+    end
+
     def automated_readability_index_metric
         [
             4.71 * data.chars.reject(&:blank?).length.to_f / words.length,
@@ -80,6 +88,10 @@ class Dactylogram < ActiveRecord::Base
         ].sum.to_f / 6
     end
 
+    def conjunctions_metric
+        conjunctions
+    end
+
     def conjunction_frequency_metric
         words.select { |word| CONJUNCTIONS.include? word }.length.to_f / words.length
     end
@@ -101,6 +113,10 @@ class Dactylogram < ActiveRecord::Base
     def digits_per_word_metric
         squished_characters = words.join('')
         squished_characters.scan(/[0-9]/).length.to_f / squished_characters.length
+    end
+
+    def determiners_metric
+        determiners
     end
 
     def determiner_frequency_percentage_metric
@@ -155,8 +171,16 @@ class Dactylogram < ActiveRecord::Base
         (word_frequency_table_metric.max_by { |k, v| v } || words).first
     end
 
+    def nouns_metric
+        nouns
+    end
+
     def paragraphs_metric
         paragraphs.length
+    end
+
+    def prepositions_metric
+        prepositions
     end
 
     def preposition_frequency_metric
@@ -250,6 +274,14 @@ class Dactylogram < ActiveRecord::Base
         unique_words.length.to_f / words.length
     end
 
+    def unrecognized_words_metric
+        unrecognized_words
+    end
+
+    def verbs_metric
+        verbs
+    end
+
     def vowels_per_word_percentage_metric
         squished_characters = words.join('')
         squished_characters.scan(/[aeiou]/).length.to_f / squished_characters.length
@@ -270,10 +302,6 @@ class Dactylogram < ActiveRecord::Base
         table
     end
 
-    def word_tree_metric
-        sentence(data).inspect
-    end
-
     def words_metric
         words
     end
@@ -290,6 +318,14 @@ class Dactylogram < ActiveRecord::Base
 
     private
 
+    def adjectives
+        @adjectives ||= words.select { |word| word.category == 'adjective' }
+    end
+
+    def adverbs
+        @adverbs ||= words.select { |word| word.category == 'adverb' }
+    end
+
     # Given a method name (symbol), return whether it should be ran as a metric
     def metric? method_name
         method_name.to_s.end_with? '_metric'
@@ -303,12 +339,28 @@ class Dactylogram < ActiveRecord::Base
         results
     end
 
+    def conjunctions
+        @conjunctions ||= words.select { |word| word.category == 'conjunction' }
+    end
+
+    def determiners
+        @determiners ||= words.select { |word| word.category == 'determiner' }
+    end
+
+    def prepositions
+        @prepositions ||= words.select { |word| word.category == 'preposition' }
+    end
+
     def sentences
         data.split(/[!\?\.]/)
     end
 
     def words
         data.downcase.gsub(/[^\s\w]/, '').split(' ')
+    end
+
+    def nouns
+        @nouns ||= words.select { |word| word.category == 'noun' }
     end
 
     # As defined by Robert Gunning in the GFI and SMOG
@@ -346,6 +398,14 @@ class Dactylogram < ActiveRecord::Base
         of = [of] unless of.is_a? Array
 
         within.flatten.select { |hay| of.include? hay }.length
+    end
+
+    def verbs
+        @verbs ||= words.select { |word| word.category == 'verb' }
+    end
+
+    def unrecognized_words
+        @unrecognized_words ||= words.select { |word| word.category == 'unknown' }
     end
 
 end
