@@ -1,61 +1,76 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="//cdn.muicss.com/mui-0.1.18/css/mui.min.css" rel="stylesheet" type="text/css" />
-	<script src="//cdn.muicss.com/mui-0.1.18/js/mui.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//cdn.muicss.com/mui-0.1.18/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.1.18/js/mui.min.js"></script>
 </head>
 <style>
-	body { margin: 50px 0; background: #dfefff;}
-	.logo { text-align: center; padding-bottom: 50px; }
-	.logo img { width: 200px; }
+body { margin: 50px 0; background: #dfefff;}
+.logo { text-align: center; padding-bottom: 50px; }
+.logo img { width: 200px; }
+thead { background: #FFD54F; }
+pre { white-space: pre-wrap; }
 </style>
 
 <body>
 
-<div class="mui-container">
-	<% unless @data %>
-		<div class="logo">
-			<img src="http://4vector.com/i/free-vector-studiofibonacci-cartoon-pterodactyl-clip-art_105550_Studiofibonacci_Cartoon_Pterodactyl_clip_art_hight.png" />
-		</div>
-	<% end %>
+    <div class="mui-container">
+        <% unless @report %>
+        <div class="logo">
+            <img src="http://4vector.com/i/free-vector-studiofibonacci-cartoon-pterodactyl-clip-art_105550_Studiofibonacci_Cartoon_Pterodactyl_clip_art_hight.png" />
+        </div>
+        <% end %>
 
-	<form class="mui-panel" method="post">
-		<legend>Analyze text 'n stuff with Dactyl</legend>
+        <form class="mui-panel" method="post">
+            <legend>Analyze text 'n stuff with Dactyl</legend>
 
-		<div class="mui-form-group">
-			<textarea class="mui-form-control" name="text"><%= @data[:original_string] if @data %></textarea>
-			<label class="mui-form-floating-label">Write or paste your text here</label>
-		</div>
-		<button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
-		<%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
-	</form>
+            <div class="mui-form-group">
+                <textarea class="mui-form-control" name="text"><%= @report[:original_string] if @report %></textarea>
+                <label class="mui-form-floating-label">Write or paste your text here</label>
+            </div>
+            <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
+            <%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
+        </form>
 
-	<% if @data %>
-			<table class="mui-table mui-table-bordered mui-panel">
-				<thead>
-					<tr>
-						<th width="25%">Metric</th>
-						<th>Value</th>
-					</tr>
-				</thead>
-				<tbody>
-				<% @data[:metrics].each do |metric, value| %>
-					<tr>
-						<td><%= metric.gsub('percentage', '%').try :humanize %></td>
-						<td><%= metric.end_with?('_percentage') ? "#{number_with_precision(value * 100, precision: 3)} %" : number_with_precision(value, precision: 3) %></td>
-					</tr>
-				<% end %>
-				</tbody>
-			</table>	
-	<% end %>
+        <% @report && @report[:metrics].keys.each do |category| %>
+        <table class="mui-table mui-table-bordered mui-panel">
+            <thead>
+                <tr>
+                    <td colspan="2" class="metric-category-row"><%= category.to_s.humanize %></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th width="25%">Metric</th>
+                    <th>Value</th>
+                </tr>
+                <% @report[:metrics][category].each do |metric, value| %>
+                <tr>
+                    <td><%= metric.humanize %></td>
+                    <td>
+                        <%= case value
+                            when Float then number_with_precision(value, precision: 3)
+                            when Hash then "<pre>#{value}</pre>".html_safe
+                            when Array then "<pre>#{value.to_s}</pre>".html_safe
 
-	<div style="text-align: center">
-		Powered by <a href="http://indentlabs.com">Indent</a>
-	</div>
-</div>
+                            else value
+                        end
+                        %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+
+        <% end %>
+
+        <div style="text-align: center">
+            Powered by <a href="http://indentlabs.com">Indent</a>
+        </div>
+    </div>
 
 </body>
 </html>

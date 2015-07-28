@@ -67,6 +67,17 @@ class Dactylogram < ActiveRecord::Base
         ].sum
     end
 
+    def combined_average_grade_level_metric
+        [
+            automated_readability_index_metric,
+            coleman_liau_index_metric,
+            flesch_kincaid_grade_level_metric,
+            forcast_grade_level_metric,
+            gunning_fog_index_metric,
+            smog_grade_metric
+        ].sum.to_f / 6
+    end
+
     def conjunction_frequency_metric
         words.select { |word| CONJUNCTIONS.include? word }.length.to_f / words.length
     end
@@ -251,7 +262,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def word_frequency_table_metric
-        words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+        words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }.reject { |k, v| v == 1 }.sort_by { |k, v| v }.reverse
     end
 
     def words_metric
