@@ -150,7 +150,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def most_frequent_word_metric
-        word_frequency_table_metric.max_by { |k, v| v }.first
+        (word_frequency_table_metric.max_by { |k, v| v } || words).first
     end
 
     def paragraphs_metric
