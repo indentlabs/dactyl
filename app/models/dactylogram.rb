@@ -1,4 +1,6 @@
 class Dactylogram < ActiveRecord::Base
+    include Treat::Core::DSL
+
     attr_accessor :data
 
     validates :data, presence: true
@@ -262,7 +264,14 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def word_frequency_table_metric
-        words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }.reject { |k, v| v == 1 }.sort_by { |k, v| v }.reverse
+        table = words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+        table.reject! { |k, v| v == 1 } if table.any? { |k, v| v > 1 }
+        table.sort_by { |k, v| v }.reverse!
+        table
+    end
+
+    def word_tree_metric
+        sentence(data).inspect
     end
 
     def words_metric

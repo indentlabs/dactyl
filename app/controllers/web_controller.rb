@@ -58,6 +58,7 @@ class WebController < ApplicationController
             'unique_words',
             'repeated_words',
             'most_frequent_word',
+            'word_tree'
         ],
 
         sentiment: [
