@@ -26,6 +26,11 @@ class WebController < ApplicationController
             'unrecognized_words'
         ],
 
+        tone: [
+            'active_voice_percentage',
+            'passive_voice_percentage'
+        ],
+
         analytics: [
             'data_length',
             'characters_per_word',
@@ -47,11 +52,21 @@ class WebController < ApplicationController
             'unique_words_per_sentence_percentage',
             'unique_words_per_paragraph',
             'unique_words_per_paragraph_percentage',
+            'noun_percentage',
+            'adjective_percentage',
+            'verb_percentage',
+            'acronyms_percentage',
             'paragraphs', # get paragraph_count
             'sentence_count', #rename to sentences
             'sentences_per_paragraph',
             'spaces_after_sentence',
             'whitespace_percentage',
+            'lexical_density',
+        ],
+
+        abstractions: [
+            'similes',
+            'metaphors'
         ],
 
         frequencies: [
@@ -68,11 +83,26 @@ class WebController < ApplicationController
             'word_frequency_table',
             'unique_words',
             'repeated_words',
-            'most_frequent_word'
+            'most_frequent_word',
+            'stem_words',
+            'stemmed_words',
+            'filter_words',
+            'stop_words',
+            'auxiliary_verbs',
+            'function_words',
+            'insert_words',
+            'lexical_words',
+        ],
+
+        context: [
+            'language',
+            'jargon_words',
+            'related_topics'
         ],
 
         sentiment: [
-            'sentiment'
+            'sentiment',
+            'glittering_generalities'
         ]
     }
 

@@ -26,6 +26,45 @@ class Dactylogram < ActiveRecord::Base
         "which", "how", "than", "or", "so", "before", "since", "while", "where",
         "although", "though", "who", "whose"]
 
+    STOP_WORDS = ["a", "about", "above", "above", "across", "after", "afterwards", 
+        "again", "against", "all", "almost", "alone", "along", "already", "also",
+        "although", "always","am","among", "amongst", "amoungst", "amount",  "an", 
+        "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", 
+        "are", "around", "as",  "at", "back","be","became", "because","become",
+        "becomes", "becoming", "been", "before", "beforehand", "behind", "being", 
+        "below", "beside", "besides", "between", "beyond", "bill", "both", 
+        "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", 
+        "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", 
+        "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", 
+        "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", 
+        "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", 
+        "first", "five", "for", "former", "formerly", "forty", "found", "four", 
+        "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", 
+        "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", 
+        "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", 
+        "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", 
+        "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", 
+        "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", 
+        "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", 
+        "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", 
+        "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", 
+        "often", "on", "once", "one", "only", "onto", "or", "other", "others", 
+        "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", 
+        "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", 
+        "seeming", "seems", "serious", "several", "she", "should", "show", "side", 
+        "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", 
+        "something", "sometime", "sometimes", "somewhere", "still", "such", "system", 
+        "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", 
+        "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", 
+        "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", 
+        "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", 
+        "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", 
+        "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", 
+        "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", 
+        "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", 
+        "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", 
+        "you", "your", "yours", "yourself", "yourselves", "the"]
+
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }
@@ -41,8 +80,20 @@ class Dactylogram < ActiveRecord::Base
         self.class.instance_methods.select { |m| metric? m }
     end
 
+    def acronyms_percentage_metric
+        "not implemented"
+    end
+
+    def active_voice_percentage_metric
+        "not implemented"
+    end
+
     def adjectives_metric
         adjectives
+    end
+
+    def adjective_percentage_metric
+        adjectives.length.to_f / words.length
     end
 
     def adverbs_metric
@@ -55,6 +106,10 @@ class Dactylogram < ActiveRecord::Base
             0.5 * words.length.to_f / sentences.length,
             -21.43
         ].sum
+    end
+
+    def auxiliary_verbs_metric
+        "not implemented"
     end
 
     def characters_per_paragraph_metric
@@ -158,13 +213,49 @@ class Dactylogram < ActiveRecord::Base
         20 - (words_with_syllables(1).length.to_f / words.length / 10)
     end
 
+    def glittering_generalities_metric
+        "not implemented"
+    end
+
+    def filter_words_metric
+        "not implemented"
+    end
+
+    def function_words_metric
+        "not implemented"
+    end
+
     def gunning_fog_index_metric
         #todo GFI word/suffix exclusions
         0.4 * (words.length.to_f / sentences.length + 100 * (complex_words.length.to_f / words.length))
     end
 
+    def insert_words_metric
+        "not implemented"
+    end
+
+    def jargon_words_metric
+        "not implemented"
+    end
+
+    def language_metric
+        "not implemented"
+    end
+
     def letters_per_word_metric
         data.chars.length.to_f / words.length
+    end
+
+    def lexical_words_metric
+        "not implemented"
+    end
+
+    def lexical_density_metric
+        "not implemented"
+    end
+
+    def metaphors_metric
+        "not implemented"
     end
 
     def most_frequent_word_metric
@@ -175,8 +266,16 @@ class Dactylogram < ActiveRecord::Base
         nouns
     end
 
+    def noun_percentage_metric
+        nouns.length.to_f / words.length
+    end
+
     def paragraphs_metric
         paragraphs.length
+    end
+
+    def passive_voice_percentage_metric
+        "not implemented"
     end
 
     def prepositions_metric
@@ -195,12 +294,20 @@ class Dactylogram < ActiveRecord::Base
         data.scan(/[\.,;\?!\-"':\(\)\[\]"]/).length.to_f / data.chars.length
     end
 
+    def related_topics_metric
+        "not implemented"
+    end
+
     def repeated_words_metric
         words.select {|e| words.rindex(e) != words.index(e) }.uniq
     end
 
     def repeated_word_percentage_metric
         repeated_words_metric.length.to_f / words.length
+    end
+
+    def similes_metric
+        "not implemented"
     end
 
     def sentence_count_metric
@@ -231,6 +338,18 @@ class Dactylogram < ActiveRecord::Base
 
     def special_character_percentage_metric
         data.scan(/[\$\^#@%~]/).length.to_f / data.chars.length
+    end
+
+    def stem_words_metric
+        words.select { |word| word.stem == word }
+    end
+
+    def stemmed_words_metric
+        words.select { |word| word.stem != word }
+    end
+
+    def stop_words_metric
+        stop_words
     end
 
     def syllable_count_metric
@@ -280,6 +399,10 @@ class Dactylogram < ActiveRecord::Base
 
     def verbs_metric
         verbs
+    end
+
+    def verb_percentage_metric
+        verbs.length.to_f / words.length
     end
 
     def vowels_per_word_percentage_metric
@@ -353,6 +476,10 @@ class Dactylogram < ActiveRecord::Base
 
     def sentences
         data.split(/[!\?\.]/)
+    end
+
+    def stop_words
+        words.select { |word| STOP_WORDS.include? word }
     end
 
     def words
