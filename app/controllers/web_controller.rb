@@ -36,9 +36,8 @@ class WebController < ApplicationController
             'characters_per_paragraph',
             'letters_per_word',
             'digits_per_word',
-            'consonants_per_word',
             'consonants_per_word_percentage',
-            'vowels_per_word_percentage', #nonpercentage?
+            'vowels_per_word_percentage',
             'syllable_count', #rename to syllables
             'syllables_per_word',
             'syllables_per_sentence',

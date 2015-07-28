@@ -151,11 +151,6 @@ class Dactylogram < ActiveRecord::Base
         words.select { |word| CONJUNCTIONS.include? word }.length.to_f / words.length
     end
 
-    def consonants_per_word_metric
-        squished_characters = words.join('')
-        squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
-    end
-
     def consonants_per_word_percentage_metric
         squished_characters = words.join('')
         squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
