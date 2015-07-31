@@ -5,6 +5,11 @@ class Dactylogram < ActiveRecord::Base
 
     validates :data, presence: true
 
+    AUXILLARY_VERBS = ["be", "can", "could", "dare", "do", "have", "may", "might",
+        "must", "need", "ought", "shall", "should", "will", "would"]
+
+    INSERT_WORDS = ["um", "uh"] #todo need more of these
+
     PREPOSITIONS = ["about", "across", "against", "along", "around", "at", "behind",
         "beside", "besides", "by", "despite", "down", "during", "for", "from", "in",
         "inside", "into", "near", "of", "off", "on", "onto", "over", "through", "to",
@@ -80,8 +85,12 @@ class Dactylogram < ActiveRecord::Base
         self.class.instance_methods.select { |m| metric? m }
     end
 
+    def acronyms_metric
+        data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase }
+    end
+
     def acronyms_percentage_metric
-        "not implemented"
+        acronyms_metric.length.to_f / words.length
     end
 
     def active_voice_percentage_metric
@@ -109,7 +118,11 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def auxiliary_verbs_metric
-        "not implemented"
+        words.select { |word| AUXILLARY_VERBS.include? word }
+    end
+
+    def auxiliary_verbs_percentage_metric
+        auxiliary_verbs_metric.length.to_f / words.length
     end
 
     def characters_per_paragraph_metric
@@ -209,6 +222,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def glittering_generalities_metric
+        # some infoz http://www.buzzle.com/articles/examples-of-glittering-generalities.html
         "not implemented"
     end
 
@@ -226,7 +240,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def insert_words_metric
-        "not implemented"
+        words.select { |word| INSERT_WORDS.include? word }.length.to_f / words.length
     end
 
     def jargon_words_metric
@@ -242,7 +256,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def lexical_words_metric
-        "not implemented"
+        function_words_metric
     end
 
     def lexical_density_metric

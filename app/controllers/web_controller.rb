@@ -21,6 +21,7 @@ class WebController < ApplicationController
             'conjunctions',
             'prepositions',
             'determiners',
+            'acronyms',
             'unrecognized_words'
         ],
 
@@ -52,6 +53,7 @@ class WebController < ApplicationController
             'noun_percentage',
             'adjective_percentage',
             'verb_percentage',
+            'auxiliary_verbs_percentage',
             'acronyms_percentage',
             'paragraphs', # get paragraph_count
             'sentence_count', #rename to sentences
@@ -129,6 +131,7 @@ class WebController < ApplicationController
         categorized_metrics
     end
 
+    # Exclude metrics with a value of "not implemented"
     def exclude_not_implemented metrics
         metrics.select do |category, metric_values|
             metric_values.select! do |m, value|
