@@ -110,8 +110,15 @@ class WebController < ApplicationController
         d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
 
         @report = d.metric_report
-        @report[:metrics] = metrics_by_category @report[:metrics]
+        @report[:metrics] = prepare_metrics_for_output @report[:metrics]
     end
+
+    def prepare_metrics_for_output metrics
+        metrics = metrics_by_category metrics
+        metrics = exclude_not_implemented metrics
+    end
+
+    private
 
     # Categorize all the metrics into groups to avoid printing out one big list to the user
     def metrics_by_category metrics
@@ -120,6 +127,16 @@ class WebController < ApplicationController
             categorized_metrics[category] = metrics.slice *METRIC_CATEGORIES[category]
         end
         categorized_metrics
+    end
+
+    def exclude_not_implemented metrics
+        metrics.select do |category, metric_values|
+            metric_values.select! do |m, value|
+                value != "not implemented"
+            end
+
+            metric_values.any?
+        end
     end
 
 end
