@@ -115,6 +115,16 @@ class WebController < ApplicationController
         @report[:metrics] = prepare_metrics_for_output @report[:metrics]
     end
 
+    def upload
+        return unless @analysis_string.present?
+
+        d = Dactylogram.new(data: @analysis_string)
+        d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+        d.send :calculate_metrics
+
+        raise d.inspect
+    end
+
     def prepare_metrics_for_output metrics
         metrics = metrics_by_category metrics
         metrics = exclude_not_implemented metrics
