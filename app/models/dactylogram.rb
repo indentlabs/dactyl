@@ -464,11 +464,13 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def calculate_metrics
-        results = {}
-        (@metrics || all_metrics).map { |metric|
-            results[metric.to_s.chomp '_metric'] = send(metric)
-        }
-        results
+        self.metrics ||= begin
+            results = {}
+            (@metrics || all_metrics).map { |metric|
+                results[metric.to_s.chomp '_metric'] = send(metric)
+            }
+            results
+        end
     end
 
     def conjunctions
