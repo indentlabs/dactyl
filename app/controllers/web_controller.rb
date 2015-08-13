@@ -1,6 +1,10 @@
 class WebController < ApplicationController
 
     METRIC_CATEGORIES = {
+        author_similarity_index: [
+            'most_similar_to'
+        ],
+
         readability: [
             'automated_readability_index',
             'coleman_liau_index',
@@ -112,6 +116,11 @@ class WebController < ApplicationController
         d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
 
         @report = d.metric_report
+
+        # Substitute in any 2nd-order metrics (that require 1st order metrics to be computed)
+        @report[:metrics]['most_similar_to'] = d.most_similar_to
+
+        # Format metric report into format view is expecting
         @report[:metrics] = prepare_metrics_for_output @report[:metrics]
     end
 
@@ -122,10 +131,11 @@ class WebController < ApplicationController
         d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
         d.send :calculate_metrics
 
-        raise d.inspect
+        render json: d.save
     end
 
     def prepare_metrics_for_output metrics
+        metrics = sanitize_values metrics
         metrics = metrics_by_category metrics
         metrics = exclude_not_implemented metrics
     end
@@ -150,6 +160,11 @@ class WebController < ApplicationController
 
             metric_values.any?
         end
+    end
+
+    # Sanitize metric values for text/html output
+    def sanitize_values metrics
+        metrics['most_similar_to'] = metrics['most_similar_to'].reverse.chomp("authors/".reverse).reverse # god dammit ruby give me lchomp
     end
 
 end

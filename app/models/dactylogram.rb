@@ -1,9 +1,13 @@
 class Dactylogram < ActiveRecord::Base
     include Treat::Core::DSL
+    include Comparable
 
     attr_accessor :data
 
     validates :data, presence: true
+    validates :metrics, presence: true
+
+    serialize :metrics, JSON
 
     AUXILLARY_VERBS = ["be", "can", "could", "dare", "do", "have", "may", "might",
         "must", "need", "ought", "shall", "should", "will", "would"]
@@ -69,10 +73,25 @@ class Dactylogram < ActiveRecord::Base
         "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", 
         "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", 
         "you", "your", "yours", "yourself", "yourselves", "the"]
+    #todo move to translations
 
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }
+
+    #n-dimensional cartesian distance on shared metrics
+    def distance_to other_dactylogram
+        puts "Computing distance to #{other_dactylogram.identifier}"
+
+        shared_metrics = self.metrics.keys & other_dactylogram.metrics.keys
+        distance = shared_metrics.map do |metric|
+            if metric.class == Fixnum || metric.class == Float
+                (metrics[metric] - other_dactylogram.metrics[metric]).abs
+            else
+                0
+            end
+        end.sum
+    end
 
     def metric_report
         {
@@ -269,6 +288,23 @@ class Dactylogram < ActiveRecord::Base
 
     def most_frequent_word_metric
         (word_frequency_table_metric.max_by { |k, v| v } || words).first
+    end
+
+    def most_similar_to
+        authors = Dactylogram.all.select {|d| d.identifier.start_with? 'authors/' }
+        return if authors.empty?
+
+        most_similar_author = authors.first
+        shortest_distance = distance_to most_similar_author
+
+        authors.drop(1).each do |author|
+           if distance_to(author) < shortest_distance
+               shortest_distance = distance_to author
+               most_similar_author = author
+           end
+        end
+
+        most_similar_author.identifier
     end
 
     def nouns_metric
