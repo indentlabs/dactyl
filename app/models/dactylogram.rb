@@ -105,7 +105,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def acronyms_metric
-        data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase }
+        data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase }.uniq.sort
     end
 
     def acronyms_percentage_metric
@@ -117,7 +117,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def adjectives_metric
-        adjectives
+        adjectives.sort
     end
 
     def adjective_percentage_metric
@@ -125,7 +125,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def adverbs_metric
-        adverbs
+        adverbs.sort
     end
 
     def automated_readability_index_metric
@@ -137,7 +137,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def auxiliary_verbs_metric
-        words.select { |word| AUXILLARY_VERBS.include? word }
+        words.select { |word| AUXILLARY_VERBS.include? word }.uniq.sort
     end
 
     def auxiliary_verbs_percentage_metric
@@ -176,7 +176,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def conjunctions_metric
-        conjunctions
+        conjunctions.sort
     end
 
     def conjunction_frequency_metric
@@ -198,7 +198,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def determiners_metric
-        determiners
+        determiners.sort
     end
 
     def determiner_frequency_percentage_metric
@@ -259,7 +259,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def insert_words_metric
-        words.select { |word| INSERT_WORDS.include? word }
+        words.select { |word| INSERT_WORDS.include? word }.uniq.sort
     end
 
     def jargon_words_metric
@@ -308,7 +308,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def nouns_metric
-        nouns
+        nouns.sort
     end
 
     def noun_percentage_metric
@@ -324,7 +324,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def prepositions_metric
-        prepositions
+        prepositions.sort
     end
 
     def preposition_frequency_metric
@@ -344,7 +344,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def repeated_words_metric
-        words.select {|e| words.rindex(e) != words.index(e) }.uniq
+        words.select {|e| words.rindex(e) != words.index(e) }.uniq.sort
     end
 
     def repeated_word_percentage_metric
@@ -386,15 +386,15 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def stem_words_metric
-        words.select { |word| word.try(:stem) == word }
+        words.select { |word| word.try(:stem) == word }.uniq.sort
     end
 
     def stemmed_words_metric
-        words.select { |word| word.try(:stem) != word }
+        words.select { |word| word.try(:stem) != word }.uniq.sort
     end
 
     def stop_words_metric
-        stop_words
+        stop_words.uniq.sort
     end
 
     def syllable_count_metric
@@ -439,11 +439,11 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def unrecognized_words_metric
-        unrecognized_words
+        unrecognized_words.sort
     end
 
     def verbs_metric
-        verbs
+        verbs.sort
     end
 
     def verb_percentage_metric
@@ -487,11 +487,11 @@ class Dactylogram < ActiveRecord::Base
     private
 
     def adjectives
-        @adjectives ||= words.select { |word| word.category == 'adjective' }
+        @adjectives ||= words.select { |word| word.category == 'adjective' }.uniq
     end
 
     def adverbs
-        @adverbs ||= words.select { |word| word.category == 'adverb' }
+        @adverbs ||= words.select { |word| word.category == 'adverb' }.uniq
     end
 
     # Given a method name (symbol), return whether it should be ran as a metric
@@ -510,15 +510,15 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def conjunctions
-        @conjunctions ||= words.select { |word| word.category == 'conjunction' }
+        @conjunctions ||= words.select { |word| word.category == 'conjunction' }.uniq
     end
 
     def determiners
-        @determiners ||= words.select { |word| word.category == 'determiner' }
+        @determiners ||= words.select { |word| word.category == 'determiner' }.uniq
     end
 
     def prepositions
-        @prepositions ||= words.select { |word| word.category == 'preposition' }
+        @prepositions ||= words.select { |word| word.category == 'preposition' }.uniq
     end
 
     def sentences
@@ -534,7 +534,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def nouns
-        @nouns ||= words.select { |word| word.category == 'noun' }
+        @nouns ||= words.select { |word| word.category == 'noun' }.uniq
     end
 
     # As defined by Robert Gunning in the GFI and SMOG
@@ -575,11 +575,11 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def verbs
-        @verbs ||= words.select { |word| word.category == 'verb' }
+        @verbs ||= words.select { |word| word.category == 'verb' }.uniq
     end
 
     def unrecognized_words
-        @unrecognized_words ||= words.select { |word| word.category == 'unknown' }
+        @unrecognized_words ||= words.select { |word| word.category == 'unknown' }.uniq
     end
 
 end
