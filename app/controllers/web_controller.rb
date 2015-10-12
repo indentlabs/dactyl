@@ -1,9 +1,9 @@
 class WebController < ApplicationController
 
     METRIC_CATEGORIES = {
-        author_similarity_index: [
-            'most_similar_to'
-        ],
+        # author_similarity_index: [
+        #     'most_similar_to'
+        # ],
 
         readability: [
             'automated_readability_index',
@@ -118,7 +118,7 @@ class WebController < ApplicationController
         @report = d.metric_report
 
         # Substitute in any 2nd-order metrics (that require 1st order metrics to be computed)
-        @report[:metrics]['most_similar_to'] = d.most_similar_to
+        #@report[:metrics]['most_similar_to'] = d.most_similar_to
 
         # Format metric report into format view is expecting
         @report[:metrics] = prepare_metrics_for_output @report[:metrics]
@@ -146,7 +146,7 @@ class WebController < ApplicationController
     def metrics_by_category metrics
         categorized_metrics = {}
         METRIC_CATEGORIES.keys.each do |category|
-            categorized_metrics[category] = metrics.slice *METRIC_CATEGORIES[category]
+            categorized_metrics[category] = @report[:metrics].slice *METRIC_CATEGORIES[category]
         end
         categorized_metrics
     end
@@ -164,7 +164,7 @@ class WebController < ApplicationController
 
     # Sanitize metric values for text/html output
     def sanitize_values metrics
-        metrics['most_similar_to'] = metrics['most_similar_to'].reverse.chomp("authors/".reverse).reverse # god dammit ruby give me lchomp
+        #metrics['most_similar_to'] = metrics['most_similar_to'].reverse.chomp("authors/".reverse).reverse # god dammit ruby give me lchomp
     end
 
 end
