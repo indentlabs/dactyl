@@ -259,7 +259,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def insert_words_metric
-        words.select { |word| INSERT_WORDS.include? word }.length.to_f / words.length
+        words.select { |word| INSERT_WORDS.include? word }
     end
 
     def jargon_words_metric
