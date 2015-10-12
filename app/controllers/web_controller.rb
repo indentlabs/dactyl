@@ -73,10 +73,10 @@ class WebController < ApplicationController
         ],
 
         frequencies: [
-            'conjunction_frequency',
+            'conjunction_frequency_percentage',
             'determiner_frequency_percentage',
-            'preposition_frequency',
-            'pronoun_frequency',
+            'preposition_frequency_percentage',
+            'pronoun_frequency_percentage',
             'punctuation_percentage',
             'repeated_words_percentage',
             'special_character_percentage',

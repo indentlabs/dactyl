@@ -179,7 +179,7 @@ class Dactylogram < ActiveRecord::Base
         conjunctions.sort
     end
 
-    def conjunction_frequency_metric
+    def conjunction_frequency_percentage_metric
         words.select { |word| CONJUNCTIONS.include? word }.length.to_f / words.length
     end
 
@@ -327,11 +327,11 @@ class Dactylogram < ActiveRecord::Base
         prepositions.sort
     end
 
-    def preposition_frequency_metric
+    def preposition_frequency_percentage_metric
         words.select { |word| PREPOSITIONS.include? word }.length.to_f / words.length
     end
 
-    def pronoun_frequency_metric
+    def pronoun_frequency_percentage_metric
         words.select { |word| PRONOUNS.include? word }.length.to_f / words.length
     end
 
