@@ -24,6 +24,7 @@ class WebController < ApplicationController
             'adverbs',
             'conjunctions',
             'prepositions',
+            'pronouns',
             'determiners',
             'acronyms',
             'unrecognized_words'

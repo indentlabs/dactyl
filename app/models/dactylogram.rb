@@ -105,7 +105,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def acronyms_metric
-        data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase }.uniq.sort
+        data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase && word.length > 1 }.uniq.sort
     end
 
     def acronyms_percentage_metric
@@ -331,8 +331,12 @@ class Dactylogram < ActiveRecord::Base
         words.select { |word| PREPOSITIONS.include? word }.length.to_f / words.length
     end
 
+    def pronouns_metric
+        pronouns.sort
+    end
+
     def pronoun_frequency_percentage_metric
-        words.select { |word| PRONOUNS.include? word }.length.to_f / words.length
+        pronouns.length.to_f / words.length
     end
 
     def punctuation_percentage_metric
@@ -523,6 +527,10 @@ class Dactylogram < ActiveRecord::Base
         @prepositions ||= words.select { |word| word.category == 'preposition' }.uniq
     end
 
+    def pronouns
+        @pronouns ||= words.select { |word| PRONOUNS.include? word }.uniq
+    end
+
     def sentences
         data.split(/[!\?\.]/)
     end
@@ -581,7 +589,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def unrecognized_words
-        @unrecognized_words ||= words.select { |word| word.category == 'unknown' }.uniq
+        @unrecognized_words ||= words.select { |word| word.category == 'unknown' }.uniq - pronouns
     end
 
 end
