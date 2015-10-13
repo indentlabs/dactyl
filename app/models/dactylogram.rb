@@ -384,7 +384,9 @@ class Dactylogram < ActiveRecord::Base
             sentence.length - sentence.gsub(/^ +/, '').length
         }.reject(&:zero?)
 
-        spaces_per_sentence.sum.to_f / spaces_per_sentence.length
+        spaces = spaces_per_sentence.sum.to_f / spaces_per_sentence.length
+        spaces = 0 if spaces.nan?
+        spaces
     end
 
     def special_character_percentage_metric

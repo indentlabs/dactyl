@@ -58,7 +58,7 @@ class WebController < ApplicationController
             'paragraphs', # get paragraph_count
             'sentence_count', #rename to sentences
             'sentences_per_paragraph',
-            'spaces_after_sCentence',
+            'spaces_after_sentence',
             'whitespace_percentage',
             'lexical_density',
         ],
