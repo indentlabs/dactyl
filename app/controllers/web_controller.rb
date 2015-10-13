@@ -35,7 +35,7 @@ class WebController < ApplicationController
         ],
 
         analytics: [
-            'data_length',
+            'character_count',
             'characters_per_word',
             'characters_per_sentence',
             'characters_per_paragraph',

@@ -144,6 +144,10 @@ class Dactylogram < ActiveRecord::Base
         auxiliary_verbs_metric.length.to_f / words.length
     end
 
+    def character_count_metric
+        data.length
+    end
+
     def characters_per_paragraph_metric
         data.chars.length.to_f / paragraphs.length
     end
@@ -186,10 +190,6 @@ class Dactylogram < ActiveRecord::Base
     def consonants_per_word_percentage_metric
         squished_characters = words.join('')
         squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
-    end
-
-    def data_length_metric
-        data.length
     end
 
     def digits_per_word_metric
@@ -377,8 +377,10 @@ class Dactylogram < ActiveRecord::Base
 
     def spaces_after_sentence_metric
         spaces_per_sentence = sentences.map { |sentence|
-            sentence.length - sentence.lstrip.length
-        }.sum.to_f / (sentences.length - 1)
+            sentence.length - sentence.gsub(/^ +/, '').length
+        }.reject(&:zero?)
+
+        spaces_per_sentence.sum.to_f / spaces_per_sentence.length
     end
 
     def special_character_percentage_metric
