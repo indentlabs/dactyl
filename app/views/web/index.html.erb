@@ -33,6 +33,9 @@
             </div>
             <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
             <%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
+            <% if @analysis_string.presence %>
+                <%= link_to "View as API call", "/api/v1/dactyl?text=#{CGI.escape @analysis_string}", class: "mui-btn mui-btn-raised" %>
+            <% end %>
         <% end %>
 
         <% @report && @report[:metrics].keys.each do |category| %>
