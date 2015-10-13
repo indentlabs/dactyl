@@ -55,15 +55,10 @@ class WebController < ApplicationController
             'unique_words_per_sentence_percentage',
             'unique_words_per_paragraph',
             'unique_words_per_paragraph_percentage',
-            'noun_percentage',
-            'adjective_percentage',
-            'verb_percentage',
-            'auxiliary_verbs_percentage',
-            'acronyms_percentage',
             'paragraphs', # get paragraph_count
             'sentence_count', #rename to sentences
             'sentences_per_paragraph',
-            'spaces_after_sentence',
+            'spaces_after_sCentence',
             'whitespace_percentage',
             'lexical_density',
         ],
@@ -74,13 +69,18 @@ class WebController < ApplicationController
         ],
 
         frequencies: [
-            'conjunction_frequency_percentage',
-            'determiner_frequency_percentage',
-            'preposition_frequency_percentage',
-            'pronoun_frequency_percentage',
+            'acronyms_percentage',
+            'adjective_percentage',
+            'auxiliary_verbs_percentage',
+            'conjunction_percentage',
+            'determiner_percentage',
+            'noun_percentage',
+            'preposition_percentage',
+            'pronoun_percentage',
             'punctuation_percentage',
             'repeated_words_percentage',
             'special_character_percentage',
+            'verb_percentage',
         ],
 
         word_frequency_tables: [
