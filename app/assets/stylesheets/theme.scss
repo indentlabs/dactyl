@@ -1,0 +1,27 @@
+body {
+    margin: 50px 0;
+    background: #EFF7FF;
+    font-size: 12pt;
+}
+
+.logo {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.logo img {
+    width: 200px;
+}
+
+thead {
+    background: #FFC769;
+}
+
+tr {
+	max-height: 10px;
+	overflow: scroll;
+}
+
+pre {
+    white-space: pre-wrap;
+}

@@ -6,14 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//cdn.muicss.com/mui-0.1.18/css/mui.min.css" rel="stylesheet" type="text/css" />
     <script src="//cdn.muicss.com/mui-0.1.18/js/mui.min.js"></script>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
 </head>
-<style>
-    body { margin: 50px 0; background: #dfefff;}
-    .logo { text-align: center; padding-bottom: 50px; }
-    .logo img { width: 200px; }
-    thead { background: #FFD54F; }
-    pre { white-space: pre-wrap; }
-</style>
 
 <body>
 
@@ -28,7 +22,7 @@
             <legend>Analyze text 'n stuff with Dactyl</legend>
 
             <div class="mui-form-group">
-                <textarea class="mui-form-control" name="text"><%= @report[:original_string] if @report %></textarea>
+                <textarea class="mui-form-control" name="text" rows="10"><%= @report[:original_string] if @report %></textarea>
                 <label class="mui-form-floating-label">Write or paste your text here</label>
             </div>
             <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
