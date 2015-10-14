@@ -270,10 +270,6 @@ class Dactylogram < ActiveRecord::Base
         "not implemented"
     end
 
-    def letters_per_word_metric
-        data.chars.length.to_f / words.length
-    end
-
     def lexical_words_metric
         function_words_metric
     end

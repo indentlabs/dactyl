@@ -83,7 +83,6 @@ class WebController < ApplicationController
             'characters_per_paragraph',
             'digits_per_word',
             'consonants_per_word_percentage',
-            'letters_per_word',
             'lexical_density',
             'paragraphs', # get paragraph_count
             'sentence_count', #rename to sentences
