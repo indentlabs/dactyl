@@ -81,27 +81,27 @@ class WebController < ApplicationController
             'characters_per_word',
             'characters_per_sentence',
             'characters_per_paragraph',
-            'letters_per_word',
             'digits_per_word',
             'consonants_per_word_percentage',
-            'vowels_per_word_percentage',
+            'letters_per_word',
+            'lexical_density',
+            'paragraphs', # get paragraph_count
+            'sentence_count', #rename to sentences
+            'sentences_per_paragraph',
+            'spaces_after_sentence',
             'syllable_count', #rename to syllables
             'syllables_per_word',
             'syllables_per_sentence',
-            'word_count', #rename to words
-            'words_per_sentence',
-            'words_per_paragraph',
+            'vowels_per_word_percentage',
             'unique_words_percentage',
             'unique_words_per_sentence',
             'unique_words_per_sentence_percentage',
             'unique_words_per_paragraph',
             'unique_words_per_paragraph_percentage',
-            'paragraphs', # get paragraph_count
-            'sentence_count', #rename to sentences
-            'sentences_per_paragraph',
-            'spaces_after_sentence',
+            'word_count', #rename to words
+            'words_per_sentence',
+            'words_per_paragraph',
             'whitespace_percentage',
-            'lexical_density',
         ],
 
         sentiment: [
