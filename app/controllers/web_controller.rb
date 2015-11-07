@@ -1,10 +1,6 @@
 class WebController < ApplicationController
 
     METRIC_CATEGORIES = {
-        # author_similarity_index: [
-        #     'most_similar_to'
-        # ],
-
         readability: [
             'automated_readability_index',
             'coleman_liau_index',

@@ -9,72 +9,6 @@ class Dactylogram < ActiveRecord::Base
 
     serialize :metrics, JSON
 
-    AUXILLARY_VERBS = ["be", "can", "could", "dare", "do", "have", "may", "might",
-        "must", "need", "ought", "shall", "should", "will", "would"]
-
-    INSERT_WORDS = ["um", "uh"] #todo need more of these
-
-    PREPOSITIONS = ["about", "across", "against", "along", "around", "at", "behind",
-        "beside", "besides", "by", "despite", "down", "during", "for", "from", "in",
-        "inside", "into", "near", "of", "off", "on", "onto", "over", "through", "to",
-        "toward", "with", "within", "without"]
-
-    PRONOUNS = ["i", "you", "he", "me", "her", "him", "my", "mine", "her",
-        "hers", "his", "myself", "himself", "herself", "anything",
-        "everything", "anyone", "everyone", "ones", "such", "it",
-        "we", "they", "us", "them", "our", "ours", "their", "theirs",
-        "itself", "ourselves", "themselves", "something", "nothing", "someone"]
-
-    DETERMINERS = ["the", "some", "this", "that", "every", "all", "both", "one",
-        "first", "other", "next", "many", "much", "more", "most",
-        "several", "no", "a", "an", "any", "each", "half", "twice",
-        "two", "second", "another", "last", "few", "little", "less",
-        "least", "own"]
-
-    CONJUNCTIONS =  ["and", "but", "after", "when", "as", "because", "if", "what",
-        "which", "how", "than", "or", "so", "before", "since", "while", "where",
-        "although", "though", "who", "whose"]
-
-    STOP_WORDS = ["a", "about", "above", "above", "across", "after", "afterwards", 
-        "again", "against", "all", "almost", "alone", "along", "already", "also",
-        "although", "always","am","among", "amongst", "amoungst", "amount",  "an", 
-        "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", 
-        "are", "around", "as",  "at", "back","be","became", "because","become",
-        "becomes", "becoming", "been", "before", "beforehand", "behind", "being", 
-        "below", "beside", "besides", "between", "beyond", "bill", "both", 
-        "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", 
-        "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", 
-        "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", 
-        "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", 
-        "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", 
-        "first", "five", "for", "former", "formerly", "forty", "found", "four", 
-        "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", 
-        "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", 
-        "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", 
-        "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", 
-        "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", 
-        "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", 
-        "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", 
-        "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", 
-        "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", 
-        "often", "on", "once", "one", "only", "onto", "or", "other", "others", 
-        "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", 
-        "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", 
-        "seeming", "seems", "serious", "several", "she", "should", "show", "side", 
-        "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", 
-        "something", "sometime", "sometimes", "somewhere", "still", "such", "system", 
-        "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", 
-        "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", 
-        "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", 
-        "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", 
-        "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", 
-        "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", 
-        "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", 
-        "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", 
-        "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", 
-        "you", "your", "yours", "yourself", "yourselves", "the"]
-    #todo move to translations
-
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }
@@ -137,7 +71,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def auxiliary_verbs_metric
-        words.select { |word| AUXILLARY_VERBS.include? word }.uniq.sort
+        words.select { |word| I18n.t('auxillary-verbs').include? word }.uniq.sort
     end
 
     def auxiliary_verbs_percentage_metric
@@ -184,7 +118,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def conjunction_percentage_metric
-        words.select { |word| CONJUNCTIONS.include? word }.length.to_f / words.length
+        words.select { |word| I18n.t('conjunctions').include? word }.length.to_f / words.length
     end
 
     def consonants_per_word_percentage_metric
@@ -202,7 +136,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def determiner_percentage_metric
-        words.select { |word| DETERMINERS.include? word }.length.to_f / words.length
+        words.select { |word| I18n.t('determiners').include? word }.length.to_f / words.length
     end
 
     def flesch_kincaid_age_minimum_metric
@@ -259,7 +193,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def insert_words_metric
-        words.select { |word| INSERT_WORDS.include? word }.uniq.sort
+        words.select { |word| I18n.t('insert-words').include? word }.uniq.sort
     end
 
     def jargon_words_metric
@@ -287,6 +221,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def most_similar_to
+        raise "not implemented"
         authors = Dactylogram.all.select {|d| d.identifier.start_with? 'authors/' }
         return if authors.empty?
 
@@ -324,7 +259,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def preposition_percentage_metric
-        words.select { |word| PREPOSITIONS.include? word }.length.to_f / words.length
+        words.select { |word| I18n.t('prepositions').include? word }.length.to_f / words.length
     end
 
     def pronouns_metric
@@ -526,7 +461,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def pronouns
-        @pronouns ||= words.select { |word| PRONOUNS.include? word }.uniq
+        @pronouns ||= words.select { |word| I18n.t('pronouns').include? word }.uniq
     end
 
     def sentences
@@ -534,7 +469,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def stop_words
-        words.select { |word| STOP_WORDS.include? word }
+        words.select { |word| I18n.t('stop-words').include? word }
     end
 
     def words
