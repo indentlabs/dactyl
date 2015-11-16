@@ -20,7 +20,7 @@ gem 'treat'
 #gem 'stanford-core-nlp'
 gem 'engtagger'
 gem 'wordnet'
-gem 'wordnet-defaultdb'
+#gem 'wordnet-defaultdb'
 
 # Development
 group :development, :test do
