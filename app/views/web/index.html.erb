@@ -12,19 +12,21 @@
 <body>
     <div class="mui-container content-panel">
         <div class="logo">
-        <% if @report %>
-            <%= image_tag 'dactyl-logo' %>
-        <% else %>
-            <%= image_tag 'dactyl-hero' %>
-        <% end %>
+            <% if @report %>
+                <%= image_tag 'dactyl-logo' %>
+            <% else %>
+                <%= image_tag 'dactyl-hero' %>
+            <% end %>
         </div>
 
         <%= form_tag(params.except(:text), method: :post, class: 'mui-panel') do %>
-            <legend>Analyze text 'n stuff with Dactyl</legend>
+            <% unless @report %>
+                <legend>Generate a linguistic dactylogram below:</legend>
+            <% end %>
 
             <div class="mui-form-group">
                 <textarea class="mui-form-control" name="text" rows="10"><%= @report[:original_string] if @report %></textarea>
-                <label class="mui-form-floating-label">Write or paste your text here</label>
+                <label class="mui-form-floating-label">Write or paste any text here</label>
             </div>
             <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
             <%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
@@ -41,14 +43,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th width="40%">Metric</th>
-                    <th>Value</th>
-                </tr>
                 <% @report[:metrics][category].each do |metric, value| %>
                 <tr>
-                    <td><%= metric.humanize %></td>
-                    <td>
+                    <td width="50%"><%= metric.humanize %></td>
+                    <td class="metric-value">
                         <%= case value
                             when Float
                                 value *= 100 if metric.end_with?('_percentage')
