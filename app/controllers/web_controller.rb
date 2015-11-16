@@ -51,21 +51,6 @@ class WebController < ApplicationController
             'verb_percentage',
         ],
 
-        word_frequency_tables: [
-            'word_frequency_table',
-            'unique_words',
-            'repeated_words',
-            'most_frequent_word',
-            'stem_words',
-            'stemmed_words',
-            'filter_words',
-            'stop_words',
-            'auxiliary_verbs',
-            'function_words',
-            'insert_words',
-            'lexical_words',
-        ],
-
         context: [
             'language',
             'jargon_words',
@@ -97,6 +82,21 @@ class WebController < ApplicationController
             'words_per_sentence',
             'words_per_paragraph',
             'whitespace_percentage',
+        ],
+
+        word_frequency_tables: [
+            'word_frequency_table',
+            'unique_words',
+            'repeated_words',
+            'most_frequent_word',
+            'stem_words',
+            'stemmed_words',
+            'filter_words',
+            'stop_words',
+            'auxiliary_verbs',
+            'function_words',
+            'insert_words',
+            'lexical_words',
         ],
 
         sentiment: [
