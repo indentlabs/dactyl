@@ -10,13 +10,14 @@
 </head>
 
 <body>
-
-    <div class="mui-container">
-        <% unless @report %>
+    <div class="mui-container content-panel">
         <div class="logo">
+        <% if @report %>
             <%= image_tag 'dactyl-logo' %>
-        </div>
+        <% else %>
+            <%= image_tag 'dactyl-hero' %>
         <% end %>
+        </div>
 
         <%= form_tag(params.except(:text), method: :post, class: 'mui-panel') do %>
             <legend>Analyze text 'n stuff with Dactyl</legend>
@@ -56,8 +57,8 @@
                                     metric.end_with?('_percentage') ? ' %' : ''
                                 ].join
 
-                            when Hash then "<pre>#{value}</pre>".html_safe
-                            when Array then "<pre>#{value.to_s}</pre>".html_safe
+                            when Hash then "<span class='monospace'>#{value}</span>".html_safe
+                            when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
 
                             else value
                         end

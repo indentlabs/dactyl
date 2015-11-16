@@ -1,7 +1,13 @@
 body {
-    margin: 50px 0;
-    background: #EFF7FF;
+    background: #F58752;
     font-size: 12pt;
+}
+
+.content-panel {
+    background: white;
+    width: 600px;
+    height: 100%;
+    padding: 30px 10px;
 }
 
 .logo {
@@ -14,7 +20,7 @@ body {
 }
 
 thead {
-    background: #FFC769;
+    background: #F8CE55;
 }
 
 tr {
@@ -24,4 +30,9 @@ tr {
 
 pre {
     white-space: pre-wrap;
+}
+
+.monospace {
+    font-family: monospace;
+    font-size: 13px;
 }
