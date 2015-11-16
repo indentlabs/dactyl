@@ -5,7 +5,7 @@ default: &default
 
 development:
   <<: *default
-  adapter: sqlite3
+  adapter: postgresql
   database: db/development
 
 # Warning: The database defined as "test" will be erased and
