@@ -1,0 +1,43 @@
+<div class="logo">
+	<a href="/"><%= image_tag 'dactyl-logo.png' %></a>
+</div>
+
+<% if @analysis_string.presence %>
+    <%= link_to "View as API call", "/api/v1/dactyl?text=#{CGI.escape @analysis_string}", class: "mui-btn mui-btn-raised" %>
+<% end %>
+
+<% @report && @report[:metrics].keys.each do |category| %>
+<table class="mui-table mui-table-bordered mui-panel">
+    <thead>
+        <tr>
+            <td colspan="2" class="metric-category-row"><%= category.to_s.humanize %></td>
+        </tr>
+    </thead>
+    <tbody>
+        <% @report[:metrics][category].each do |metric, value| %>
+        <tr>
+            <td width="50%"><%= metric.humanize %></td>
+            <td class="metric-value">
+            	<div class="scrolling-container">
+                <%= case value
+                    when Float
+                        value *= 100 if metric.end_with?('_percentage')
+                        [
+                            number_with_precision(value, precision: 3),
+                            metric.end_with?('_percentage') ? ' %' : ''
+                        ].join
+
+                    when Hash then "<span class='monospace'>#{value}</span>".html_safe
+                    when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
+
+                    else value
+                end
+                %>
+                </div>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<% end %>

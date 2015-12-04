@@ -110,14 +110,10 @@ class WebController < ApplicationController
 
         d = Dactylogram.new(data: @analysis_string)
         d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+        d.send :calculate_metrics
+        d.save
 
-        @report = d.metric_report
-
-        # Substitute in any 2nd-order metrics (that require 1st order metrics to be computed)
-        #@report[:metrics]['most_similar_to'] = d.most_similar_to
-
-        # Format metric report into format view is expecting
-        @report[:metrics] = prepare_metrics_for_output @report[:metrics]
+        redirect_to show_dactylogram_path(d)
     end
 
     def upload
@@ -128,6 +124,12 @@ class WebController < ApplicationController
         d.send :calculate_metrics
 
         render json: d.save
+    end
+
+    def show
+        d = Dactylogram.find_by(id: params[:id])
+        @report = d.metric_report
+        @report[:metrics] = prepare_metrics_for_output @report[:metrics]
     end
 
     def prepare_metrics_for_output metrics

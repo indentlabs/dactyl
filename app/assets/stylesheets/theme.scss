@@ -1,14 +1,13 @@
-html, body {
-    min-height: 100%;
+html {
+    height: 100%;
 }
 
 body {
-    background: #F58752;
+    background: #EEF7FE;
     font-size: 12pt;
 }
 
 .content-panel {
-    background: white;
     width: 600px;
     height: 100%;
     padding: 30px 10px;
@@ -24,7 +23,8 @@ body {
 }
 
 thead {
-    background: #F8CE55;
+    background: #F9CE55;
+    font-weight: bold;
 }
 
 tr {
@@ -43,4 +43,9 @@ pre {
 
 .metric-value {
     font-size: 20px;
+}
+
+.scrolling-container {
+    max-height: 300px;
+    overflow: scroll;
 }

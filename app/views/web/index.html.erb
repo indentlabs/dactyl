@@ -1,80 +1,15 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="//cdn.muicss.com/mui-0.1.18/css/mui.min.css" rel="stylesheet" type="text/css" />
-    <script src="//cdn.muicss.com/mui-0.1.18/js/mui.min.js"></script>
-    <%= stylesheet_link_tag    "application", :media => "all" %>
-</head>
 
-<body>
-    <div class="mui-container content-panel">
-        <div class="logo">
-            <a href="/">
-                <% if @report %>
-                    <%= image_tag 'dactyl-logo.png' %>
-                <% else %>
-                    <%= image_tag 'dactyl-hero.png' %>
-                <% end %>
-            </a>
-        </div>
+<div class="logo">
+    <a href="/"><%= image_tag 'dactyl-hero.png' %></a>
+</div>
 
-        <%= form_tag(params.except(:text), method: :post, class: 'mui-panel') do %>
-            <% unless @report %>
-                <legend>Generate a linguistic dactylogram below:</legend>
-            <% end %>
+<%= form_tag(params.except(:text), method: :post, class: 'mui-panel') do %>
+    <legend>Generate a linguistic dactylogram below:</legend>
 
-            <div class="mui-form-group">
-                <textarea class="mui-form-control" name="text" rows="10"><%= @report[:original_string] if @report %></textarea>
-                <label class="mui-form-floating-label">Write or paste any text here</label>
-            </div>
-            <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
-            <%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
-            <% if @analysis_string.presence %>
-                <%= link_to "View as API call", "/api/v1/dactyl?text=#{CGI.escape @analysis_string}", class: "mui-btn mui-btn-raised" %>
-            <% end %>
-        <% end %>
-
-        <% @report && @report[:metrics].keys.each do |category| %>
-        <table class="mui-table mui-table-bordered mui-panel">
-            <thead>
-                <tr>
-                    <td colspan="2" class="metric-category-row"><%= category.to_s.humanize %></td>
-                </tr>
-            </thead>
-            <tbody>
-                <% @report[:metrics][category].each do |metric, value| %>
-                <tr>
-                    <td width="50%"><%= metric.humanize %></td>
-                    <td class="metric-value">
-                        <%= case value
-                            when Float
-                                value *= 100 if metric.end_with?('_percentage')
-                                [
-                                    number_with_precision(value, precision: 3),
-                                    metric.end_with?('_percentage') ? ' %' : ''
-                                ].join
-
-                            when Hash then "<span class='monospace'>#{value}</span>".html_safe
-                            when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
-
-                            else value
-                        end
-                        %>
-                    </td>
-                </tr>
-                <% end %>
-            </tbody>
-        </table>
-
-        <% end %>
-
-        <div style="text-align: center">
-            Powered by <a href="http://indentlabs.com">Indent Labs</a>
-        </div>
+    <div class="mui-form-group">
+        <textarea class="mui-form-control" name="text" rows="10"></textarea>
+        <label class="mui-form-floating-label">Write or paste any text here</label>
     </div>
-
-</body>
-</html>
+    <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
+    <%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
+<% end %>
