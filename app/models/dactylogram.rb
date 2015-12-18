@@ -440,13 +440,22 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def calculate_metrics
+        begin_all = Time.now
         self.metrics ||= begin
             results = {}
             (@metrics || all_metrics).map { |metric|
+                print "Calculating #{metric}... "
+                start = Time.now
                 results[metric.to_s.chomp '_metric'] = send(metric)
+                finish = Time.now
+                puts "Done. Took #{(finish - start).round(5)} seconds."
             }
             results
         end
+        finish_all = Time.now
+        puts "Finished calculating all metrics in #{(finish_all - begin_all).round(5)} seconds."
+
+        metrics
     end
 
     def conjunctions
