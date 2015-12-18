@@ -11,5 +11,5 @@
         <label class="mui-form-floating-label">Write or paste any text here</label>
     </div>
     <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
-    <%= link_to "Clear", nil, class: "mui-btn mui-btn-default mui-btn-raised" %>
+    <%= link_to "Clear", 'javascript:$("textarea").val("")', class: "mui-btn mui-btn-default mui-btn-raised" %>
 <% end %>
