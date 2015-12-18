@@ -171,6 +171,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def forcast_grade_level_metric
+        #todo this is broken; should be over 150-word sample, not full text -- needs to scale up/down
         20 - (words_with_syllables(1).length.to_f / words.length / 10)
     end
 

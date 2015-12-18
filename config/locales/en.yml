@@ -1,4 +1,51 @@
 en:
+  metric-descriptions:
+    automated_readability_index: |
+         The ARI is designed to gauge the understandability of a text. Like other readability indices, it produces an approximate representation of the US grade level needed to comprehend text.
+
+         Unlike the other indices, the ARI, along with the Coleman-Liau, relies on measuring characters per word, instead of the usual syllables per word.
+
+         Fun fact: this index was designed for real-time monitoring of readability on electric typewriters.
+    coleman_liau_index: |
+        The Coleman-Liau Index is designed to gauge the understandability of a text. Like other readability indices, it produces an approximate representation of the US grade level needed to comprehend text.
+
+        Like the ARI but unlike most of the other indices, Coleman–Liau relies on characters instead of syllables per word.
+
+        Fun fact: the Coleman–Liau index was designed to be easily calculated mechanically from samples of hard-copy text. Unlike syllable-based readability indices, it does not require that the character content of words be analyzed, only their length in characters.
+    flesch_kincaid_age_minimum: |
+        The Flesch-Kincaid age minimum is what age a reader is recommended to be in order to be expected to comprehend the text, based on average US grade level ages.
+    flesch_kincaid_grade_level: |
+        The Flesch–Kincaid Grade Level presents a score as a US grade level, making it easier for teachers, parents, librarians, and others to judge the readability level of various books and texts. It can also mean the number of years of education generally required to understand this text, relevant when the formula results in a number greater than 10.
+
+        Fun fact: the lowest grade level score in theory is −3.40, but there are few real passages in which every sentence consists of a single one-syllable word. Green Eggs and Ham by Dr. Seuss comes close, averaging 5.7 words per sentence and 1.02 syllables per word, with a grade level of −1.3.
+    flesch_kincaid_reading_ease: |
+        In the Flesch reading-ease test, higher scores indicate material that is easier to read; lower numbers mark passages that are more difficult to read.
+
+        Reader's Digest magazine has a readability index of about 65, Time magazine scores about 52, an average 6th grade student's written assignment (age of 12) has a readability index of 60–70, and the Harvard Law Review has a general readability score in the low 30s.
+
+        Fun fact: The highest (easiest) readability score possible is around 120&mdash;every sentence consisting of only two one-syllable words
+    forcast_grade_level: |
+        Unlike most other formulas, the FORCAST formula uses only a vocabulary element, making it useful for texts without complete sentences.
+
+        The FORCAST formula correlates 0.66 with comprehension as measured by reading tests.
+
+        Fun fact: FORCAST was designed by the US military in 1973 to test candidate's writing skills required for different military jobs.
+    gunning_fog_index: |
+        In 1952, Robert Gunning published The Technique of Clear Writing with his own Fog Index, a formula that correlates 0.91 with comprehension as measured by reading tests.
+
+        The formula is historically one of the most reliable and simplest to apply by hand.
+    smog_grade: |
+        Harry McLaughlin determined that word length and sentence length should be multiplied rather than added as in other formulas. In 1969, he published his SMOG formula.
+
+        The SMOG formula correlates 0.88 with comprehension as measured by reading tests. It is often recommended for use in healthcare.
+
+        Fun fact: SMOG stands for "Simple Measure of Gobbledygook".
+    combined_average_grade_level: |
+        Dactyl's combined average grade level metric recognizes that not every readability index will be the best in every situation, and provides an average US grade level incorporating all indices.
+
+    unrecognized_words: |
+        These are words that Dactyl doesn't yet recognize. If they're real words, he'll learn about them soon though!
+
   insert-words:
     - uh
     - um

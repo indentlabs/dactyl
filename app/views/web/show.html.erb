@@ -2,9 +2,7 @@
 	<a href="/"><%= image_tag 'dactyl-logo.png' %></a>
 </div>
 
-<% if @analysis_string.presence %>
-    <%= link_to "View as API call", "/api/v1/dactyl?text=#{CGI.escape @analysis_string}", class: "mui-btn mui-btn-raised" %>
-<% end %>
+<%= link_to "View as API call", "/api/v1/dactyl?id=#{params[:id]}", class: "mui-btn mui-btn-raised" %>
 
 <% @report && @report[:metrics].keys.each do |category| %>
 <table class="mui-table mui-table-bordered mui-panel">
@@ -19,20 +17,32 @@
             <td width="50%"><%= metric.humanize %></td>
             <td class="metric-value">
             	<div class="scrolling-container">
-                <%= case value
-                    when Float
-                        value *= 100 if metric.end_with?('_percentage')
-                        [
-                            number_with_precision(value, precision: 3),
-                            metric.end_with?('_percentage') ? ' %' : ''
-                        ].join
+                    <%= case value
+                        when Float
+                            value *= 100 if metric.end_with?('_percentage')
+                            [
+                                number_with_precision(value, precision: 3),
+                                metric.end_with?('_percentage') ? ' %' : ''
+                            ].join
 
-                    when Hash then "<span class='monospace'>#{value}</span>".html_safe
-                    when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
+                        when Hash then "<span class='monospace'>#{value}</span>".html_safe
+                        when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
 
-                    else value
-                end
-                %>
+                        else value
+                    end
+                    %>
+                    <%
+                        more_info = I18n.t("metric-descriptions.#{metric}", :default => '')
+                        if more_info.present?
+                    %>
+                        <div class="read-more-link">
+                            <a href="#" data-title="About this metric" data-content="<%= more_info.gsub("\n", "<br />") %>" data-placement="right">
+                                ?
+                            </a>
+                        </div>
+                    <%
+                        end
+                    %>
                 </div>
             </td>
         </tr>
@@ -41,3 +51,11 @@
 </table>
 
 <% end %>
+<script>
+$(document).ready(function(){
+    $('.read-more-link > a').webuiPopover({
+        width: '320px',
+        animation: 'pop'
+    });
+});
+</script>

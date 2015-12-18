@@ -4,8 +4,8 @@ class WebController < ApplicationController
         readability: [
             'automated_readability_index',
             'coleman_liau_index',
-            'flesch_kincaid_age_minimum',
             'flesch_kincaid_grade_level',
+            'flesch_kincaid_age_minimum',
             'flesch_kincaid_reading_ease',
             'forcast_grade_level',
             'gunning_fog_index',
