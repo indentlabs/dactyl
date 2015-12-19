@@ -2,11 +2,11 @@ class WebController < ApplicationController
 
     METRIC_CATEGORIES = {
         readability: [
+            'flesch_kincaid_reading_ease',
+            'flesch_kincaid_age_minimum',
+            'flesch_kincaid_grade_level',
             'automated_readability_index',
             'coleman_liau_index',
-            'flesch_kincaid_grade_level',
-            'flesch_kincaid_age_minimum',
-            'flesch_kincaid_reading_ease',
             'forcast_grade_level',
             'gunning_fog_index',
             'smog_grade',
@@ -89,6 +89,11 @@ class WebController < ApplicationController
             'unique_words',
             'repeated_words',
             'most_frequent_word',
+        ],
+
+        word_types: [
+            'complex_words',
+            'simple_words',
             'stem_words',
             'stemmed_words',
             'filter_words',
@@ -96,7 +101,7 @@ class WebController < ApplicationController
             'auxiliary_verbs',
             'function_words',
             'insert_words',
-            'lexical_words',
+            'lexical_words'
         ],
 
         sentiment: [

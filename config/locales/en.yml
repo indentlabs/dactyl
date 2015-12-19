@@ -31,20 +31,26 @@ en:
 
         Fun fact: FORCAST was designed by the US military in 1973 to test candidate's writing skills required for different military jobs.
     gunning_fog_index: |
-        In 1952, Robert Gunning published The Technique of Clear Writing with his own Fog Index, a formula that correlates 0.91 with comprehension as measured by reading tests.
+        The Gunning Fog index is historically one of the most reliable and simplest to apply by hand.
 
-        The formula is historically one of the most reliable and simplest to apply by hand.
+        It correlates 0.91 with comprehension as measured by reading tests.
     smog_grade: |
-        Harry McLaughlin determined that word length and sentence length should be multiplied rather than added as in other formulas. In 1969, he published his SMOG formula.
+        The SMOG formula multiplies word length and sentence length instead of adding, as other readability indices do.
 
         The SMOG formula correlates 0.88 with comprehension as measured by reading tests. It is often recommended for use in healthcare.
 
         Fun fact: SMOG stands for "Simple Measure of Gobbledygook".
     combined_average_grade_level: |
-        Dactyl's combined average grade level metric recognizes that not every readability index will be the best in every situation, and provides an average US grade level incorporating all indices.
+        Dactyl's combined average grade level metric recognizes that not every readability index will be the best in every situation, and provides an average US grade level incorporating all indices with outliers removed.
 
     unrecognized_words: |
         These are words that Dactyl doesn't yet recognize. If they're real words, he'll learn about them soon though!
+
+    complex_words: |
+        Words containing at least three syllables, as defined by the Gunning Fog and SMOG readability indices.
+
+    simple_words: |
+        Words containing fewer than three syllables.
 
   insert-words:
     - uh

@@ -39,7 +39,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def acronyms_metric
-        data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase && word.length > 1 }.uniq.sort
+        @acroynyms_metric ||= data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase && word.length > 1 }.uniq.sort
     end
 
     def acronyms_percentage_metric
@@ -63,7 +63,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def automated_readability_index_metric
-        [
+        @automated_readability_index ||= [
             4.71 * data.chars.reject(&:blank?).length.to_f / words.length,
             0.5 * words.length.to_f / sentences.length,
             -21.43
@@ -95,7 +95,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def coleman_liau_index_metric
-        [
+        @coleman_liau_index ||= [
             0.0588 * 100 * data.chars.length.to_f / words.length,
             -0.296 * 100 / (words.length.to_f / sentences.length),
             -15.8
@@ -110,7 +110,11 @@ class Dactylogram < ActiveRecord::Base
             forcast_grade_level_metric,
             gunning_fog_index_metric,
             smog_grade_metric
-        ].sum.to_f / 6
+        ].sort.slice(1..-2).sum.to_f / 4
+    end
+
+    def complex_words_metric
+        complex_words
     end
 
     def conjunctions_metric
@@ -140,7 +144,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def flesch_kincaid_age_minimum_metric
-        case flesch_kincaid_reading_ease_metric
+        @flesch_kincaid_age_minimum ||= case flesch_kincaid_reading_ease_metric
             when (90..100) then 11
             when (71..89)  then 12
             when (67..69)  then 13
@@ -155,7 +159,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def flesch_kincaid_grade_level_metric
-        [
+        @flesch_kincaid_grade_level ||= [
             0.38 * (words.length.to_f / sentences.length),
             11.18 * (word_syllables.sum.to_f / words.length),
             -15.59
@@ -163,7 +167,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def flesch_kincaid_reading_ease_metric
-        [
+        @flesch_kincaid_reading_ease_metric ||= [
             206.835,
             -(1.015 * words.length.to_f / sentences.length),
             -(84.6 * word_syllables.sum.to_f / words.length)
@@ -171,8 +175,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def forcast_grade_level_metric
-        #todo this is broken; should be over 150-word sample, not full text -- needs to scale up/down
-        20 - (words_with_syllables(1).length.to_f / words.length / 10)
+        @forcast_grade_level ||= 20 - (((words_with_syllables(1).length.to_f / words.length) * 150) / 10.0)
     end
 
     def glittering_generalities_metric
@@ -190,7 +193,7 @@ class Dactylogram < ActiveRecord::Base
 
     def gunning_fog_index_metric
         #todo GFI word/suffix exclusions
-        0.4 * (words.length.to_f / sentences.length + 100 * (complex_words.length.to_f / words.length))
+        @gunning_fog_index ||= 0.4 * (words.length.to_f / sentences.length + 100 * (complex_words.length.to_f / words.length))
     end
 
     def insert_words_metric
@@ -280,7 +283,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def repeated_words_metric
-        words.select {|e| words.rindex(e) != words.index(e) }.uniq.sort
+        @repeated_words_metric ||= words.select {|e| words.rindex(e) != words.index(e) }.uniq.sort
     end
 
     def repeated_word_percentage_metric
@@ -305,6 +308,10 @@ class Dactylogram < ActiveRecord::Base
 
     def sentiment_metric
         "not implemented"
+    end
+
+    def simple_words_metric
+        simple_words
     end
 
     def smog_grade_metric
@@ -352,6 +359,10 @@ class Dactylogram < ActiveRecord::Base
 
     def syllables_per_word_metric
         word_syllables.sum.to_f / words.length
+    end
+
+    def one_syllable_words_metric
+        # todo, etc
     end
 
     def unique_words_metric
@@ -475,7 +486,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def sentences
-        data.split(/[!\?\.]/)
+        @sentences ||= data.split(/[!\?\.]/)
     end
 
     def stop_words
@@ -483,7 +494,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def words
-        data.downcase.gsub(/[^\s\w]/, '').split(' ')
+        @words ||= data.downcase.gsub(/[^\s\w]/, '').split(' ')
     end
 
     def nouns
@@ -492,7 +503,11 @@ class Dactylogram < ActiveRecord::Base
 
     # As defined by Robert Gunning in the GFI and SMOG
     def complex_words
-        unique_words.select { |word| syllables_in(word) >= 3 }
+        @complex_words ||= unique_words.select { |word| syllables_in(word) >= 3 }
+    end
+
+    def simple_words
+        @simple_words ||= words - complex_words
     end
 
     def unique_words
@@ -518,7 +533,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def paragraphs
-        data.split(/[\r\n\t]+/)
+        @paragraphs ||= data.split(/[\r\n\t]+/)
     end
 
     def occurrences of: needles, within: haystack
