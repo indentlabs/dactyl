@@ -20,6 +20,18 @@
             <td width="50%"><%= metric.humanize %></td>
             <td class="metric-value">
             	<div class="scrolling-container">
+                    <%
+                        more_info = I18n.t("metric-descriptions.#{metric}", :default => '')
+                        if more_info.present?
+                    %>
+                        <div class="read-more-link">
+                            <a href="#" data-title="About this metric" data-content="<%= more_info.gsub("\n", "<br />") %>" data-placement="right">
+                                ?
+                            </a>
+                        </div>
+                    <%
+                        end
+                    %>
                     <%= case value
                         when Float
                             value *= 100 if metric.end_with?('_percentage')
@@ -33,18 +45,6 @@
 
                         else value
                     end
-                    %>
-                    <%
-                        more_info = I18n.t("metric-descriptions.#{metric}", :default => '')
-                        if more_info.present?
-                    %>
-                        <div class="read-more-link">
-                            <a href="#" data-title="About this metric" data-content="<%= more_info.gsub("\n", "<br />") %>" data-placement="right">
-                                ?
-                            </a>
-                        </div>
-                    <%
-                        end
                     %>
                 </div>
             </td>
