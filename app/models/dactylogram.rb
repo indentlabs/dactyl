@@ -242,6 +242,13 @@ class Dactylogram < ActiveRecord::Base
         most_similar_author.identifier
     end
 
+    def negative_words_metric
+        load_sentiment_defaults
+        @sentiment_analyzer ||= Sentimental.new
+
+        words.select { |word| @sentiment_analyzer.get_sentiment(word) == :negative }
+    end
+
     def nouns_metric
         nouns.sort
     end
@@ -256,6 +263,13 @@ class Dactylogram < ActiveRecord::Base
 
     def passive_voice_percentage_metric
         "not implemented"
+    end
+
+    def positive_words_metric
+        load_sentiment_defaults
+        @sentiment_analyzer ||= Sentimental.new
+
+        words.select { |word| @sentiment_analyzer.get_sentiment(word) == :positive }
     end
 
     def prepositions_metric
@@ -308,13 +322,13 @@ class Dactylogram < ActiveRecord::Base
 
     def sentiment_metric
         load_sentiment_defaults
-        @sentiment_analyzer = Sentimental.new
+        @sentiment_analyzer ||= Sentimental.new
         @sentiment_analyzer.get_sentiment data
     end
 
     def sentiment_score_metric
         load_sentiment_defaults
-        @sentiment_analyzer = Sentimental.new
+        @sentiment_analyzer ||= Sentimental.new
         @sentiment_analyzer.get_score data
     end
 

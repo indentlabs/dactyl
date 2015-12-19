@@ -16,6 +16,8 @@ class WebController < ApplicationController
         sentiment: [
             'sentiment',
             'sentiment_score',
+            'positive_words',
+            'negative_words',
             'glittering_generalities'
         ],
 
