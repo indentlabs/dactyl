@@ -22,6 +22,7 @@ gem 'treat'
 gem 'engtagger'
 gem 'wordnet'
 #gem 'wordnet-defaultdb'
+gem 'sentimental'
 
 # Development
 group :development, :test do

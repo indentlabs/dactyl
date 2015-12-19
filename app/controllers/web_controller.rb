@@ -13,6 +13,12 @@ class WebController < ApplicationController
             'combined_average_grade_level'
         ],
 
+        sentiment: [
+            'sentiment',
+            'sentiment_score',
+            'glittering_generalities'
+        ],
+
         parts_of_speech: [
             'nouns',
             'adjectives',
@@ -102,11 +108,6 @@ class WebController < ApplicationController
             'function_words',
             'insert_words',
             'lexical_words'
-        ],
-
-        sentiment: [
-            'sentiment',
-            'glittering_generalities'
         ]
     }
 
