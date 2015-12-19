@@ -307,7 +307,15 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def sentiment_metric
-        "not implemented"
+        load_sentiment_defaults
+        @sentiment_analyzer = Sentimental.new
+        @sentiment_analyzer.get_sentiment data
+    end
+
+    def sentiment_score_metric
+        load_sentiment_defaults
+        @sentiment_analyzer = Sentimental.new
+        @sentiment_analyzer.get_score data
     end
 
     def simple_words_metric
@@ -475,6 +483,13 @@ class Dactylogram < ActiveRecord::Base
 
     def determiners
         @determiners ||= words.select { |word| word.category == 'determiner' }.uniq
+    end
+
+    def load_sentiment_defaults
+        @sentiment_defaults ||= begin
+            Sentimental.load_defaults
+            Sentimental.threshold = 0.1
+        end
     end
 
     def prepositions

@@ -52,6 +52,9 @@ en:
     simple_words: |
         Words containing fewer than three syllables.
 
+    sentiment: |
+        Dactyl currently classifies sentiment as positive, neutral, or negative.
+
   insert-words:
     - uh
     - um
