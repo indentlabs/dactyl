@@ -154,7 +154,7 @@ class Dactylogram < ActiveRecord::Base
             when (40..49)  then 21
             when (31..39)  then 24
             when (0..30)   then 25
-            else "N/A"
+            else ''
         end
     end
 
@@ -330,6 +330,13 @@ class Dactylogram < ActiveRecord::Base
         load_sentiment_defaults
         @sentiment_analyzer ||= Sentimental.new
         @sentiment_analyzer.get_score data
+    end
+
+    def sentiment_score_per_sentence_metric
+        return unless sentences.length > 1
+        load_sentiment_defaults
+        @sentiment_analyzer ||= Sentimental.new
+        sentences.map { |sentence| @sentiment_analyzer.get_score sentence }
     end
 
     def simple_words_metric

@@ -16,6 +16,7 @@
     </thead>
     <tbody>
         <% @report[:metrics][category].each do |metric, value| %>
+        <% next if value.blank? %>
         <tr>
             <td width="50%"><%= metric.humanize %></td>
             <td class="metric-value">
