@@ -120,9 +120,9 @@ class WebController < ApplicationController
         d = Dactylogram.new(data: @analysis_string)
         d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
         d.send :calculate_metrics
-        d.save
+        d.save!
 
-        redirect_to show_dactylogram_path(d)
+        redirect_to show_dactylogram_path(reference: d.reference)
     end
 
     def upload
@@ -136,7 +136,8 @@ class WebController < ApplicationController
     end
 
     def show
-        d = Dactylogram.find_by(id: params[:id])
+        d = Dactylogram.find_by(reference: params[:reference])
+        # redirect_to 404 unless d
         @report = d.metric_report
         @report[:metrics] = prepare_metrics_for_output @report[:metrics]
     end
