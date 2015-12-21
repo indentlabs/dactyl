@@ -250,7 +250,7 @@ class Dactylogram < ActiveRecord::Base
         load_sentiment_defaults
         @sentiment_analyzer ||= Sentimental.new
 
-        words.select { |word| @sentiment_analyzer.get_sentiment(word) == :negative }
+        unique_words.select { |word| @sentiment_analyzer.get_sentiment(word) == :negative }.sort
     end
 
     def nouns_metric
@@ -273,7 +273,7 @@ class Dactylogram < ActiveRecord::Base
         load_sentiment_defaults
         @sentiment_analyzer ||= Sentimental.new
 
-        words.select { |word| @sentiment_analyzer.get_sentiment(word) == :positive }
+        unique_words.select { |word| @sentiment_analyzer.get_sentiment(word) == :positive }.sort
     end
 
     def prepositions_metric
@@ -340,7 +340,7 @@ class Dactylogram < ActiveRecord::Base
         return unless sentences.length > 1
         load_sentiment_defaults
         @sentiment_analyzer ||= Sentimental.new
-        sentences.map { |sentence| @sentiment_analyzer.get_score sentence }
+        sentences.map { |sentence| @sentiment_analyzer.get_score(sentence).round(3) }
     end
 
     def simple_words_metric
@@ -348,7 +348,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def smog_grade_metric
-        1.043 * Math.sqrt(complex_words.length.to_f * (30.0 / sentences.length)) + 3.1291
+        @smog_grade ||= 1.043 * Math.sqrt(complex_words.length.to_f * (30.0 / sentences.length)) + 3.1291
     end
 
     def spaces_after_sentence_metric
