@@ -13,7 +13,7 @@ en:
 
         Fun fact: the Coleman–Liau index was designed to be easily calculated mechanically from samples of hard-copy text. Unlike syllable-based readability indices, it does not require that the character content of words be analyzed, only their length in characters.
     flesch_kincaid_age_minimum: |
-        The Flesch-Kincaid age minimum is what age a reader is recommended to be in order to be expected to comprehend the text, based on average US grade level ages.
+        The Flesch-Kincaid age minimum is what age a reader is recommended to be (between 11 and 25) in order to be expected to comprehend the text, based on average US grade level ages.
     flesch_kincaid_grade_level: |
         The Flesch–Kincaid Grade Level presents a score as a US grade level, making it easier for teachers, parents, librarians, and others to judge the readability level of various books and texts. It can also mean the number of years of education generally required to understand this text, relevant when the formula results in a number greater than 10.
 

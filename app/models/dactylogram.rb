@@ -250,7 +250,7 @@ class Dactylogram < ActiveRecord::Base
         load_sentiment_defaults
         @sentiment_analyzer ||= Sentimental.new
 
-        unique_words.select { |word| @sentiment_analyzer.get_sentiment(word) == :negative }.sort
+        unique_words.select { |word| @sentiment_analyzer.get_score(word) < -0.5 }.sort
     end
 
     def nouns_metric
@@ -273,7 +273,7 @@ class Dactylogram < ActiveRecord::Base
         load_sentiment_defaults
         @sentiment_analyzer ||= Sentimental.new
 
-        unique_words.select { |word| @sentiment_analyzer.get_sentiment(word) == :positive }.sort
+        unique_words.select { |word| @sentiment_analyzer.score(word) > 0.5 }.sort
     end
 
     def prepositions_metric
