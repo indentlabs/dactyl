@@ -9,6 +9,10 @@ class Dactylogram < ActiveRecord::Base
 
     serialize :metrics, JSON
 
+    before_save do
+        self.reference ||= SecureRandom.uuid
+    end
+
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }

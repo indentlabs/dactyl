@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/upload' => 'web#upload'
   post '/upload' => 'web#upload'
 
-  get '/analysis/:id' => 'web#show', as: 'show_dactylogram'
+  get '/analysis/:reference' => 'web#show', as: 'show_dactylogram'
 
   scope :api do
     scope :v1 do
