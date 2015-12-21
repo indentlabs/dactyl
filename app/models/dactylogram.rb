@@ -547,7 +547,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def simple_words
-        @simple_words ||= words - complex_words
+        @simple_words ||= unique_words - complex_words
     end
 
     def unique_words
