@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/intendlabs/dactyl.svg?branch=master)](https://travis-ci.org/indentlabs/dactyl)
+[![Build Status](https://travis-ci.org/indentlabs/dactyl.svg)](https://travis-ci.org/indentlabs/dactyl)
 
 /api/v1/dactyl?text=Hello,%20world! will return a JSON hash of linguistic analytics
 
