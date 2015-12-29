@@ -87,6 +87,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def characters_per_paragraph_metric
+        return unless paragraphs.length > 1
         data.chars.length.to_f / paragraphs.length
     end
 
@@ -262,6 +263,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def paragraphs_metric
+        return unless paragraphs.length > 1
         paragraphs.length
     end
 
@@ -321,6 +323,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def sentences_per_paragraph_metric
+        return unless paragraphs.length > 1
         sentences.length.to_f / paragraphs.length
     end
 
@@ -403,10 +406,12 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def unique_words_per_paragraph_metric
+        return unless paragraphs.length > 1
         unique_words.length.to_f / paragraphs.length
     end
 
     def unique_words_per_paragraph_percentage_metric
+        return unless paragraphs.length > 1
         unique_words_per_paragraph_metric.to_f / words_per_paragraph_metric
     end
 
@@ -459,6 +464,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def words_per_paragraph_metric
+        return unless paragraphs.length > 1
         words.length.to_f / paragraphs.length
     end
 
@@ -526,7 +532,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def sentences
-        @sentences ||= data.split(/[!\?\.]/)
+        @sentences ||= data.strip.split(/[!\?\.]/)
     end
 
     def stop_words
