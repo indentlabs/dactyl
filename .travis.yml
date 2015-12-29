@@ -1,0 +1,6 @@
+language: ruby
+rvm: 2.1.5
+services:
+  - postgresql
+before_script:
+  - createdb "db/test" -U postgres
