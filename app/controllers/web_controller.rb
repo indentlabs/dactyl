@@ -17,6 +17,7 @@ class WebController < ApplicationController
             'sentiment',
             'sentiment_score',
             'sentiment_score_per_sentence',
+            'sentiment_score_per_paragraph',
             'positive_words',
             'negative_words',
             'glittering_generalities'

@@ -339,6 +339,13 @@ class Dactylogram < ActiveRecord::Base
         @sentiment_analyzer.get_score data
     end
 
+    def sentiment_score_per_paragraph_metric
+        return unless paragraphs.length > 1
+        load_sentiment_defaults
+        @sentiment_analyzer ||= Sentimental.new
+        paragraphs.map { |paragraph| @sentiment_analyzer.get_score(paragraph).round(3) }
+    end
+
     def sentiment_score_per_sentence_metric
         return unless sentences.length > 1
         load_sentiment_defaults
