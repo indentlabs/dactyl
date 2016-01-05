@@ -108,14 +108,20 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def combined_average_grade_level_metric
-        [
+        scores = [
             automated_readability_index_metric,
             coleman_liau_index_metric,
             flesch_kincaid_grade_level_metric,
             forcast_grade_level_metric,
             gunning_fog_index_metric,
             smog_grade_metric
-        ].sort.slice(1..-2).sum.to_f / 4
+        ]
+        scores.reject! &:nan?
+        scores.reject! { |hasselhoff| hasselhoff.abs == Float::INFINITY }
+
+        return unless scores.length > 2
+
+        scores.sort.slice(1..-2).sum.to_f / 4
     end
 
     def complex_words_metric

@@ -3,13 +3,15 @@
     <a href="/"><%= image_tag 'dactyl-hero.png' %></a>
 </div>
 
-<%= form_tag(params.except(:text), method: :post, class: 'mui-panel') do %>
+<%= form_tag(params.except(:text), method: :post, class: 'mui-panel', id: 'this-form') do %>
     <legend>Generate a linguistic dactylogram below:</legend>
 
     <div class="mui-form-group">
         <textarea class="mui-form-control" name="text" rows="10"></textarea>
         <label class="mui-form-floating-label">Write or paste any text here</label>
     </div>
-    <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised">Analyze</button>
-    <%= link_to "Clear", 'javascript:$("textarea").val("")', class: "mui-btn mui-btn-default mui-btn-raised" %>
+    <div class="buttons">
+	    <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised" onclick="javascript:$(this).attr('disabled', 'disabled'); $('#this-form').submit();">Analyze</button>
+	    <%= link_to "Clear", 'javascript:$("textarea").val("")', class: "mui-btn mui-btn-default mui-btn-raised" %>
+    </div>
 <% end %>
