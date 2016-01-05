@@ -547,7 +547,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def words
-        @words ||= data.downcase.gsub(/[^\s\w]/, '').split(' ')
+        @words ||= data.downcase.gsub(/[^\s\w']/, '').split(' ')
     end
 
     def nouns
