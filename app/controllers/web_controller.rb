@@ -116,8 +116,9 @@ class WebController < ApplicationController
     }
 
     def index
-        if (params.has_key?(:file) && params[:file].exists?) then
+        if (params.has_key?(:file)) then
             @file_text = params[:file].read
+            params[:file].close
             flash[:notice] = 'File processed'
         end
         return unless @analysis_string.present?

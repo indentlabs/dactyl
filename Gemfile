@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.1.5'
 # Architecture
 gem 'rails', '4.2.0'
 
@@ -35,5 +35,5 @@ end
 
 # Production
 group :production do
-	gem 'pg'
+#	gem 'pg'
 end

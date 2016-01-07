@@ -7,7 +7,13 @@
     <legend>Generate a linguistic dactylogram below:</legend>
 
     <div class="mui-form-group">
-        <textarea class="mui-form-control" name="text" rows="10"></textarea>
+        <%  if !@file_text.nil? 
+                @default_text = @file_text 
+            else
+                @default_text = ""
+            end
+        %>
+        <textarea class="mui-form-control" name="text" rows="10" value="<%= @default_text %>"></textarea>
         <label class="mui-form-floating-label">Write or paste any text here</label>
     </div>
     <div class="buttons">
