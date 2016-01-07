@@ -15,3 +15,19 @@
 	    <%= link_to "Clear", 'javascript:$("textarea").val("")', class: "mui-btn mui-btn-default mui-btn-raised" %>
     </div>
 <% end %>
+
+<%= form_tag({action: :upload}, multipart: true) do %>
+    <span class="document">
+        <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document_upload" %>
+    </span>
+    <%= submit_tag "Upload", class: "mui-btn mui-btn-default mui-btn-primary mui-btn-raised" %>
+<% end %>
+
+<script type="text/javascript">
+  $('#document_upload').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

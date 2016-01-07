@@ -19,7 +19,13 @@
 <body>
 
 <div class="mui-container content-panel">
+
   <%= yield %>
+
+  <% flash.each do |name, msg| %>
+    <%= content_tag(:div, msg, class: "alert alert-info") %>
+  <% end %>
+
   <div style="text-align: center">
       Proudly powered by <a href="http://indentlabs.com">Indent Labs</a>
       - <a href="http://feedback.dactyl.in" target="_new">Provide feedback</a>

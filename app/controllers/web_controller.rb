@@ -127,13 +127,21 @@ class WebController < ApplicationController
     end
 
     def upload
-        return unless @analysis_string.present?
+        if (params.has_key?(:file)) then
+            redirect_to root_url, notice: 'File processed'
+        else
+            redirect_to root_url, notice: 'File not processed'
+        end
+        #CSV::Reader.parse(params[:file].read) do |parsed|
 
-        d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
-        d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
-        d.send :calculate_metrics
+        #end
+        # return unless @analysis_string.present?
 
-        render json: d.save
+        # d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
+        # d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+        # d.send :calculate_metrics
+
+        # render json: d.save
     end
 
     def show
