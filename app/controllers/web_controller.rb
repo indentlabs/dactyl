@@ -116,6 +116,10 @@ class WebController < ApplicationController
     }
 
     def index
+        if (params.has_key?(:file) && params[:file].exists?) then
+            @file_text = params[:file].read
+            flash[:notice] = 'File processed'
+        end
         return unless @analysis_string.present?
 
         d = Dactylogram.new(data: @analysis_string)
@@ -127,19 +131,13 @@ class WebController < ApplicationController
     end
 
     def upload
-        if (params.has_key?(:file)) then
-            redirect_to root_url, notice: 'File processed'
-        else
-            redirect_to root_url, notice: 'File not processed'
-        end
-        #CSV::Reader.parse(params[:file].read) do |parsed|
 
-        #end
-        # return unless @analysis_string.present?
 
-        # d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
-        # d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
-        # d.send :calculate_metrics
+        return unless @analysis_string.present?
+
+        d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
+        d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+        d.send :calculate_metrics
 
         # render json: d.save
     end

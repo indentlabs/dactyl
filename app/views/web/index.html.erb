@@ -16,11 +16,15 @@
     </div>
 <% end %>
 
-<%= form_tag({action: :upload}, multipart: true) do %>
+<%= form_tag({action: :index}, multipart: true) do %>
     <span class="document">
         <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document_upload" %>
     </span>
     <%= submit_tag "Upload", class: "mui-btn mui-btn-default mui-btn-primary mui-btn-raised" %>
+<% end %>
+ 
+<% if !@file_text.nil? %>
+    <pre><%= @file_text %></pre>
 <% end %>
 
 <script type="text/javascript">
