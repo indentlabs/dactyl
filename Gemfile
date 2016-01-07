@@ -3,10 +3,14 @@ source 'https://rubygems.org'
 # Architecture
 gem 'rails', '4.2.0'
 
-gem 'pg'
+#gem 'pg'
 group :development do
-  #gem 'sqlite3'
+  gem 'sqlite3'
   #gem 'pg'
+end
+
+group :production do
+	gem 'pg'
 end
 
 # Assets
