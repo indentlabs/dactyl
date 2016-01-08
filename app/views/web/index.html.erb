@@ -7,14 +7,14 @@
     <legend>Generate a linguistic dactylogram below:</legend>
 
     <div class="mui-form-group">
-        <%  if !@file_text.nil? 
-                @default_text = @file_text 
-            else
-                @default_text = ""
-            end
-        %>
-        <textarea class="mui-form-control" name="text" rows="10" value="<%= @default_text %>"></textarea>
-        <label class="mui-form-floating-label">Write or paste any text here</label>
+        <textarea class="mui-form-control" name="text" rows="10" id="input_text_area"><%= @file_text %></textarea>
+        <label class="mui-form-floating-label">
+            <% if @file_text.blank? %>
+                Write or paste any text here.
+            <% else %>
+                Your imported text is ready for review.  Click analyze when ready.
+            <% end %>
+        </label>
     </div>
     <div class="buttons">
 	    <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised" onclick="javascript:$(this).attr('disabled', 'disabled'); $('#this-form').submit();">Analyze</button>
@@ -26,18 +26,20 @@
     <span class="document">
         <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document_upload" %>
     </span>
-    <%= submit_tag "Upload", class: "mui-btn mui-btn-default mui-btn-primary mui-btn-raised" %>
-<% end %>
- 
-<% if !@file_text.nil? %>
-    <pre><%= @file_text %></pre>
+    <%= submit_tag "Import File", class: "mui-btn mui-btn-default mui-btn-primary mui-btn-raised" %>
 <% end %>
 
+  <% flash.each do |name, msg| %>
+    <%= content_tag(:div, msg) %>
+  <% end %> 
+
+  <P></P>
+  
 <script type="text/javascript">
   $('#document_upload').bind('change', function() {
-    var size_in_megabytes = this.files[0].size/1024/1024;
-    if (size_in_megabytes > 5) {
-      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    var size_in_kilobytes = this.files[0].size/1024;
+    if (size_in_kilobytes > 500) {
+      alert('Maximum file size is 500KB. Please choose a smaller file.');
     }
   });
 </script>

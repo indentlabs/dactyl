@@ -1,5 +1,5 @@
 class WebController < ApplicationController
-
+    include ParserHelper
     METRIC_CATEGORIES = {
         readability: [
             'flesch_kincaid_reading_ease',
@@ -116,24 +116,23 @@ class WebController < ApplicationController
     }
 
     def index
-        if (params.has_key?(:file)) then
-            @file_text = params[:file].read
+        if @analysis_string.present?   # Analysis requested
+            # Process analysis string
+            d = Dactylogram.new(data: @analysis_string)
+            d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+            d.send :calculate_metrics
+            d.save!
+            redirect_to show_dactylogram_path(reference: d.reference)
+        elsif (params.has_key?(:file) && params[:file].class == ActionDispatch::Http::UploadedFile)  # File import requested 
+            # Load and process file
+            @file_text = parse_document params[:file]
             params[:file].close
-            flash[:notice] = 'File processed'
+        else  # Default
+            @file_text = ""
         end
-        return unless @analysis_string.present?
-
-        d = Dactylogram.new(data: @analysis_string)
-        d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
-        d.send :calculate_metrics
-        d.save!
-
-        redirect_to show_dactylogram_path(reference: d.reference)
     end
 
     def upload
-
-
         return unless @analysis_string.present?
 
         d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
@@ -182,5 +181,4 @@ class WebController < ApplicationController
     def sanitize_values metrics
         #metrics['most_similar_to'] = metrics['most_similar_to'].reverse.chomp("authors/".reverse).reverse # god dammit ruby give me lchomp
     end
-
 end

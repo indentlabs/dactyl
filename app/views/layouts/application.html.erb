@@ -22,14 +22,11 @@
 
   <%= yield %>
 
-  <% flash.each do |name, msg| %>
-    <%= content_tag(:div, msg) %>
-  <% end %>
-
   <div style="text-align: center">
       Proudly powered by <a href="http://indentlabs.com">Indent Labs</a>
       - <a href="http://feedback.dactyl.in" target="_new">Provide feedback</a>
   </div>
+  
 </div>
 
 <script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
