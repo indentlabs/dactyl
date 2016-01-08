@@ -23,6 +23,7 @@ gem 'sentimental'
 gem 'ruby-rtf', '0.0.1'
 gem 'docx-html', '~> 0.1.0'
 gem 'pdf-reader', '1.3.3'
+gem 'nokogiri', '~>1.6.7'
 
 # Development
 group :development, :test do
@@ -30,12 +31,11 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'sqlite3'
-    # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '3.4.0'
   #gem 'pg
 end
 
 # Production
 group :production do
-#	gem 'pg'
+  gem 'pg'
 end

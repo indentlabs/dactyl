@@ -12,3 +12,25 @@ by
 
 Tom Aranda
 Aranda Cyber Solutions, LLC
+
+The fork allows the user to import a file into the main text input field.  After the import, the user can review the text and click analyze.  Files supported are:
+
+		Plain Text           (txt)
+		Rich Text Format     (rtf)
+		Portable Data Format (pdf)
+		Microsoft Word       (docx)
+
+The text is extracted without formatting.  Basic error checking and sanitizing of input is accomplished to prevent injection attacks.  
+However, neither extensive testing nor fuzzing has been accomplished.
+
+Modifications were made to:
+ 
+ 	routes.rb
+ 	application.html.erb
+ 	index.html.erb
+ 	web_controller  
+
+New file added:
+  parser_helper.rb
+
+For questions or feedback please contact Tom Aranda at tga@arandacybersolutions.com
