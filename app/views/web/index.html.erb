@@ -17,29 +17,39 @@
         </label>
     </div>
     <div class="buttons">
-	    <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised" onclick="javascript:$(this).attr('disabled', 'disabled'); $('#this-form').submit();">Analyze</button>
-	    <%= link_to "Clear", 'javascript:$("textarea").val("")', class: "mui-btn mui-btn-default mui-btn-raised" %>
+        <button type="submit" class="mui-btn mui-btn-default mui-btn-primary mui-btn-raised" id="analyze-text-button">Analyze this text</button>
+        or
+        <button id="document-upload-button" class="mui-btn mui-btn-default mui-btn-raised" onclick="#">Analyze a file</button>
+        <span class="loading-icon" id="submit-loading-icon"><%= image_tag 'loading.gif' %></span>
     </div>
 <% end %>
 
-<%= form_tag({action: :index}, multipart: true) do %>
-    <span class="document">
-        <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document_upload" %>
-    </span>
-    <%= submit_tag "Import File", class: "mui-btn mui-btn-default mui-btn-primary mui-btn-raised" %>
+<%= form_tag({action: :index}, multipart: true, id: 'file-upload-form') do %>
+    <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document-upload" %>
 <% end %>
 
-  <% flash.each do |name, msg| %>
-    <%= content_tag(:div, msg) %>
-  <% end %> 
-
-  <P></P>
   
 <script type="text/javascript">
-  $('#document_upload').bind('change', function() {
+  $('#submit-loading-icon').hide();
+
+  $('#analyze-text-button').click(function () {
+    $(this).attr('disabled', 'disabled');
+    $('#submit-loading-icon').show();
+    $('#this-form').submit();
+  });
+
+  $('#document-upload-button').click(function () {
+    $('#document-upload').click();
+    return false;
+  });
+
+  $('#document-upload').bind('change', function() {
     var size_in_kilobytes = this.files[0].size/1024;
     if (size_in_kilobytes > 500) {
       alert('Maximum file size is 500KB. Please choose a smaller file.');
+    } else {
+      $('#submit-loading-icon').show();
+      $('#file-upload-form').submit();
     }
   });
 </script>

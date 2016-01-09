@@ -57,3 +57,22 @@ pre {
 .read-more-link a {
     text-decoration: none;
 }
+
+.buttons {
+    button {
+        margin-right: 7px;
+    }
+
+    .loading-icon {
+        float: right;
+        margin-top: 5px;
+    }
+}
+
+#file-upload-form {
+    display: none;
+}
+
+.float-right {
+    float: right;
+}
