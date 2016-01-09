@@ -43,7 +43,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def acronyms_metric
-        @acroynyms_metric ||= data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase && word.length > 1 }.uniq.sort
+        @acroynyms_metric ||= data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase && word.length > 1 && !is_numeric?(word) }.uniq.sort
     end
 
     def acronyms_percentage_metric
@@ -553,7 +553,7 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def words
-        @words ||= data.downcase.gsub(/[^\s\w']/, '').split(' ')
+        @words ||= data.downcase.gsub(/[^\s\w']/, '').split(' ').reject { |w| is_numeric?(w) }
     end
 
     def nouns
@@ -607,6 +607,13 @@ class Dactylogram < ActiveRecord::Base
 
     def unrecognized_words
         @unrecognized_words ||= words.select { |word| word.category == 'unknown' }.uniq - pronouns
+    end
+
+    #--------
+    # Break these out somewhere as ASAP as possible
+
+    def is_numeric?(string)
+        true if Float(string) rescue false
     end
 
 end
