@@ -3,9 +3,6 @@ Rails.application.routes.draw do
   get '/' => 'web#index'
   post '/' => 'web#index'
 
-  get '/upload' => 'web#upload'
-  post '/upload' => 'web#upload'
-
   get '/analysis/:reference' => 'web#show', as: 'show_dactylogram'
 
   scope :api do

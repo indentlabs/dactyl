@@ -133,16 +133,6 @@ class WebController < ApplicationController
 
     end
 
-    def upload
-        return unless @analysis_string.present?
-
-        d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
-        d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
-        d.send :calculate_metrics
-
-        #render json: d.save
-    end
-
     def show
         d = Dactylogram.find_by(reference: params[:reference])
         # redirect_to 404 unless d
