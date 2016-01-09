@@ -55,6 +55,9 @@ en:
     sentiment: |
         Dactyl currently classifies sentiment as positive, neutral, or negative.
 
+    stop_words: |
+        In the context of language processing, the most common words in any language are referred to as stop words.
+
   insert-words:
     - uh
     - um
