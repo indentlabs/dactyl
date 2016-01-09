@@ -76,3 +76,27 @@ pre {
 .float-right {
     float: right;
 }
+
+.toggle-expansion-button {
+    float: right;
+    margin-top: -3px;
+    cursor: pointer;
+    color: #F8CE55;
+    &:hover {
+        color: #DD684E;
+    }
+}
+
+.expanded-panel {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    height: 90%;
+    width: 90%;
+    overflow: auto;
+}
+
+#input_text_area {
+    min-height: 250px;
+    height: 100%;
+}

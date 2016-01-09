@@ -4,10 +4,11 @@
 </div>
 
 <%= form_tag(params.except(:text), method: :post, class: 'mui-panel', id: 'this-form') do %>
-    <legend>Generate a linguistic dactylogram below:</legend>
+    <i class="material-icons md-36 toggle-expansion-button">aspect_ratio</i>
+    <legend style="width: 80%;">Generate a linguistic dactylogram below:</legend>
 
-    <div class="mui-form-group">
-        <textarea class="mui-form-control" name="text" rows="10" id="input_text_area"><%= @file_text %></textarea>
+    <div class="mui-form-group" style="height:80%;">
+        <textarea class="mui-form-control" name="text" id="input_text_area"><%= @file_text %></textarea>
         <label class="mui-form-floating-label">
             <% if @file_text.blank? %>
                 Write or paste any text here.
@@ -22,6 +23,7 @@
         <button id="document-upload-button" class="mui-btn mui-btn-default mui-btn-raised" onclick="#">Analyze a file</button>
         <span class="loading-icon" id="submit-loading-icon"><%= image_tag 'loading.gif' %></span>
     </div>
+    <div style="clear: both;"></div>
 <% end %>
 
 <%= form_tag({action: :index}, multipart: true, id: 'file-upload-form') do %>
@@ -33,12 +35,15 @@
   $('#submit-loading-icon').hide();
 
   $('#analyze-text-button').click(function () {
-    $(this).attr('disabled', 'disabled');
+    $('#analyze-text-button').attr('disabled', 'disabled');
+    $('#document-upload-button').attr('disabled', 'disabled');
     $('#submit-loading-icon').show();
     $('#this-form').submit();
   });
 
   $('#document-upload-button').click(function () {
+    $('#analyze-text-button').attr('disabled', 'disabled');
+    $('#document-upload-button').attr('disabled', 'disabled');
     $('#document-upload').click();
     return false;
   });

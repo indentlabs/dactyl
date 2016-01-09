@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'rails-html-sanitizer'
+gem 'material_icons'
 
 # NLP
 gem 'treat'
@@ -31,8 +32,8 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'sqlite3'
+  #gem 'pg'
   gem 'byebug', '3.4.0'
-  #gem 'pg
 end
 
 # Production

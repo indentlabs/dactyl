@@ -83,6 +83,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    material_icons (2.0.0)
+      railties (>= 3.2)
     method_source (0.8.2)
     mime-types (2.99)
     mini_portile2 (2.0.0)
@@ -188,6 +190,7 @@ DEPENDENCIES
   docx-html (~> 0.1.0)
   engtagger
   jquery-rails
+  material_icons
   nokogiri (~> 1.6.7)
   pdf-reader (= 1.3.3)
   pg
@@ -204,3 +207,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   wordnet
+
+BUNDLED WITH
+   1.10.6
