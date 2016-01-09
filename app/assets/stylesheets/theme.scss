@@ -52,10 +52,13 @@ pre {
 
 .read-more-link {
     float: right;
-}
 
-.read-more-link a {
-    text-decoration: none;
+    a {
+        text-decoration: none;
+        i {
+            padding-top: 2px;
+        }
+    }
 }
 
 .buttons {
