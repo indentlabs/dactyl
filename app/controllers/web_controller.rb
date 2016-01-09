@@ -33,6 +33,7 @@ class WebController < ApplicationController
             'pronouns',
             'determiners',
             'acronyms',
+            'numbers',
             'unrecognized_words'
         ],
 
@@ -59,6 +60,7 @@ class WebController < ApplicationController
             'repeated_words_percentage',
             'special_character_percentage',
             'verb_percentage',
+            'numbers_percentage'
         ],
 
         context: [

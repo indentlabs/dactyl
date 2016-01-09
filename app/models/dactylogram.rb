@@ -268,6 +268,14 @@ class Dactylogram < ActiveRecord::Base
         nouns.length.to_f / words.length
     end
 
+    def numbers_metric
+        numbers
+    end
+
+    def numbers_percentage_metric
+        numbers.length.to_f / (words.length + numbers.length).to_f
+    end
+
     def paragraphs_metric
         return unless paragraphs.length > 1
         paragraphs.length
@@ -558,6 +566,10 @@ class Dactylogram < ActiveRecord::Base
 
     def nouns
         @nouns ||= words.select { |word| word.category == 'noun' }.uniq
+    end
+
+    def numbers
+        @numbers ||= data.strip.split(' ').select {|w| is_numeric?(w) }
     end
 
     # As defined by Robert Gunning in the GFI and SMOG
