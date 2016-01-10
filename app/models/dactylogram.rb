@@ -3,6 +3,7 @@ class Dactylogram < ActiveRecord::Base
     include Comparable
 
     attr_accessor :data
+    attr_reader :adjectives, :adverbs
 
     validates :data, presence: true
     validates :metrics, presence: true
@@ -16,6 +17,84 @@ class Dactylogram < ActiveRecord::Base
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }
+
+        # This is the bad boy
+    def calculate_metrics
+        collect_analysis_triggers
+
+        begin_all = Time.now
+
+        sanitizing = Time.now
+        data.downcase!
+        data.strip!
+
+        parsing = Time.now
+        sentences = data.split(/[!\?\.]/)
+        words = sentences.flat_map { |s| s.split(' ') }
+        letters = data.split ''
+        #todo letter frequency table
+
+        computing = Time.now
+        # O(n)
+        data.characters.each do |c|
+            word += c
+            sentence += c
+
+            # character analysis
+            Metric.by_character.each do |metric|
+                metric.character_aggregator(c)
+            end
+
+            if c == ' '
+                # word analysis
+                case word.category
+                when 'adjective'
+                    adjectives << word
+
+                        def adjectives
+        @adjectives ||= words.select { |word| word.category == 'adjective' }.uniq
+    end
+
+    def adverbs
+        @adverbs ||= words.select { |word| word.category == 'adverb' }.uniq
+    end
+
+                Metric.by_word.each do |metric|
+                    metric.word_aggregator(word)
+                end
+                word = ''
+            end
+
+            if ['?', '!', '.'].include? c
+                # sentence analysis
+                sentence = ''
+            end
+        end
+
+
+
+
+
+        self.metrics ||= begin
+            results = {}
+            (@metrics || all_metrics).map { |metric|
+                print "Calculating #{metric}... "
+                start = Time.now
+                results[metric.to_s.chomp '_metric'] = send(metric)
+                finish = Time.now
+                puts "Done. Took #{(finish - start).round(5)} seconds."
+            }
+            results
+        end
+        finish_all = Time.now
+        puts "Finished calculating all metrics in #{(finish_all - begin_all).round(5)} seconds."
+
+        metrics
+    end
+
+
+
+
 
     #n-dimensional cartesian distance on shared metrics
     def distance_to other_dactylogram
@@ -497,36 +576,17 @@ class Dactylogram < ActiveRecord::Base
 
     private
 
-    def adjectives
-        @adjectives ||= words.select { |word| word.category == 'adjective' }.uniq
+
+
+    def collect_analysis_triggers
+        #todo
     end
 
-    def adverbs
-        @adverbs ||= words.select { |word| word.category == 'adverb' }.uniq
-    end
+
 
     # Given a method name (symbol), return whether it should be ran as a metric
     def metric? method_name
         method_name.to_s.end_with? '_metric'
-    end
-
-    def calculate_metrics
-        begin_all = Time.now
-        self.metrics ||= begin
-            results = {}
-            (@metrics || all_metrics).map { |metric|
-                print "Calculating #{metric}... "
-                start = Time.now
-                results[metric.to_s.chomp '_metric'] = send(metric)
-                finish = Time.now
-                puts "Done. Took #{(finish - start).round(5)} seconds."
-            }
-            results
-        end
-        finish_all = Time.now
-        puts "Finished calculating all metrics in #{(finish_all - begin_all).round(5)} seconds."
-
-        metrics
     end
 
     def conjunctions
