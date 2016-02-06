@@ -18,7 +18,7 @@ class Dactylogram < ActiveRecord::Base
         'ion' => 2
     }
 
-        # This is the bad boy
+    # This is the bad boy
     def calculate_metrics
         collect_analysis_triggers
 
@@ -28,15 +28,29 @@ class Dactylogram < ActiveRecord::Base
         data.downcase!
         data.strip!
 
-        parsing = Time.now
-        sentences = data.split(/[!\?\.]/)
-        words = sentences.flat_map { |s| s.split(' ') }
-        letters = data.split ''
+        # parsing = Time.now
+        # sentences = data.split(/[!\?\.]/)
+        # words = sentences.flat_map { |s| s.split(' ') }
+        # letters = data.split ''
         #todo letter frequency table
 
-        computing = Time.now
-        # O(n)
+        parsing = Time.now
+
+        word_builder = ''
+        sentence_builder = ''
+        paragraph_builder = ''
+
         data.characters.each do |c|
+            case c
+                when '.', '?', '!'
+                    # end of sentence
+
+                when ' '
+                    # end of word
+
+                else
+                    word_builder += c
+            end
             word += c
             sentence += c
 
