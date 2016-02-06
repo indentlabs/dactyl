@@ -63,7 +63,6 @@ class Dactylogram < ActiveRecord::Base
             :determiners_metric,
             :determiner_percentage_metric,
             :flesch_kincaid_age_minimum_metric,
-            :flesch_kincaid_grade_level_metric,
             :flesch_kincaid_reading_ease_metric,
             :forcast_grade_level_metric,
             :glittering_generalities_metric,
@@ -132,7 +131,11 @@ class Dactylogram < ActiveRecord::Base
     end
 
     def acronyms_metric
-        @acroynyms_metric ||= data.gsub(/[^\s\w]/, '').split(' ').select { |word| word == word.upcase && word.length > 1 && !is_numeric?(word) }.uniq.sort
+        @acroynyms_metric ||= data.gsub(/[^\s\w]/, '')
+            .split(' ')
+            .select { |word| word == word.upcase && word.length > 1 && !is_numeric?(word) }
+            .uniq
+            .sort
     end
 
     def acronyms_percentage_metric
@@ -200,7 +203,11 @@ class Dactylogram < ActiveRecord::Base
         scores = [
             automated_readability_index_metric,
             coleman_liau_index_metric,
-            flesch_kincaid_grade_level_metric,
+            FleschKincaidService.grade_level(
+                words: words, 
+                sentences: sentences, 
+                word_syllables: word_syllables
+            ),
             forcast_grade_level_metric,
             gunning_fog_index_metric,
             smog_grade_metric
@@ -256,14 +263,6 @@ class Dactylogram < ActiveRecord::Base
             when (0..30)   then 25
             else ''
         end
-    end
-
-    def flesch_kincaid_grade_level_metric
-        @flesch_kincaid_grade_level ||= [
-            0.38 * (words.length.to_f / sentences.length),
-            11.18 * (word_syllables.sum.to_f / words.length),
-            -15.59
-        ].sum
     end
 
     def flesch_kincaid_reading_ease_metric
@@ -594,15 +593,18 @@ class Dactylogram < ActiveRecord::Base
         @adverbs ||= words.select { |word| word.category == 'adverb' }.uniq
     end
 
-    # Given a method name (symbol), return whether it should be ran as a metric
-    def metric? method_name
-        method_name.to_s.end_with? '_metric'
-    end
-
     def calculate_metrics
         begin_all = Time.now
+
         self.metrics ||= begin
             results = {}
+
+            results[:flesch_kincaid_grade_level] = FleschKincaidService.grade_level(
+                words: words, 
+                sentences: sentences, 
+                word_syllables: word_syllables
+            )
+
             (@metrics || all_metrics).map { |metric|
                 print "Calculating #{metric}... "
                 start = Time.now
