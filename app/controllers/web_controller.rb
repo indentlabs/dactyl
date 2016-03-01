@@ -13,6 +13,10 @@ class WebController < ApplicationController
             'combined_average_grade_level'
         ],
 
+        audience: [
+            'estimated_reading_time'
+        ],
+
         sentiment: [
             'sentiment',
             'sentiment_score',

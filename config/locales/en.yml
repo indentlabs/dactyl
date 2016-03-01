@@ -12,6 +12,7 @@ en:
         Like the ARI but unlike most of the other indices, Coleman–Liau relies on characters instead of syllables per word.
 
         Fun fact: the Coleman–Liau index was designed to be easily calculated mechanically from samples of hard-copy text. Unlike syllable-based readability indices, it does not require that the character content of words be analyzed, only their length in characters.
+    estimated_reading_time: "Based on an average 60% comprehension rate at 200 WPM."
     flesch_kincaid_age_minimum: |
         The Flesch-Kincaid age minimum is what age a reader is recommended to be (between 11 and 25) in order to be expected to comprehend the text, based on average US grade level ages.
     flesch_kincaid_grade_level: |

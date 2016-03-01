@@ -2,6 +2,9 @@ class Dactylogram < ActiveRecord::Base
     include Treat::Core::DSL
     include Comparable
 
+    require 'action_view'
+    include ActionView::Helpers::DateHelper
+
     attr_accessor :data
 
     validates :data, presence: true
@@ -89,6 +92,7 @@ class Dactylogram < ActiveRecord::Base
             :pronouns_metric,
             :pronoun_percentage_metric,
             :punctuation_percentage_metric,
+            :estimated_reading_time_metric,
             :related_topics_metric,
             :repeated_words_metric,
             :repeated_word_percentage_metric,
@@ -398,6 +402,15 @@ class Dactylogram < ActiveRecord::Base
 
     def punctuation_percentage_metric
         data.scan(/[\.,;\?!\-"':\(\)\[\]"]/).length.to_f / data.chars.length
+    end
+
+    def estimated_reading_time_metric
+        average_wpm = 200
+
+        words_per_second = average_wpm / 60
+        seconds_to_read = words.length / words_per_second
+
+        distance_of_time_in_words(seconds_to_read)
     end
 
     def related_topics_metric
