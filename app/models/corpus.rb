@@ -3,22 +3,24 @@ class Corpus < ActiveRecord::Base
 
     attr_reader :text
 
+    SYLLABLE_COUNT_OVERRIDES = {
+        'ion' => 2
+    }
+
     def initialize text
         @text = text
     end
 
-
-
     def paragraphs
-        @paragraphs ||= data.split(/[\r\n\t]+/)
+        @paragraphs ||= text.split(/[\r\n\t]+/)
     end
 
     def sentences
-        @sentences ||= data.strip.split(/[!\?\.]/)
+        @sentences ||= text.strip.split(/[!\?\.]/)
     end
 
     def words
-        @words ||= data.downcase.gsub(/[^\s\w']/, '').split(' ').reject { |w| is_numeric?(w) }
+        @words ||= text.downcase.gsub(/[^\s\w']/, '').split(' ').reject { |w| is_numeric?(w) }
     end
 
     # As defined by Robert Gunning in the GFI and SMOG
@@ -58,6 +60,10 @@ class Corpus < ActiveRecord::Base
         of = [of] unless of.is_a? Array
 
         within.flatten.select { |hay| of.include? hay }.length
+    end
+
+    def is_numeric?(string)
+        true if Float(string) rescue false
     end
 
 end

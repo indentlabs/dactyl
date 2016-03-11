@@ -182,8 +182,4 @@ class WebController < ApplicationController
         end
     end
 
-    # Sanitize metric values for text/html output
-    def sanitize_values metrics
-        #metrics['most_similar_to'] = metrics['most_similar_to'].reverse.chomp("authors/".reverse).reverse # god dammit ruby give me lchomp
-    end
 end

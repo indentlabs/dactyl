@@ -18,10 +18,6 @@ class Dactylogram < ActiveRecord::Base
         self.reference ||= SecureRandom.uuid
     end
 
-    SYLLABLE_COUNT_OVERRIDES = {
-        'ion' => 2
-    }
-
     #n-dimensional cartesian distance on shared metrics
     def distance_to other_dactylogram
         puts "Computing distance to #{other_dactylogram.identifier}"
@@ -209,7 +205,7 @@ class Dactylogram < ActiveRecord::Base
         scores = [
             automated_readability_index_metric,
             coleman_liau_index_metric,
-            FleschKincaidService.grade_level(corpus),
+            FleschKincaidService.grade_level(@corpus),
             forcast_grade_level_metric,
             gunning_fog_index_metric,
             smog_grade_metric
@@ -250,29 +246,6 @@ class Dactylogram < ActiveRecord::Base
 
     def determiner_percentage_metric
         words.select { |word| I18n.t('determiners').include? word }.length.to_f / words.length
-    end
-
-    def flesch_kincaid_age_minimum_metric
-        @flesch_kincaid_age_minimum ||= case flesch_kincaid_reading_ease_metric
-            when (90..100) then 11
-            when (71..89)  then 12
-            when (67..69)  then 13
-            when (64..66)  then 14
-            when (60..63)  then 15
-            when (50..59)  then 18
-            when (40..49)  then 21
-            when (31..39)  then 24
-            when (0..30)   then 25
-            else ''
-        end
-    end
-
-    def flesch_kincaid_reading_ease_metric
-        @flesch_kincaid_reading_ease_metric ||= [
-            206.835,
-            -(1.015 * words.length.to_f / sentences.length),
-            -(84.6 * word_syllables.sum.to_f / words.length)
-        ].sum
     end
 
     def forcast_grade_level_metric
@@ -597,13 +570,18 @@ class Dactylogram < ActiveRecord::Base
     private
 
     def calculate_metrics
-        corpus = Corpus.new data
+        @corpus = Corpus.new data
 
         self.metrics ||= begin
+            results = {}
+
             (@metrics || all_metrics).map do |metric|
                 puts "Calculating #{metric}..."
                 start = Time.now
-                results[metric.to_s.chomp '_metric'] = send(metric)
+
+                service, method = metric
+                results["#{service}::#{method}"] = service.send(method, @corpus)
+
                 finish = Time.now
                 puts "Done. Took #{(finish - start).round(5)} seconds."
             end
@@ -620,15 +598,5 @@ class Dactylogram < ActiveRecord::Base
         end
     end
 
-
-
-
-
-    #--------
-    # Break these out somewhere as ASAP as possible
-
-    def is_numeric?(string)
-        true if Float(string) rescue false
-    end
 
 end
