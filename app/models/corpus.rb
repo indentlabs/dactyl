@@ -7,6 +7,8 @@ class Corpus < ActiveRecord::Base
         @text = text
     end
 
+
+
     def paragraphs
         @paragraphs ||= data.split(/[\r\n\t]+/)
     end

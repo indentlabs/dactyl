@@ -10,6 +10,8 @@ class Dactylogram < ActiveRecord::Base
     validates :data, presence: true
     validates :metrics, presence: true
 
+    belongs_to :corpus
+
     serialize :metrics, JSON
 
     before_save do
@@ -207,11 +209,7 @@ class Dactylogram < ActiveRecord::Base
         scores = [
             automated_readability_index_metric,
             coleman_liau_index_metric,
-            FleschKincaidService.grade_level(
-                words: words, 
-                sentences: sentences, 
-                word_syllables: word_syllables
-            ),
+            FleschKincaidService.grade_level(corpus),
             forcast_grade_level_metric,
             gunning_fog_index_metric,
             smog_grade_metric

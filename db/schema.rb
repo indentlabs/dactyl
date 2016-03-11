@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311013116) do
+ActiveRecord::Schema.define(version: 20160311015049) do
 
   create_table "corpus", force: :cascade do |t|
     t.string   "text"
@@ -25,7 +25,10 @@ ActiveRecord::Schema.define(version: 20160311013116) do
     t.string   "metrics"
     t.string   "identifier"
     t.string   "reference"
+    t.integer  "corpus_id"
   end
+
+  add_index "dactylograms", ["corpus_id"], name: "index_dactylograms_on_corpus_id"
 
   create_table "metrics", force: :cascade do |t|
     t.string   "name"
