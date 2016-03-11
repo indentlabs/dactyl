@@ -47,15 +47,12 @@ class Dactylogram < ActiveRecord::Base
             # :adjectives_metric,
             # :adjective_percentage_metric,
             # :adverbs_metric,
-            # :automated_readability_index_metric,
             # :auxiliary_verbs_metric,
             # :auxiliary_verbs_percentage_metric,
             # :character_count_metric,
             # :characters_per_paragraph_metric,
             # :characters_per_sentence_metric,
             # :characters_per_word_metric,
-            # :coleman_liau_index_metric,
-            # :combined_average_grade_level_metric,
             # :complex_words_metric,
             # :conjunctions_metric,
             # :conjunction_percentage_metric,
@@ -66,11 +63,14 @@ class Dactylogram < ActiveRecord::Base
             [ReadabilityService, :flesch_kincaid_grade_level],
             [ReadabilityService, :flesch_kincaid_age_minimum],
             [ReadabilityService, :flesch_kincaid_reading_ease],
-            # :forcast_grade_level_metric,
+            [ReadabilityService, :forcast_grade_level],
+            [ReadabilityService, :coleman_liau_index],
+            [ReadabilityService, :automated_readability_index],
+            [ReadabilityService, :gunning_fog_index],
+            [ReadabilityService, :combined_average_grade_level],
             # :glittering_generalities_metric,
             # :filter_words_metric,
             # :function_words_metric,
-            # :gunning_fog_index_metric,
             # :insert_words_metric,
             # :jargon_words_metric,
             # :language_metric,
@@ -161,14 +161,6 @@ class Dactylogram < ActiveRecord::Base
         adverbs.sort
     end
 
-    def automated_readability_index_metric
-        @automated_readability_index ||= [
-            4.71 * data.chars.reject(&:blank?).length.to_f / words.length,
-            0.5 * words.length.to_f / sentences.length,
-            -21.43
-        ].sum
-    end
-
     def auxiliary_verbs_metric
         words.select { |word| I18n.t('auxillary-verbs').include? word }.uniq.sort
     end
@@ -192,31 +184,6 @@ class Dactylogram < ActiveRecord::Base
 
     def characters_per_word_metric
         words.map(&:length).sum.to_f / words.length
-    end
-
-    def coleman_liau_index_metric
-        @coleman_liau_index ||= [
-            0.0588 * 100 * data.chars.length.to_f / words.length,
-            -0.296 * 100 / (words.length.to_f / sentences.length),
-            -15.8
-        ].sum
-    end
-
-    def combined_average_grade_level_metric
-        scores = [
-            automated_readability_index_metric,
-            coleman_liau_index_metric,
-            FleschKincaidService.grade_level(@corpus),
-            forcast_grade_level_metric,
-            gunning_fog_index_metric,
-            smog_grade_metric
-        ]
-        scores.reject! &:nan?
-        scores.reject! { |hasselhoff| hasselhoff.abs == Float::INFINITY }
-
-        return unless scores.length > 2
-
-        scores.sort.slice(1..-2).sum.to_f / 4
     end
 
     def complex_words_metric
@@ -249,10 +216,6 @@ class Dactylogram < ActiveRecord::Base
         words.select { |word| I18n.t('determiners').include? word }.length.to_f / words.length
     end
 
-    def forcast_grade_level_metric
-        @forcast_grade_level ||= 20 - (((words_with_syllables(1).length.to_f / words.length) * 150) / 10.0)
-    end
-
     def glittering_generalities_metric
         # some infoz http://www.buzzle.com/articles/examples-of-glittering-generalities.html
         "not implemented"
@@ -264,11 +227,6 @@ class Dactylogram < ActiveRecord::Base
 
     def function_words_metric
         "not implemented"
-    end
-
-    def gunning_fog_index_metric
-        #todo GFI word/suffix exclusions
-        @gunning_fog_index ||= 0.4 * (words.length.to_f / sentences.length + 100 * (complex_words.length.to_f / words.length))
     end
 
     def insert_words_metric
@@ -442,10 +400,6 @@ class Dactylogram < ActiveRecord::Base
 
     def simple_words_metric
         simple_words
-    end
-
-    def smog_grade_metric
-        @smog_grade ||= 1.043 * Math.sqrt(complex_words.length.to_f * (30.0 / sentences.length)) + 3.1291
     end
 
     def spaces_after_sentence_metric

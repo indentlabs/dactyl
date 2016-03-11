@@ -11,6 +11,10 @@ class Corpus < ActiveRecord::Base
         @text = text
     end
 
+    def characters
+        @characters ||= text.chars
+    end
+
     def paragraphs
         @paragraphs ||= text.split(/[\r\n\t]+/)
     end
