@@ -167,6 +167,10 @@ class WordFrequencyService
         corpus.words.length.to_f / corpus.sentences.length
     end
 
+    def self.one_syllable_words corpus
+        corpus.words.select { |word| corpus.syllables_in(word) == 1 }.length
+    end
+
     private
 
 

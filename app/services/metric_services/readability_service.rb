@@ -59,4 +59,14 @@ class ReadabilityService
         @smog_grade ||= 1.043 * Math.sqrt(corpus.complex_words.length.to_f * (30.0 / corpus.sentences.length)) + 3.1291
     end
 
+    def self.estimated_reading_time corpus
+        average_wpm = 200
+
+        words_per_second = average_wpm / 60
+        seconds_to_read = corpus.words.length / words_per_second
+
+        #distance_of_time_in_words(seconds_to_read)
+        "#{seconds_to_read} seconds"
+    end
+
 end

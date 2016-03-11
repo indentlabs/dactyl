@@ -1,16 +1,12 @@
 class Dactylogram < ActiveRecord::Base
-    include Treat::Core::DSL
     include Comparable
-
-    require 'action_view'
-    include ActionView::Helpers::DateHelper
 
     attr_accessor :data
 
+    belongs_to :corpus
+
     validates :data, presence: true
     validates :metrics, presence: true
-
-    belongs_to :corpus
 
     serialize :metrics, JSON
 
@@ -18,29 +14,16 @@ class Dactylogram < ActiveRecord::Base
         self.reference ||= SecureRandom.uuid
     end
 
-    #n-dimensional cartesian distance on shared metrics
-    def distance_to other_dactylogram
-        puts "Computing distance to #{other_dactylogram.identifier}"
-
-        shared_metrics = self.metrics.keys & other_dactylogram.metrics.keys
-        distance = shared_metrics.map do |metric|
-            if metric.class == Fixnum || metric.class == Float
-                (metrics[metric] - other_dactylogram.metrics[metric]).abs
-            else
-                0
-            end
-        end.sum
-    end
-
     def metric_report
         {
-            original_string: data,
-            metrics: calculate_metrics!
+            original_string: data || (corpus && corpus.text),
+            metrics: compute_metrics!
         }
     end
 
     def all_metrics
         [
+            [ReadabilityService, :estimated_reading_time],
             [ReadabilityService, :flesch_kincaid_grade_level],
             [ReadabilityService, :flesch_kincaid_age_minimum],
             [ReadabilityService, :flesch_kincaid_reading_ease],
@@ -108,6 +91,7 @@ class Dactylogram < ActiveRecord::Base
             [WordFrequencyService, :word_count],
             [WordFrequencyService, :words_per_paragraph],
             [WordFrequencyService, :words_per_sentence],
+            [WordFrequencyService, :one_syllable_words],
 
             [FrequencyTableService, :word_frequency_table],
 
@@ -121,105 +105,7 @@ class Dactylogram < ActiveRecord::Base
         ]
     end
 
-
-    def active_voice_percentage_metric
-        "not implemented"
-    end
-
-
-    
-
-    def glittering_generalities_metric
-        # some infoz http://www.buzzle.com/articles/examples-of-glittering-generalities.html
-        "not implemented"
-    end
-
-    def filter_words_metric
-        "not implemented"
-    end
-
-    def function_words_metric
-        "not implemented"
-    end
-
-    def jargon_words_metric
-        "not implemented"
-    end
-
-    def language_metric
-        "not implemented"
-    end
-
-    def lexical_density_metric
-        "not implemented"
-    end
-
-    def metaphors_metric
-        "not implemented"
-    end
-
-
-    def most_similar_to
-        raise "not implemented"
-        authors = Dactylogram.all.select {|d| d.identifier.start_with? 'authors/' }
-        return if authors.empty?
-
-        most_similar_author = authors.first
-        shortest_distance = distance_to most_similar_author
-
-        authors.drop(1).each do |author|
-           if distance_to(author) < shortest_distance
-               shortest_distance = distance_to author
-               most_similar_author = author
-           end
-        end
-
-        most_similar_author.identifier
-    end
-
-    def passive_voice_percentage_metric
-        "not implemented"
-    end
-
-    def estimated_reading_time_metric
-        average_wpm = 200
-
-        words_per_second = average_wpm / 60
-        seconds_to_read = words.length / words_per_second
-
-        distance_of_time_in_words(seconds_to_read)
-    end
-
-    def related_topics_metric
-        "not implemented"
-    end
-
-    def similes_metric
-        "not implemented"
-    end
-
-    
-
-    def one_syllable_words_metric
-        # todo, etc
-    end
-
-    
-
-    def word_frequency_table_metric
-        table = words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-        table.reject! { |k, v| v == 1 } if table.any? { |k, v| v > 1 } && table.length > 50
-        table = Hash[table.sort_by { |k, v| v }.reverse]
-        table
-    end
-
-    # ... more stuffs ... #
-
-    private
-
-    def calculate_metrics!
-        @corpus = Corpus.new data
-
+    def compute_metrics!
         self.metrics ||= begin
             results = {}
 
@@ -228,7 +114,7 @@ class Dactylogram < ActiveRecord::Base
                 start = Time.now
 
                 service, method = metric
-                results["#{service}::#{method}"] = service.send(method, @corpus)
+                results["#{service}::#{method}"] = service.send(method, corpus)
 
                 finish = Time.now
                 puts "Done. Took #{(finish - start).round(5)} seconds."

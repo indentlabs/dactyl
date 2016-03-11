@@ -1,15 +1,9 @@
 class Corpus < ActiveRecord::Base
     include HasPartsOfSpeech
 
-    attr_reader :text
-
     SYLLABLE_COUNT_OVERRIDES = {
         'ion' => 2
     }
-
-    def initialize text
-        @text = text
-    end
 
     def characters
         @characters ||= text.chars
@@ -55,7 +49,7 @@ class Corpus < ActiveRecord::Base
         words.map(&method(:syllables_in))
     end
 
-    #todo add this to stringlib
+    #todo add this to some stringlib instead
     def syllables_in word
         word.downcase.gsub!(/[^a-z]/, '')
 
@@ -65,8 +59,6 @@ class Corpus < ActiveRecord::Base
         word.sub(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').sub!(/^y/, '')
         word.scan(/[aeiouy]{1,2}/).length
     end
-
-    private
 
     def is_numeric?(string)
         true if Float(string) rescue false
