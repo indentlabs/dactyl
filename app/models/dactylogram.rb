@@ -598,47 +598,21 @@ class Dactylogram < ActiveRecord::Base
 
     private
 
-    def adjectives
-        @adjectives ||= words.select { |word| word.category == 'adjective' }.uniq
-    end
-
-    def adverbs
-        @adverbs ||= words.select { |word| word.category == 'adverb' }.uniq
-    end
-
     def calculate_metrics
-        begin_all = Time.now
+        corpus = Corpus.new data
 
         self.metrics ||= begin
-            results = {}
-
-            results[:flesch_kincaid_grade_level] = FleschKincaidService.grade_level(
-                words: words, 
-                sentences: sentences, 
-                word_syllables: word_syllables
-            )
-
-            (@metrics || all_metrics).map { |metric|
-                print "Calculating #{metric}... "
+            (@metrics || all_metrics).map do |metric|
+                puts "Calculating #{metric}..."
                 start = Time.now
                 results[metric.to_s.chomp '_metric'] = send(metric)
                 finish = Time.now
                 puts "Done. Took #{(finish - start).round(5)} seconds."
-            }
+            end
             results
         end
-        finish_all = Time.now
-        puts "Finished calculating all metrics in #{(finish_all - begin_all).round(5)} seconds."
 
         metrics
-    end
-
-    def conjunctions
-        @conjunctions ||= words.select { |word| word.category == 'conjunction' }.uniq
-    end
-
-    def determiners
-        @determiners ||= words.select { |word| word.category == 'determiner' }.uniq
     end
 
     def load_sentiment_defaults
@@ -648,82 +622,9 @@ class Dactylogram < ActiveRecord::Base
         end
     end
 
-    def prepositions
-        @prepositions ||= words.select { |word| word.category == 'preposition' }.uniq
-    end
 
-    def pronouns
-        @pronouns ||= words.select { |word| I18n.t('pronouns').include? word }.uniq
-    end
 
-    def sentences
-        @sentences ||= data.strip.split(/[!\?\.]/)
-    end
 
-    def stop_words
-        words.select { |word| I18n.t('stop-words').include? word }
-    end
-
-    def words
-        @words ||= data.downcase.gsub(/[^\s\w']/, '').split(' ').reject { |w| is_numeric?(w) }
-    end
-
-    def nouns
-        @nouns ||= words.select { |word| word.category == 'noun' }.uniq
-    end
-
-    def numbers
-        @numbers ||= data.strip.split(' ').select {|w| is_numeric?(w) }
-    end
-
-    # As defined by Robert Gunning in the GFI and SMOG
-    def complex_words
-        @complex_words ||= unique_words.select { |word| syllables_in(word) >= 3 }
-    end
-
-    def simple_words
-        @simple_words ||= unique_words - complex_words
-    end
-
-    def unique_words
-        words.map(&:downcase).uniq
-    end
-
-    def word_syllables
-        words.map(&method(:syllables_in))
-    end
-
-    def words_with_syllables syllable_count
-        words.select { |word| syllables_in(word) == syllable_count }
-    end
-
-    def syllables_in word
-        word.downcase.gsub!(/[^a-z]/, '')
-
-        return 1 if word.length <= 3
-        return SYLLABLE_COUNT_OVERRIDES[word] if SYLLABLE_COUNT_OVERRIDES.key? word
-
-        word.sub(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').sub!(/^y/, '')
-        word.scan(/[aeiouy]{1,2}/).length
-    end
-
-    def paragraphs
-        @paragraphs ||= data.split(/[\r\n\t]+/)
-    end
-
-    def occurrences of: needles, within: haystack
-        of = [of] unless of.is_a? Array
-
-        within.flatten.select { |hay| of.include? hay }.length
-    end
-
-    def verbs
-        @verbs ||= words.select { |word| word.category == 'verb' }.uniq
-    end
-
-    def unrecognized_words
-        @unrecognized_words ||= words.select { |word| word.category == 'unknown' }.uniq - pronouns
-    end
 
     #--------
     # Break these out somewhere as ASAP as possible
