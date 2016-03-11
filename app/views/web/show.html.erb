@@ -1,5 +1,5 @@
 <div class="logo">
-	<a href="/"><%= image_tag 'dactyl-logo.png' %></a>
+    <a href="/"><%= image_tag 'dactyl-logo.png' %></a>
 </div>
 
 <div class="mui-panel" style="text-align: center">
@@ -11,40 +11,35 @@
 <table class="mui-table mui-table-bordered mui-panel">
     <thead>
         <tr>
-            <td colspan="2" class="metric-category-row"><%= category.to_s.humanize %></td>
+            <td colspan="2" class="metric-category-row"><%= category %></td>
         </tr>
     </thead>
     <tbody>
-        <% @report[:metrics][category].each do |metric, value| %>
-        <% next if value.blank? %>
+        <% @report[:metrics][category].each do |metric| %>
+        <%
+            metric_name  = metric.keys.first
+            metric_value = metric.values.first
+        %>
         <tr>
-            <td width="50%"><%= metric.humanize %></td>
+            <td width="50%"><%= metric_name.humanize %></td>
             <td class="metric-value">
-            	<div class="scrolling-container">
+                <div class="scrolling-container">
                     <%
-                        more_info = I18n.t("metric-descriptions.#{metric}", :default => '')
-                        if more_info.present?
+                        more_info = I18n.t("metric-descriptions.#{category}.#{metric_name}", :default => '')
+                        render partial: more_info, locals: { text: more_info } if more_info.present?
                     %>
-                        <div class="read-more-link">
-                            <a href="#" data-title="About this metric" data-content="<%= more_info.gsub("\n", "<br />") %>" data-placement="right">
-                                <i class="material-icons">info_outline</i>
-                            </a>
-                        </div>
-                    <%
-                        end
-                    %>
-                    <%= case value
+                    <%= case metric_value
                         when Float
-                            value *= 100 if metric.end_with?('_percentage')
+                            metric_value *= 100 if metric_name.end_with?('_percentage')
                             [
-                                number_with_precision(value, precision: 3),
-                                metric.end_with?('_percentage') ? ' %' : ''
+                                number_with_precision(metric_value, precision: 3),
+                                metric_name.end_with?('_percentage') ? ' %' : ''
                             ].join
 
                         when Hash then "<span class='monospace'>#{value}</span>".html_safe
                         when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
 
-                        else value
+                        else metric_value
                     end
                     %>
                 </div>

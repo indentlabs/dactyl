@@ -20,7 +20,7 @@ class FleschKincaidService
             when (40..49)  then 21
             when (31..39)  then 24
             when (0..30)   then 25
-            else ''
+            else 2
         end
     end
 
