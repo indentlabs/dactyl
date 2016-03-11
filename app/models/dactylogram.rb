@@ -41,7 +41,38 @@ class Dactylogram < ActiveRecord::Base
 
     def all_metrics
         [
-            # :acronyms_metric,
+            [ReadabilityService, :flesch_kincaid_grade_level],
+            [ReadabilityService, :flesch_kincaid_age_minimum],
+            [ReadabilityService, :flesch_kincaid_reading_ease],
+            [ReadabilityService, :forcast_grade_level],
+            [ReadabilityService, :coleman_liau_index],
+            [ReadabilityService, :automated_readability_index],
+            [ReadabilityService, :gunning_fog_index],
+            [ReadabilityService, :combined_average_grade_level],
+
+            [PartsOfSpeechService, :acronyms],
+            [PartsOfSpeechService, :adjectives],
+            [PartsOfSpeechService, :adverbs],
+            [PartsOfSpeechService, :auxiliary_verbs],
+            [PartsOfSpeechService, :complex_words],
+            [PartsOfSpeechService, :conjunctions],
+            [PartsOfSpeechService, :determiners],
+            [PartsOfSpeechService, :insert_words],
+            [PartsOfSpeechService, :nouns],
+            [PartsOfSpeechService, :numbers],
+            [PartsOfSpeechService, :prepositions],
+            [PartsOfSpeechService, :pronouns],
+            [PartsOfSpeechService, :repeated_words],
+            [PartsOfSpeechService, :simple_words],
+            [PartsOfSpeechService, :stem_words],
+            [PartsOfSpeechService, :stemmed_words],
+            [PartsOfSpeechService, :stop_words],
+            [PartsOfSpeechService, :unique_words],
+            [PartsOfSpeechService, :unrecognized_words],
+            [PartsOfSpeechService, :verbs],
+            [PartsOfSpeechService, :adjectives],
+
+            #todo
             # :acronyms_percentage_metric,
             # :active_voice_percentage_metric,
             # :adjectives_metric,
@@ -60,14 +91,6 @@ class Dactylogram < ActiveRecord::Base
             # :digits_per_word_metric,
             # :determiners_metric,
             # :determiner_percentage_metric,
-            [ReadabilityService, :flesch_kincaid_grade_level],
-            [ReadabilityService, :flesch_kincaid_age_minimum],
-            [ReadabilityService, :flesch_kincaid_reading_ease],
-            [ReadabilityService, :forcast_grade_level],
-            [ReadabilityService, :coleman_liau_index],
-            [ReadabilityService, :automated_readability_index],
-            [ReadabilityService, :gunning_fog_index],
-            [ReadabilityService, :combined_average_grade_level],
             # :glittering_generalities_metric,
             # :filter_words_metric,
             # :function_words_metric,
@@ -133,14 +156,6 @@ class Dactylogram < ActiveRecord::Base
         ]
     end
 
-    def acronyms_metric
-        @acroynyms_metric ||= data.gsub(/[^\s\w]/, '')
-            .split(' ')
-            .select { |word| word == word.upcase && word.length > 1 && !is_numeric?(word) }
-            .uniq
-            .sort
-    end
-
     def acronyms_percentage_metric
         acronyms_metric.length.to_f / words.length
     end
@@ -149,20 +164,8 @@ class Dactylogram < ActiveRecord::Base
         "not implemented"
     end
 
-    def adjectives_metric
-        adjectives.sort
-    end
-
     def adjective_percentage_metric
         adjectives.length.to_f / words.length
-    end
-
-    def adverbs_metric
-        adverbs.sort
-    end
-
-    def auxiliary_verbs_metric
-        words.select { |word| I18n.t('auxillary-verbs').include? word }.uniq.sort
     end
 
     def auxiliary_verbs_percentage_metric
@@ -186,14 +189,6 @@ class Dactylogram < ActiveRecord::Base
         words.map(&:length).sum.to_f / words.length
     end
 
-    def complex_words_metric
-        complex_words
-    end
-
-    def conjunctions_metric
-        conjunctions.sort
-    end
-
     def conjunction_percentage_metric
         words.select { |word| I18n.t('conjunctions').include? word }.length.to_f / words.length
     end
@@ -206,10 +201,6 @@ class Dactylogram < ActiveRecord::Base
     def digits_per_word_metric
         squished_characters = words.join('')
         squished_characters.scan(/[0-9]/).length.to_f / squished_characters.length
-    end
-
-    def determiners_metric
-        determiners.sort
     end
 
     def determiner_percentage_metric
@@ -229,20 +220,12 @@ class Dactylogram < ActiveRecord::Base
         "not implemented"
     end
 
-    def insert_words_metric
-        words.select { |word| I18n.t('insert-words').include? word }.uniq.sort
-    end
-
     def jargon_words_metric
         "not implemented"
     end
 
     def language_metric
         "not implemented"
-    end
-
-    def lexical_words_metric
-        function_words_metric
     end
 
     def lexical_density_metric
@@ -282,16 +265,9 @@ class Dactylogram < ActiveRecord::Base
         unique_words.select { |word| @sentiment_analyzer.get_score(word) < -0.5 }.sort
     end
 
-    def nouns_metric
-        nouns.sort
-    end
 
     def noun_percentage_metric
         nouns.length.to_f / words.length
-    end
-
-    def numbers_metric
-        numbers
     end
 
     def numbers_percentage_metric
@@ -314,16 +290,8 @@ class Dactylogram < ActiveRecord::Base
         unique_words.select { |word| @sentiment_analyzer.get_score(word) > 0.5 }.sort
     end
 
-    def prepositions_metric
-        prepositions.sort
-    end
-
     def preposition_percentage_metric
         words.select { |word| I18n.t('prepositions').include? word }.length.to_f / words.length
-    end
-
-    def pronouns_metric
-        pronouns.sort
     end
 
     def pronoun_percentage_metric
@@ -345,10 +313,6 @@ class Dactylogram < ActiveRecord::Base
 
     def related_topics_metric
         "not implemented"
-    end
-
-    def repeated_words_metric
-        @repeated_words_metric ||= words.select {|e| words.rindex(e) != words.index(e) }.uniq.sort
     end
 
     def repeated_word_percentage_metric
@@ -398,10 +362,6 @@ class Dactylogram < ActiveRecord::Base
         sentences.map { |sentence| @sentiment_analyzer.get_score(sentence).round(3) }
     end
 
-    def simple_words_metric
-        simple_words
-    end
-
     def spaces_after_sentence_metric
         spaces_per_sentence = sentences.map { |sentence|
             sentence.length - sentence.gsub(/^ +/, '').length
@@ -414,18 +374,6 @@ class Dactylogram < ActiveRecord::Base
 
     def special_character_percentage_metric
         data.scan(/[\$\^#@%~]/).length.to_f / data.chars.length
-    end
-
-    def stem_words_metric
-        words.select { |word| word.try(:stem) == word }.uniq.sort
-    end
-
-    def stemmed_words_metric
-        words.select { |word| word.try(:stem) != word }.uniq.sort
-    end
-
-    def stop_words_metric
-        stop_words.uniq.sort
     end
 
     def syllable_count_metric
@@ -447,10 +395,6 @@ class Dactylogram < ActiveRecord::Base
 
     def one_syllable_words_metric
         # todo, etc
-    end
-
-    def unique_words_metric
-        unique_words.sort
     end
 
     def unique_words_per_paragraph_metric
@@ -475,14 +419,6 @@ class Dactylogram < ActiveRecord::Base
         unique_words.length.to_f / words.length
     end
 
-    def unrecognized_words_metric
-        unrecognized_words.sort
-    end
-
-    def verbs_metric
-        verbs.sort
-    end
-
     def verb_percentage_metric
         verbs.length.to_f / words.length
     end
@@ -505,10 +441,6 @@ class Dactylogram < ActiveRecord::Base
         table.reject! { |k, v| v == 1 } if table.any? { |k, v| v > 1 } && table.length > 50
         table = Hash[table.sort_by { |k, v| v }.reverse]
         table
-    end
-
-    def words_metric
-        words
     end
 
     def words_per_paragraph_metric

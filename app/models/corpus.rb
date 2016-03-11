@@ -27,6 +27,13 @@ class Corpus < ActiveRecord::Base
         @words ||= text.downcase.gsub(/[^\s\w']/, '').split(' ').reject { |w| is_numeric?(w) }
     end
 
+    def acronyms
+        @acroynyms ||= words
+            .select { |word| word == word.upcase && word.length > 1 && !is_numeric?(word) }
+            .uniq
+            .sort
+    end
+
     # As defined by Robert Gunning in the GFI and SMOG
     def complex_words
         @complex_words ||= unique_words.select { |word| syllables_in(word) >= 3 }

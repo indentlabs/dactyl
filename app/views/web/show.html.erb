@@ -36,8 +36,8 @@
                                 metric_name.end_with?('_percentage') ? ' %' : ''
                             ].join
 
-                        when Hash then "<span class='monospace'>#{value}</span>".html_safe
-                        when Array then "<span class='monospace'>#{value.to_s}</span>".html_safe
+                        when Hash then "<span class='monospace'>#{metric_value}</span>".html_safe
+                        when Array then "<span class='monospace'>#{metric_value.to_s}</span>".html_safe
 
                         else metric_value
                     end

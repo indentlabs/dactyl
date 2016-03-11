@@ -20,7 +20,9 @@ module HasPartsOfSpeech
     end
 
     def numbers
-        @numbers ||= data.strip.split(' ').select {|w| is_numeric?(w) }
+        @numbers ||= text.strip
+            .split(' ')
+            .select { |w| is_numeric?(w) }
     end
 
     def prepositions
