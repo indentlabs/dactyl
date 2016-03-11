@@ -109,7 +109,15 @@ class Dactylogram < ActiveRecord::Base
             [WordFrequencyService, :words_per_paragraph],
             [WordFrequencyService, :words_per_sentence],
 
-            [FrequencyTableService, :word_frequency_table]
+            [FrequencyTableService, :word_frequency_table],
+
+            [SentimentService, :positive_words],
+            [SentimentService, :negative_words],
+            [SentimentService, :sentiment],
+            [SentimentService, :sentiment_score],
+            [SentimentService, :sentiment_score_per_sentence],
+            [SentimentService, :sentiment_score_per_paragraph],
+
         ]
     end
 
@@ -169,23 +177,8 @@ class Dactylogram < ActiveRecord::Base
         most_similar_author.identifier
     end
 
-    def negative_words_metric
-        load_sentiment_defaults
-        @sentiment_analyzer ||= Sentimental.new
-
-        unique_words.select { |word| @sentiment_analyzer.get_score(word) < -0.5 }.sort
-    end
-
-
     def passive_voice_percentage_metric
         "not implemented"
-    end
-
-    def positive_words_metric
-        load_sentiment_defaults
-        @sentiment_analyzer ||= Sentimental.new
-
-        unique_words.select { |word| @sentiment_analyzer.get_score(word) > 0.5 }.sort
     end
 
     def estimated_reading_time_metric
@@ -203,32 +196,6 @@ class Dactylogram < ActiveRecord::Base
 
     def similes_metric
         "not implemented"
-    end
-
-    def sentiment_metric
-        load_sentiment_defaults
-        @sentiment_analyzer ||= Sentimental.new
-        @sentiment_analyzer.get_sentiment data
-    end
-
-    def sentiment_score_metric
-        load_sentiment_defaults
-        @sentiment_analyzer ||= Sentimental.new
-        @sentiment_analyzer.get_score data
-    end
-
-    def sentiment_score_per_paragraph_metric
-        return unless paragraphs.length > 1
-        load_sentiment_defaults
-        @sentiment_analyzer ||= Sentimental.new
-        paragraphs.map { |paragraph| @sentiment_analyzer.get_score(paragraph).round(3) }
-    end
-
-    def sentiment_score_per_sentence_metric
-        return unless sentences.length > 1
-        load_sentiment_defaults
-        @sentiment_analyzer ||= Sentimental.new
-        sentences.map { |sentence| @sentiment_analyzer.get_score(sentence).round(3) }
     end
 
     
@@ -270,13 +237,6 @@ class Dactylogram < ActiveRecord::Base
         end
 
         metrics
-    end
-
-    def load_sentiment_defaults
-        @sentiment_defaults ||= begin
-            Sentimental.load_defaults
-            Sentimental.threshold = 0.1
-        end
     end
 
 
