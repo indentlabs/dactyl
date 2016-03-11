@@ -55,8 +55,7 @@ class Corpus < ActiveRecord::Base
         words.map(&method(:syllables_in))
     end
 
-    private
-
+    #todo add this to stringlib
     def syllables_in word
         word.downcase.gsub!(/[^a-z]/, '')
 
@@ -67,11 +66,7 @@ class Corpus < ActiveRecord::Base
         word.scan(/[aeiouy]{1,2}/).length
     end
 
-    def occurrences of: needles, within: haystack
-        of = [of] unless of.is_a? Array
-
-        within.flatten.select { |hay| of.include? hay }.length
-    end
+    private
 
     def is_numeric?(string)
         true if Float(string) rescue false

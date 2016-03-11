@@ -72,140 +72,54 @@ class Dactylogram < ActiveRecord::Base
             [PartsOfSpeechService, :verbs],
             [PartsOfSpeechService, :adjectives],
 
-            #todo
-            # :acronyms_percentage_metric,
-            # :active_voice_percentage_metric,
-            # :adjectives_metric,
-            # :adjective_percentage_metric,
-            # :adverbs_metric,
-            # :auxiliary_verbs_metric,
-            # :auxiliary_verbs_percentage_metric,
-            # :character_count_metric,
-            # :characters_per_paragraph_metric,
-            # :characters_per_sentence_metric,
-            # :characters_per_word_metric,
-            # :complex_words_metric,
-            # :conjunctions_metric,
-            # :conjunction_percentage_metric,
-            # :consonants_per_word_percentage_metric,
-            # :digits_per_word_metric,
-            # :determiners_metric,
-            # :determiner_percentage_metric,
-            # :glittering_generalities_metric,
-            # :filter_words_metric,
-            # :function_words_metric,
-            # :insert_words_metric,
-            # :jargon_words_metric,
-            # :language_metric,
-            # :lexical_words_metric,
-            # :lexical_density_metric,
-            # :metaphors_metric,
-            # :most_frequent_word_metric,
-            # :negative_words_metric,
-            # :nouns_metric,
-            # :noun_percentage_metric,
-            # :numbers_metric,
-            # :numbers_percentage_metric,
-            # :paragraphs_metric,
-            # :passive_voice_percentage_metric,
-            # :positive_words_metric,
-            # :prepositions_metric,
-            # :preposition_percentage_metric,
-            # :pronouns_metric,
-            # :pronoun_percentage_metric,
-            # :punctuation_percentage_metric,
-            # :estimated_reading_time_metric,
-            # :related_topics_metric,
-            # :repeated_words_metric,
-            # :repeated_word_percentage_metric,
-            # :similes_metric,
-            # :sentence_count_metric,
-            # :sentences_metric,
-            # :sentences_per_paragraph_metric,
-            # :sentiment_metric,
-            # :sentiment_score_metric,
-            # :sentiment_score_per_paragraph_metric,
-            # :sentiment_score_per_sentence_metric,
-            # :simple_words_metric,
-            # :smog_grade_metric,
-            # :spaces_after_sentence_metric,
-            # :special_character_percentage_metric,
-            # :stem_words_metric,
-            # :stemmed_words_metric,
-            # :stop_words_metric,
-            # :syllable_count_metric,
-            # :syllables_per_sentence_metric,
-            # :syllables_per_word_metric,
-            # :one_syllable_words_metric,
-            # :unique_words_metric,
-            # :unique_words_per_paragraph_metric,
-            # :unique_words_per_paragraph_percentage_metric,
-            # :unique_words_per_sentence_metric,
-            # :unique_words_per_sentence_percentage_metric,
-            # :unique_words_percentage_metric,
-            # :unrecognized_words_metric,
-            # :verbs_metric,
-            # :verb_percentage_metric,
-            # :vowels_per_word_percentage_metric,
-            # :whitespace_percentage_metric,
-            # :word_count_metric,
-            # :word_frequency_table_metric,
-            # :words_metric,
-            # :words_per_paragraph_metric,
-            # :words_per_sentence_metric
+            [WordFrequencyService, :acronyms_percentage],
+            [WordFrequencyService, :adjective_percentage],
+            [WordFrequencyService, :auxiliary_verbs_percentage],
+            [WordFrequencyService, :character_count],
+            [WordFrequencyService, :characters_per_paragraph],
+            [WordFrequencyService, :characters_per_sentence],
+            [WordFrequencyService, :characters_per_word],
+            [WordFrequencyService, :conjunction_percentage],
+            [WordFrequencyService, :consonants_per_word_percentage],
+            [WordFrequencyService, :digits_per_word],
+            [WordFrequencyService, :determiner_percentage],
+            [WordFrequencyService, :most_frequent_word],
+            [WordFrequencyService, :noun_percentage],
+            [WordFrequencyService, :numbers_percentage],
+            [WordFrequencyService, :preposition_percentage],
+            [WordFrequencyService, :pronoun_percentage],
+            [WordFrequencyService, :punctuation_percentage],
+            [WordFrequencyService, :repeated_word_percentage],
+            [WordFrequencyService, :sentence_count],
+            [WordFrequencyService, :sentences_per_paragraph],
+            [WordFrequencyService, :spaces_after_sentence],
+            [WordFrequencyService, :special_character_percentage],
+            [WordFrequencyService, :syllable_count],
+            [WordFrequencyService, :syllables_per_sentence],
+            [WordFrequencyService, :syllables_per_word],
+            [WordFrequencyService, :unique_words_per_paragraph],
+            [WordFrequencyService, :unique_words_per_paragraph_percentage],
+            [WordFrequencyService, :unique_words_per_sentence],
+            [WordFrequencyService, :unique_words_per_sentence_percentage],
+            [WordFrequencyService, :unique_words_percentage],
+            [WordFrequencyService, :verb_percentage],
+            [WordFrequencyService, :vowels_per_word_percentage],
+            [WordFrequencyService, :whitespace_percentage],
+            [WordFrequencyService, :word_count],
+            [WordFrequencyService, :words_per_paragraph],
+            [WordFrequencyService, :words_per_sentence],
+
+            [FrequencyTableService, :word_frequency_table]
         ]
     end
 
-    def acronyms_percentage_metric
-        acronyms_metric.length.to_f / words.length
-    end
 
     def active_voice_percentage_metric
         "not implemented"
     end
 
-    def adjective_percentage_metric
-        adjectives.length.to_f / words.length
-    end
 
-    def auxiliary_verbs_percentage_metric
-        auxiliary_verbs_metric.length.to_f / words.length
-    end
-
-    def character_count_metric
-        data.length
-    end
-
-    def characters_per_paragraph_metric
-        return unless paragraphs.length > 1
-        data.chars.length.to_f / paragraphs.length
-    end
-
-    def characters_per_sentence_metric
-        data.length.to_f / sentences.length
-    end
-
-    def characters_per_word_metric
-        words.map(&:length).sum.to_f / words.length
-    end
-
-    def conjunction_percentage_metric
-        words.select { |word| I18n.t('conjunctions').include? word }.length.to_f / words.length
-    end
-
-    def consonants_per_word_percentage_metric
-        squished_characters = words.join('')
-        squished_characters.scan(/[^aeiou]/).length.to_f / squished_characters.length
-    end
-
-    def digits_per_word_metric
-        squished_characters = words.join('')
-        squished_characters.scan(/[0-9]/).length.to_f / squished_characters.length
-    end
-
-    def determiner_percentage_metric
-        words.select { |word| I18n.t('determiners').include? word }.length.to_f / words.length
-    end
+    
 
     def glittering_generalities_metric
         # some infoz http://www.buzzle.com/articles/examples-of-glittering-generalities.html
@@ -236,9 +150,6 @@ class Dactylogram < ActiveRecord::Base
         "not implemented"
     end
 
-    def most_frequent_word_metric
-        (word_frequency_table_metric.max_by { |k, v| v } || words).first
-    end
 
     def most_similar_to
         raise "not implemented"
@@ -266,19 +177,6 @@ class Dactylogram < ActiveRecord::Base
     end
 
 
-    def noun_percentage_metric
-        nouns.length.to_f / words.length
-    end
-
-    def numbers_percentage_metric
-        numbers.length.to_f / (words.length + numbers.length).to_f
-    end
-
-    def paragraphs_metric
-        return unless paragraphs.length > 1
-        paragraphs.length
-    end
-
     def passive_voice_percentage_metric
         "not implemented"
     end
@@ -288,18 +186,6 @@ class Dactylogram < ActiveRecord::Base
         @sentiment_analyzer ||= Sentimental.new
 
         unique_words.select { |word| @sentiment_analyzer.get_score(word) > 0.5 }.sort
-    end
-
-    def preposition_percentage_metric
-        words.select { |word| I18n.t('prepositions').include? word }.length.to_f / words.length
-    end
-
-    def pronoun_percentage_metric
-        pronouns.length.to_f / words.length
-    end
-
-    def punctuation_percentage_metric
-        data.scan(/[\.,;\?!\-"':\(\)\[\]"]/).length.to_f / data.chars.length
     end
 
     def estimated_reading_time_metric
@@ -315,25 +201,8 @@ class Dactylogram < ActiveRecord::Base
         "not implemented"
     end
 
-    def repeated_word_percentage_metric
-        repeated_words_metric.length.to_f / words.length
-    end
-
     def similes_metric
         "not implemented"
-    end
-
-    def sentence_count_metric
-        sentences.length
-    end
-
-    def sentences_metric
-        sentences
-    end
-
-    def sentences_per_paragraph_metric
-        return unless paragraphs.length > 1
-        sentences.length.to_f / paragraphs.length
     end
 
     def sentiment_metric
@@ -362,94 +231,19 @@ class Dactylogram < ActiveRecord::Base
         sentences.map { |sentence| @sentiment_analyzer.get_score(sentence).round(3) }
     end
 
-    def spaces_after_sentence_metric
-        spaces_per_sentence = sentences.map { |sentence|
-            sentence.length - sentence.gsub(/^ +/, '').length
-        }.reject(&:zero?)
-
-        spaces = spaces_per_sentence.sum.to_f / spaces_per_sentence.length
-        spaces = 0 if spaces.nan?
-        spaces
-    end
-
-    def special_character_percentage_metric
-        data.scan(/[\$\^#@%~]/).length.to_f / data.chars.length
-    end
-
-    def syllable_count_metric
-        word_syllables.sum
-    end
-
-    def syllables_per_sentence_metric
-        total_syllables = 0
-        sentences.each do |sentence|
-            total_syllables += sentence.split(' ').map(&method(:syllables_in)).sum
-        end
-
-        total_syllables.to_f / sentences.length
-    end
-
-    def syllables_per_word_metric
-        word_syllables.sum.to_f / words.length
-    end
+    
 
     def one_syllable_words_metric
         # todo, etc
     end
 
-    def unique_words_per_paragraph_metric
-        return unless paragraphs.length > 1
-        unique_words.length.to_f / paragraphs.length
-    end
-
-    def unique_words_per_paragraph_percentage_metric
-        return unless paragraphs.length > 1
-        unique_words_per_paragraph_metric.to_f / words_per_paragraph_metric
-    end
-
-    def unique_words_per_sentence_metric
-        unique_words.length.to_f / sentences.length
-    end
-
-    def unique_words_per_sentence_percentage_metric
-        unique_words_per_sentence_metric / words_per_sentence_metric
-    end
-
-    def unique_words_percentage_metric
-        unique_words.length.to_f / words.length
-    end
-
-    def verb_percentage_metric
-        verbs.length.to_f / words.length
-    end
-
-    def vowels_per_word_percentage_metric
-        squished_characters = words.join('')
-        squished_characters.scan(/[aeiou]/).length.to_f / squished_characters.length
-    end
-
-    def whitespace_percentage_metric
-        occurrences(of: ["\s", "\r", "\n"], within: data.chars).to_f / data.length
-    end
-
-    def word_count_metric
-        words.length
-    end
+    
 
     def word_frequency_table_metric
         table = words.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
         table.reject! { |k, v| v == 1 } if table.any? { |k, v| v > 1 } && table.length > 50
         table = Hash[table.sort_by { |k, v| v }.reverse]
         table
-    end
-
-    def words_per_paragraph_metric
-        return unless paragraphs.length > 1
-        words.length.to_f / paragraphs.length
-    end
-
-    def words_per_sentence_metric
-        words.length.to_f / sentences.length
     end
 
     # ... more stuffs ... #
