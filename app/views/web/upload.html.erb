@@ -1,13 +1,13 @@
 <%= form_tag(params.except(:text), method: :post) do %>
-	<div>
-		<label>Author:
-			<input type="text" name="author" />
-		</label>
-	</div>
+    <div>
+        <label>Author:
+            <input type="text" name="author" />
+        </label>
+    </div>
 
-	<div>
-		<textarea name="text" cols="80" rows="20">Text</textarea>
-	</div>
-	
-	<input type="submit" value="Create" />
+    <div>
+        <textarea name="text" cols="80" rows="20">Text</textarea>
+    </div>
+    
+    <input type="submit" value="Create" />
 <% end %>

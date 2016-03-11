@@ -4,35 +4,32 @@ class WebController < ApplicationController
     before_action :set_analysis_string
     def set_analysis_string
         @analysis_string ||= params[:string] || params[:text]
-    end
 
-    def index
         if (params.has_key?(:file) && params[:file].class == ActionDispatch::Http::UploadedFile)
             @analysis_string = parse_document params[:file]
             params[:file].close
         end
+    end
 
-        if @analysis_string.present?
-            corpus = Corpus.new text: @analysis_string
-            corpus.save!
+    def index
+        return unless @analysis_string.present?
 
-            d = Dactylogram.new(data: @analysis_string, corpus: corpus)
-            d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
-            d.compute_metrics!
-            d.save!
+        #todo should probably break this out into separate post endpoint
+        d = Dactylogram.new corpus: build_corpus_for(@analysis_string)
+        d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
+        d.compute_metrics!
+        d.save!
 
-            redirect_to show_dactylogram_path(reference: d.reference)
-        end
+        redirect_to show_dactylogram_path(reference: d.reference)
     end
 
     def upload
         return unless @analysis_string.present?
 
-        d = Dactylogram.new(data: @analysis_string, identifier: params[:author])
+        d = Dactylogram.new(corpus: build_corpus_for(@analysis_string), identifier: params[:author])
         d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
-        d.send :calculate_metrics!
-
-        #render json: d.save
+        d.compute_metrics!
+        d.save!
     end
 
     def show
@@ -61,6 +58,12 @@ class WebController < ApplicationController
         end
 
         categorized_metrics
+    end
+
+    def build_corpus_for string
+        corpus = Corpus.new text: @analysis_string
+        corpus.save!
+        corpus
     end
 
 end

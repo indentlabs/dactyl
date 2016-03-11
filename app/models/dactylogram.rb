@@ -1,11 +1,8 @@
 class Dactylogram < ActiveRecord::Base
     include Comparable
 
-    attr_accessor :data
-
     belongs_to :corpus
 
-    validates :data, presence: true
     validates :metrics, presence: true
 
     serialize :metrics, JSON
@@ -16,7 +13,7 @@ class Dactylogram < ActiveRecord::Base
 
     def metric_report
         {
-            original_string: data || (corpus && corpus.text),
+            original_string: corpus.text,
             metrics: compute_metrics!
         }
     end

@@ -11,16 +11,18 @@ class FleschKincaidService
 
     def self.age_minimum corpus
         @flesch_kincaid_age_minimum ||= case reading_ease(corpus)
-            when (90..100) then 11
-            when (71..89)  then 12
-            when (67..69)  then 13
-            when (64..66)  then 14
-            when (60..63)  then 15
-            when (50..59)  then 18
-            when (40..49)  then 21
-            when (31..39)  then 24
-            when (0..30)   then 25
-            else 2
+            when (100..1e5) then 11
+            when (90..100)  then 11
+            when (71..89)   then 12
+            when (67..69)   then 13
+            when (64..66)   then 14
+            when (60..63)   then 15
+            when (50..59)   then 18
+            when (40..49)   then 21
+            when (31..39)   then 24
+            when (0..30)    then 25
+            when (-1e5..-1) then 25
+            else 
         end
     end
 
