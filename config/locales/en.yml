@@ -61,6 +61,12 @@ en:
       stop_words: |
         In the context of language processing, the most common words in any language are referred to as stop words.
 
+      stem_words: |
+        In linguistics, a stem is a part of a word, closely related to the root word to which affixes can be attached. This is a list of your stem words used without affixes.
+
+      stemmed_words:
+        Stemmed words have affixed attached to the word's "stem". This is a list of your words that are stem + affix.
+
       insert-words:
         - uh
         - um
