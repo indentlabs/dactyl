@@ -4,6 +4,8 @@ class LanguageService
     def self.language corpus
         AlchemyAPI.search(:language_detection, text: corpus.text)
             .slice("language", "native-speakers")
+    rescue
+        nil
     end
 
     def self.dialect corpus

@@ -17,10 +17,14 @@ class JargonService
         AlchemyAPI.search(:keyword_extraction, text: corpus.text)
             .map { |hash| hash['text'] }
             .uniq
+    rescue
+        nil
     end
 
     def self.entities corpus
         AlchemyAPI.search(:entity_extraction, text: corpus.text)
+    rescue
+        nil
     end
 
 
