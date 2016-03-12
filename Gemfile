@@ -19,6 +19,7 @@ gem 'engtagger'
 gem 'wordnet'
 #gem 'wordnet-defaultdb'
 gem 'sentimental'
+gem 'alchemy-api-rb', :require => 'alchemy_api'
 
 # Document uploading and parsing
 gem 'ruby-rtf', '0.0.1'

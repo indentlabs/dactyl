@@ -13,4 +13,15 @@ class JargonService
         #todo
     end
 
+    def self.keywords corpus
+        AlchemyAPI.search(:keyword_extraction, text: corpus.text)
+            .map { |hash| hash['text'] }
+            .uniq
+    end
+
+    def self.entities corpus
+        AlchemyAPI.search(:entity_extraction, text: corpus.text)
+    end
+
+
 end

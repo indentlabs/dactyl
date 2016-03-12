@@ -20,6 +20,10 @@ class Dactylogram < ActiveRecord::Base
 
     def all_metrics
         [
+            [LanguageService, :language],
+
+            [IntentService, :relation_extraction],
+
             [ReadabilityService, :estimated_reading_time],
             [ReadabilityService, :flesch_kincaid_grade_level],
             [ReadabilityService, :flesch_kincaid_age_minimum],
@@ -99,6 +103,12 @@ class Dactylogram < ActiveRecord::Base
             [SentimentService, :sentiment_score_per_sentence],
             [SentimentService, :sentiment_score_per_paragraph],
 
+            [JargonService, :keywords],
+            [JargonService, :entities],
+
+            [ContextService, :category],
+            [ContextService, :concept_tags],
+            [ContextService, :taxonomy]
         ]
     end
 

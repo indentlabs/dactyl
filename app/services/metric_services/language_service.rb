@@ -1,8 +1,9 @@
 class LanguageService
     extend Service
 
-    def language corpus
-        #todo
+    def self.language corpus
+        AlchemyAPI.search(:language_detection, text: corpus.text)
+            .slice("language", "native-speakers")
     end
 
     def self.dialect corpus
