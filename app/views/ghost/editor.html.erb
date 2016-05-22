@@ -1,9 +1,86 @@
-<h1>Ghost</h1>
-
-<div class="editable editor"></div>
+</div> <%# lol %>
+<div id="ghost-container">
+  <h1>Ghost</h1>
+  <div class="editable editor"></div>
+</div>
 
 <%= content_for :scripts do %>
   var editor = new MediumEditor('.editor', {
-    // options go here
+  	<%# TODO: Define custom buttons here - https://github.com/yabwe/medium-editor#mediumeditor-options %>
+
+  	disableExtraSpaces: 'true',
+
+    toolbar: {
+        allowMultiParagraphSelection: true,
+        buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote'],
+        diffLeft: 0,
+        diffTop: -10,
+        firstButtonClass: 'medium-editor-button-first',
+        lastButtonClass: 'medium-editor-button-last',
+        standardizeSelectionStart: false,
+        static: true,
+        relativeContainer: null,
+        /* options which only apply when static is true */
+        align: 'left',
+        sticky: true,
+        updateOnEmptySelection: true,
+
+        buttons: [
+            'bold',
+            'italic',
+            'underline',
+            {
+                name: 'h1',
+                action: 'append-h2',
+                aria: 'header type 1',
+                tagNames: ['h2'],
+                contentDefault: '<b>H1</b>',
+                classList: ['custom-class-h1'],
+                attrs: {
+                    'data-custom-attr': 'attr-value-h1'
+                }
+            },
+            'h2',
+
+            'justifyCenter',
+
+            'orderedlist',
+            'unorderedlist',
+
+            'quote',
+            'anchor',
+            'image'
+        ]
+    },
+
+    keyboardCommands: {
+        commands: [
+            {
+                command: 'bold',
+                key: 'B',
+                meta: true,
+                shift: false,
+                alt: false
+            },
+            {
+                command: 'italic',
+                key: 'I',
+                meta: true,
+                shift: false,
+                alt: false
+            },
+            {
+                command: 'underline',
+                key: 'U',
+                meta: true,
+                shift: false,
+                alt: false
+            }
+        ],
+    },
+
+    autoLinke: true
+
+
   });
 <% end %>

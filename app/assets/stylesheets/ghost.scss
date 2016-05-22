@@ -1,3 +1,21 @@
-// Place all the styles related to the Ghost controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#ghost-container {
+
+  width: 900px;
+  margin: 0 auto;
+
+  h1 {
+    float: right;
+    font-size: 150%;
+  }
+
+  .editor {
+    background: white;
+    clear: both;
+
+    font-size: 115%;
+    padding: 30px 40px;
+    width: 100%;
+
+    margin-bottom: 100px;
+  }
+}
