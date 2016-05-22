@@ -14,7 +14,7 @@ gem 'rails-html-sanitizer'
 gem 'material_icons'
 
 # NLP
-#gem 'treat'
+gem 'treat'
 #gem 'stanford-core-nlp'
 gem 'engtagger'
 gem 'wordnet'
