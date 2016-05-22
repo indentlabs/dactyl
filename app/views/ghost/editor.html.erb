@@ -1,6 +1,24 @@
 </div> <%# lol %>
 <div id="ghost-container">
   <h1>Ghost</h1>
+  <div class="metrics">
+
+    <%# TODO: editor/ partials %>
+    <% @metrics.each do |metric_name, metric_value| %>
+      <div class="metric" id="<%= metric_name.split('::').last %>">
+        <span class="goal">
+          <span class="current"></span>/<span class="target"><%= metric_value.to_i %></span> <span class="delta">▼▲</span>
+        </span>
+        <span class="name">
+          <%= metric_name.split('::').last.humanize %>
+        </span>
+        <p class="tip">
+          Write differently to be different.
+        </p>
+      </div>
+    <% end %>
+
+  </div>
   <div class="editable editor"></div>
 </div>
 
@@ -40,7 +58,6 @@
                     'data-custom-attr': 'attr-value-h1'
                 }
             },
-            'h2',
 
             'justifyCenter',
 
@@ -79,8 +96,47 @@
         ],
     },
 
-    autoLinke: true
+    autoLink: true
 
+
+  });
+
+  var delta = function(x, y) {
+    // TODO: handle ~ for small numbers
+    if (x > y * 1.05) {
+      return 'down';
+    }
+    if (x < y * 0.95) {
+      return 'up';
+    }
+
+    return 'stay';
+  };
+
+  editor.subscribe('editableInput', function (event, editable) {
+    // TODO: organize all this better
+    var metric, result;
+
+    // TODO: this has to be hella inefficient
+    var text = $(editable).text();
+    var html = $(editable).html();
+
+    // words per sentence
+    var words = text.split(' '); // TODO: remove '  '
+    var sentences = text.split('.'); // TODO: wrong
+    metric = $('.metric#words_per_sentence');
+    result = Math.round(words.length / sentences.length);
+
+    metric.find('.current').text(result);
+    metric.find('.delta').text(delta(result, metric.find('.target').text()));
+
+    // words per paragraph
+    var paragraphs = (html.split("</p>") || []).length - 1; // TODO: wrong and inefficient
+    metric = $('.metric#words_per_paragraph');
+    result = Math.round(words.length / paragraphs);
+
+    metric.find('.current').text(result);
+    metric.find('.delta').text(delta(result, metric.find('.target').text()));
 
   });
 <% end %>

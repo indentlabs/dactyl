@@ -17,5 +17,40 @@
     width: 100%;
 
     margin-bottom: 100px;
+    text-indent: 50px;
+  }
+
+  .metrics {
+    background: white;
+    border-left: 1px solid #cdcdcd;
+
+    position: fixed;
+    overflow-y: scroll;
+    right: 0;
+    top: 0;
+    height:100%;
+    width: 340px;
+    padding: 20px 15px;
+
+    .metric {
+
+      clear: both;
+
+      .goal {
+        float: right;
+        font-size: 110%;
+
+        .delta {
+          color: lime;
+        }
+      }
+
+      .tip {
+        font-style: italic;
+        color: #555;
+        display: none;
+      }
+
+    }
   }
 }

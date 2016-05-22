@@ -94,14 +94,14 @@ class Dactylogram < ActiveRecord::Base
             [WordFrequencyService, :words_per_sentence],
             [WordFrequencyService, :one_syllable_words],
 
-            [FrequencyTableService, :word_frequency_table],
+            # [FrequencyTableService, :word_frequency_table],
 
-            [SentimentService, :positive_words],
-            [SentimentService, :negative_words],
-            [SentimentService, :sentiment],
-            [SentimentService, :sentiment_score],
-            [SentimentService, :sentiment_score_per_sentence],
-            [SentimentService, :sentiment_score_per_paragraph],
+            # [SentimentService, :positive_words],
+            # [SentimentService, :negative_words],
+            # [SentimentService, :sentiment],
+            # [SentimentService, :sentiment_score],
+            # [SentimentService, :sentiment_score_per_sentence],
+            # [SentimentService, :sentiment_score_per_paragraph],
 
             [JargonService, :keywords],
             [JargonService, :entities],
