@@ -28,6 +28,9 @@ gem 'docx-html', '~> 0.1.0'
 gem 'pdf-reader', '1.3.3'
 gem 'nokogiri', '~>1.6.7'
 
+# Editor
+gem 'medium-editor-rails'
+
 # Development
 group :development, :test do
   gem 'pry'

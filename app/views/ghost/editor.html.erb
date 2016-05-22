@@ -1,0 +1,9 @@
+<h1>Ghost</h1>
+
+<div class="editable editor"></div>
+
+<%= content_for :scripts do %>
+  var editor = new MediumEditor('.editor', {
+    // options go here
+  });
+<% end %>

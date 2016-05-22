@@ -12,5 +12,7 @@
  *
  //= require material_icons
  *= require_tree .
+ *= require medium-editor/medium-editor
+ *= require medium-editor/themes/tim
  *= require_self
  */

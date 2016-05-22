@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get '/analysis/:reference' => 'web#show', as: 'show_dactylogram'
 
+  get '/ghost' => 'ghost#editor'
+
   scope :api do
     scope :v1 do
       get '/dactyl' => 'api#dactyl'
