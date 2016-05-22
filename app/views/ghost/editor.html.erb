@@ -7,7 +7,7 @@
     <% @metrics.each do |metric_name, metric_value| %>
       <div class="metric" id="<%= metric_name.split('::').last %>">
         <span class="goal">
-          <span class="current"></span>/<span class="target"><%= metric_value.to_i %></span> <span class="delta">▼▲</span>
+          <span class="current"></span>/<span class="target"><%= metric_value.to_i %></span> <span class="delta"></span>
         </span>
         <span class="name">
           <%= metric_name.split('::').last.humanize %>
@@ -103,40 +103,99 @@
 
   var delta = function(x, y) {
     // TODO: handle ~ for small numbers
-    if (x > y * 1.05) {
-      return 'down';
-    }
-    if (x < y * 0.95) {
+    if (Math.round(x) < Math.round(y * 0.6)) {
       return 'up';
+    }
+
+    if (Math.round(x) > Math.round(y * 1.6)) {
+      return 'down';
     }
 
     return 'stay';
   };
 
+  var syllables_in = function(word) {
+    word = word.toLowerCase();
+    if (word.length <= 3) { return 1; }
+    word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+    word = word.replace(/^y/, '');
+    return (word.match(/[aeiouy]{1,2}/g) || '').length;
+  }
+
   editor.subscribe('editableInput', function (event, editable) {
     // TODO: organize all this better
-    var metric, result;
+    // all in this one func right now so we can abuse memoization and reusing vars
+    var metric, result, target, dir, tip;
 
     // TODO: this has to be hella inefficient
-    var text = $(editable).text();
-    var html = $(editable).html();
+    var text = $(editable).text() || '';
+    var html = $(editable).html() || '';
 
-    // words per sentence
+    // stuff to reuse
     var words = text.split(' '); // TODO: remove '  '
     var sentences = text.split('.'); // TODO: wrong
+    var paragraphs = (html.split("</p>") || []).length - 1; // TODO: wrong and inefficient
+    var syllables = syllables_in(text); // TODO: probably need to sanitize first
+
+
+    // words per sentence
     metric = $('.metric#words_per_sentence');
     result = Math.round(words.length / sentences.length);
-
+    target = metric.find('.target').text();
+    dir = delta(result, target);
     metric.find('.current').text(result);
-    metric.find('.delta').text(delta(result, metric.find('.target').text()));
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try writing more words per sentence. Adjectives are great for this!').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try writing fewer words per sentence. Cut out any unneccessary words you can.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
 
     // words per paragraph
-    var paragraphs = (html.split("</p>") || []).length - 1; // TODO: wrong and inefficient
     metric = $('.metric#words_per_paragraph');
     result = Math.round(words.length / paragraphs);
-
+    target = metric.find('.target').text();
+    dir = delta(result, target);
     metric.find('.current').text(result);
-    metric.find('.delta').text(delta(result, metric.find('.target').text()));
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try writing more words per sentence or sentences per paragraph.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try writing fewer words per sentence or sentences per paragraph.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
 
+    // flsech kincaid grade level
+    metric = $('.metric#flesch_kincaid_grade_level');
+    result = Math.round(0.39 * (words.length / sentences.length) + 11.8 * (syllables / words.length) - 15.59);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('You can raise your grade level by using larger words and longer sentences.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('You can lower your grade level by using simpler words and shorter sentences.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // flesch kincaid reading ease
+    metric = $('.metric#flesch_kincaid_reading_ease');
+    result = Math.round(206.835 - 1.015 * (words.length / sentences.length) - (syllables / words.length));
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('You can raise your reading ease by using larger words and longer sentences.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('You can lower your reading ease by using simpler words and shorter sentences.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
   });
 <% end %>

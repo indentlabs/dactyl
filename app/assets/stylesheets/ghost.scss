@@ -39,10 +39,6 @@
       .goal {
         float: right;
         font-size: 110%;
-
-        .delta {
-          color: lime;
-        }
       }
 
       .tip {
@@ -52,5 +48,24 @@
       }
 
     }
+  }
+}
+
+.up {
+  color: lime;
+  &:before {
+    content: '▲';
+  }
+}
+.down {
+  color: red;
+  &:before {
+    content: '▼';
+  }
+}
+.stay {
+  color: #333;
+  &:before {
+    content: '~'
   }
 }

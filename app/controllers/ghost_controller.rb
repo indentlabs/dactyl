@@ -1,9 +1,9 @@
 class GhostController < ApplicationController
 
   METRICS_IN_EDITOR = [
-    # 'ReadabilityService::flesch_kincaid_grade_level',
+    'ReadabilityService::flesch_kincaid_grade_level',
     # 'ReadabilityService::flesch_kincaid_age_minimum',
-    # 'ReadabilityService::flesch_kincaid_reading_ease',
+    'ReadabilityService::flesch_kincaid_reading_ease',
     # 'ReadabilityService::forcast_grade_level',
     # 'ReadabilityService::coleman_liau_index',
     # 'ReadabilityService::automated_readability_index',
