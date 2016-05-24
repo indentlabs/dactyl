@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/billthompson/birch.git
+  revision: dc6c8e5d667f6c946c989f4d8f159f622d3bf77a
+  branch: birch-ruby22
+  specs:
+    birch (0.0.8)
+
+GIT
   remote: https://github.com/indentlabs/treat-gem.git
   revision: 7b6e8fe6a8c36e005833b0704403ade0594ee360
   specs:
@@ -53,7 +60,6 @@ GEM
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    birch (0.0.9)
     builder (3.2.2)
     byebug (3.4.0)
       columnize (~> 0.8)
@@ -207,6 +213,7 @@ PLATFORMS
 
 DEPENDENCIES
   alchemy-api-rb
+  birch!
   byebug (= 3.4.0)
   coffee-rails
   docx-html (~> 0.1.0)

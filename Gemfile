@@ -14,6 +14,7 @@ gem 'rails-html-sanitizer'
 gem 'material_icons'
 
 # NLP
+gem 'birch', github: 'billthompson/birch', branch: 'birch-ruby22'
 # can move back to treat core when https://github.com/louismullie/treat/issues/115 is resolved
 gem 'treat', :git => 'https://github.com/indentlabs/treat-gem.git'
 #gem 'stanford-core-nlp'
