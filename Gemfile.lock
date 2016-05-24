@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/indentlabs/treat-gem.git
+  revision: 7b6e8fe6a8c36e005833b0704403ade0594ee360
+  specs:
+    treat (2.1.0)
+      birch
+      schiphol
+      yomu
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -44,6 +53,7 @@ GEM
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    birch (0.0.9)
     builder (3.2.2)
     byebug (3.4.0)
       columnize (~> 0.8)
@@ -109,6 +119,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (0.18.4)
+    progressbar (0.21.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -152,6 +163,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    schiphol (1.0.1)
+      progressbar (>= 0.10.0)
+      rubyzip (~> 0.9.9)
     sentimental (1.4.0)
       json (~> 1.8, >= 1.8.3)
     sequel (3.48.0)
@@ -186,6 +200,7 @@ GEM
     wordnet (1.0.0)
       loggability (~> 0.5)
       sequel (~> 3.38)
+    yomu (0.1.5)
 
 PLATFORMS
   ruby
@@ -211,6 +226,7 @@ DEPENDENCIES
   spring
   sqlite3
   therubyracer
+  treat!
   turbolinks
   uglifier
   web-console (~> 2.0)

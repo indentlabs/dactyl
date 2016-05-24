@@ -14,7 +14,8 @@ gem 'rails-html-sanitizer'
 gem 'material_icons'
 
 # NLP
-#gem 'treat'
+# can move back to treat core when https://github.com/louismullie/treat/issues/115 is resolved
+gem 'treat', :git => 'https://github.com/indentlabs/treat-gem.git'
 #gem 'stanford-core-nlp'
 gem 'engtagger'
 gem 'wordnet'
