@@ -1,0 +1,9 @@
+<div id="login-box">
+  <% if current_user %>
+    <%= link_to 'Account settings', edit_user_registration_path, class: 'mui-btn' %>
+    <%= link_to "Log out", destroy_user_session_path, method: :delete, class: 'mui-btn' %>
+  <% else %>
+    <%= link_to 'Sign up', new_user_registration_path, class: 'mui-btn' %>
+    <%= link_to 'Login',   new_user_session_path, class: 'mui-btn' %>
+  <% end %>
+</div>
