@@ -12,6 +12,7 @@ class DactylogramController < ApplicationController
   end
 
   def index
+    # TODO
   end
 
   def new
@@ -19,6 +20,7 @@ class DactylogramController < ApplicationController
   end
 
   def create
+    # TODO: clean this up
     return unless @analysis_string.present?
 
     #todo should probably break this out into separate post endpoint
@@ -31,6 +33,7 @@ class DactylogramController < ApplicationController
   end
 
   def upload
+    # TODO: clean this up
     return unless @analysis_string.present?
 
     d = Dactylogram.new(corpus: build_corpus_for(@analysis_string), identifier: params[:author])
@@ -42,12 +45,13 @@ class DactylogramController < ApplicationController
   def show
     d = Dactylogram.find(params[:id])
 
-    # redirect_to 404 unless d
+    # TODO: redirect_to 404 unless d
     @report = d.metric_report
     @report[:metrics] = metrics_by_category @report[:metrics]
   end
 
   def destroy
+    # TODO
   end
 
   private

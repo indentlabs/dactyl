@@ -53,7 +53,7 @@ class GhostController < ApplicationController
   def editor
     # TODO: this should be Identity has_many :dactylograms
     # TODO: let user specify which dactylogram to guide
-    @dactyl = Dactylogram.find_by(reference: params[:reference])
+    @dactyl = Dactylogram.find(params[:dactylogram_id])
 
     # TODO: uhhh this name
     @alwaysshowingmetrics = ALWAYS_SHOWING_METRICS

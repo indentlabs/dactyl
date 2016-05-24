@@ -10,8 +10,8 @@
     Ghost
   </h1>
   <h2>
-    <%= link_to 'Powered by', show_dactylogram_path(reference: @dactyl.reference) %>
-    <%= link_to show_dactylogram_path(reference: @dactyl.reference) do %>
+    <%= link_to 'Powered by', @dactyl %>
+    <%= link_to @dactyl do %>
       <%= image_tag 'dactyl-hero.png', height: '40px;' %>
     <% end %>
   </h2>
