@@ -3,7 +3,7 @@
     <a href="/"><%= image_tag 'dactyl-hero.png' %></a>
 </div>
 
-<%= form_tag(params.except(:text), method: :post, class: 'mui-panel', id: 'this-form') do %>
+<%= form_tag({action: :create}, method: :post, class: 'mui-panel', id: 'this-form') do %>
     <i class="material-icons md-36 toggle-expansion-button">aspect_ratio</i>
     <legend style="width: 80%;">Generate a linguistic dactylogram below:</legend>
 
@@ -26,11 +26,11 @@
     <div style="clear: both;"></div>
 <% end %>
 
-<%= form_tag({action: :index}, multipart: true, id: 'file-upload-form') do %>
-    <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document-upload" %>
+<%= form_tag({action: :create}, multipart: true, id: 'file-upload-form') do %>
+  <%= file_field_tag 'file', accept: '.pdf,.docx,.rtf,.txt', id: "document-upload" %>
 <% end %>
 
-  
+
 <script type="text/javascript">
   $('#submit-loading-icon').hide();
 

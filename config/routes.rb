@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-  root 'web#index'
-  get '/' => 'web#index'
-  post '/' => 'web#index'
+  root 'dactylogram#new'
+  resources :dactylogram
 
-  get '/upload' => 'web#upload'
-  post '/upload' => 'web#upload'
+  get '/upload' => 'dactylogram#upload'
+  post '/upload' => 'dactylogram#upload'
 
-  get '/analysis/:reference' => 'web#show', as: 'show_dactylogram'
+  #get '/analysis/:reference' => 'dactylogram#show', as: 'show_dactylogram'
   get '/ghost/:reference' => 'ghost#editor'
 
   scope :api do
