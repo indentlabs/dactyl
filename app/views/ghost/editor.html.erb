@@ -151,6 +151,14 @@
     var text = $(editable).text() || '';
     var html = $(editable).html() || '';
 
+    // Don't start analyzing until users have at least 100 characters.
+    if (text.length < 50) {
+      $('.metric').fadeOut();
+      return;
+    } else {
+      $('.metric').fadeIn();
+    }
+
     // stuff to reuse
     var words = text.split(' '); // TODO: remove '  '
     var sentences = text.split('.'); // TODO: wrong
