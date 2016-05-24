@@ -61,7 +61,25 @@ pre {
     }
 }
 
+
+.form-container {
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+
+    .mui-form-group {
+        height: 95%;
+
+        .mui-textfield {
+            height: 100%;
+        }
+    }
+}
+
 .buttons {
+    width: 100%;
+    margin-top: auto;
+
     button {
         margin-right: 7px;
     }
@@ -102,6 +120,7 @@ pre {
 #input_text_area {
     min-height: 250px;
     height: 100%;
+    resize: vertical;
 }
 
 .mui-appbar {

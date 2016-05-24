@@ -4,22 +4,24 @@
 </div>
 
 <%= form_tag({action: :create}, method: :post, class: 'mui-panel', id: 'this-form') do %>
-    <i class="material-icons md-36 toggle-expansion-button">aspect_ratio</i>
-    <legend style="width: 80%;">Generate a linguistic dactylogram below:</legend>
+  <i class="material-icons md-36 toggle-expansion-button">aspect_ratio</i>
+  <legend style="width: 80%;">Generate a linguistic dactylogram below:</legend>
 
-    <div class="mui-form-group" style="height:80%;">
+  <div class="form-container">
+    <div class="mui-form-group">
       <div class="mui-textfield mui-textfield--float-label">
         <textarea name="text" id="input_text_area"><%= @file_text || 'It was a dark and stormy night...' %></textarea>
         <label>Write or paste any text here</label>
       </div>
     </div>
     <div class="buttons">
-        <button type="submit" class="mui-btn mui-btn--default mui-btn--primary mui-btn--raised" id="analyze-text-button">Analyze this text</button>
-        or
-        <button id="document-upload-button" class="mui-btn mui-btn--default mui-btn--raised" onclick="#">Analyze a file</button>
-        <span class="loading-icon" id="submit-loading-icon"><%= image_tag 'loading.gif' %></span>
+      <button type="submit" class="mui-btn mui-btn--default mui-btn--primary mui-btn--raised" id="analyze-text-button">Analyze this text</button>
+      or
+      <button id="document-upload-button" class="mui-btn mui-btn--default mui-btn--raised" onclick="#">Analyze a file</button>
+      <span class="loading-icon" id="submit-loading-icon"><%= image_tag 'loading.gif' %></span>
     </div>
     <div style="clear: both;"></div>
+  </div>
 <% end %>
 
 <%= form_tag({ action: :create }, multipart: true, id: 'file-upload-form') do %>
