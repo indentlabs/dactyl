@@ -1,9 +1,15 @@
-<div id="login-box">
-  <% if current_user %>
-    <%= link_to 'Account settings', edit_user_registration_path, class: 'mui-btn' %>
-    <%= link_to "Log out", destroy_user_session_path, method: :delete, class: 'mui-btn' %>
-  <% else %>
-    <%= link_to 'Sign up', new_user_registration_path, class: 'mui-btn' %>
-    <%= link_to 'Login',   new_user_session_path, class: 'mui-btn' %>
-  <% end %>
-</div>
+<% if current_user %>
+  <div class="mui-dropdown">
+    <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+      Your Account
+      <span class="mui-caret"></span>
+    </button>
+    <ul class="mui-dropdown__menu mui-dropdown__menu--right">
+      <li><%= link_to 'Account settings', edit_user_registration_path, class: 'mui--text-white' %></li>
+      <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: 'mui--text-white' %></li>
+    </ul>
+  </div>
+<% else %>
+  <%= link_to 'Sign up', new_user_registration_path, class: 'mui--text-white' %>
+  <%= link_to 'Login',   new_user_session_path, class: 'mui--text-white' %>
+<% end %>

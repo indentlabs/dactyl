@@ -104,14 +104,15 @@ pre {
     height: 100%;
 }
 
-#nav-box {
-    position: absolute;
-    top: 0;
-    left: 10px;
-}
+.mui-appbar {
+    padding: 0 10px;
+    margin-bottom: 20px;
 
-#login-box {
-    position: absolute;
-    top: 0;
-    right: 10px;
+    a {
+        padding-right: 10px;
+    }
+
+    .brand {
+        font-size: 150%;
+    }
 }
