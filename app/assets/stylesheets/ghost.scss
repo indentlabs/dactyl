@@ -4,8 +4,13 @@
   margin: 0 auto;
 
   h1 {
-    float: right;
+    float: left;
     font-size: 150%;
+  }
+
+  h2 {
+    float: right;
+    font-size: 90%;
   }
 
   .editor {

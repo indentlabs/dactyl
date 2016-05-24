@@ -7,8 +7,7 @@ Rails.application.routes.draw do
   post '/upload' => 'web#upload'
 
   get '/analysis/:reference' => 'web#show', as: 'show_dactylogram'
-
-  get '/ghost' => 'ghost#editor'
+  get '/ghost/:reference' => 'ghost#editor'
 
   scope :api do
     scope :v1 do

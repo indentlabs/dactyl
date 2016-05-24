@@ -6,7 +6,15 @@
 <script src="https://npmcdn.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>
 
 <div id="ghost-container">
-  <h1>Ghost</h1>
+  <h1>
+    Ghost
+  </h1>
+  <h2>
+    <%= link_to 'Powered by', show_dactylogram_path(reference: @dactyl.reference) %>
+    <%= link_to show_dactylogram_path(reference: @dactyl.reference) do %>
+      <%= image_tag 'dactyl-hero.png', height: '40px;' %>
+    <% end %>
+  </h2>
   <div class="metrics">
 
     <%# TODO: editor/ partials %>

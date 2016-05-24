@@ -48,7 +48,7 @@ class GhostController < ApplicationController
   def editor
     # TODO: this should be Identity has_many :dactylograms
     # TODO: let user specify which dactylogram to guide
-    @dactyl = Dactylogram.last
+    @dactyl = Dactylogram.find_by(reference: params[:reference])
 
     @metrics = @dactyl.metrics.select { |k, v| METRICS_IN_EDITOR.include? k }
   end
