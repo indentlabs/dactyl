@@ -14,8 +14,6 @@ Rails.application.routes.draw do
   get '/upload' => 'dactylogram#upload'
   post '/upload' => 'dactylogram#upload'
 
-  get '/ghost/:reference' => 'ghost#editor'
-
   scope :api do
     scope :v1 do
       get '/dactyl' => 'api#dactyl'

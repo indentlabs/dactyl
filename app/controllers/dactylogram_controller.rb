@@ -43,10 +43,10 @@ class DactylogramController < ApplicationController
   end
 
   def show
-    d = Dactylogram.find(params[:id])
+    @dactyl = Dactylogram.find(params[:id])
 
     # TODO: redirect_to 404 unless d
-    @report = d.metric_report
+    @report = @dactyl.metric_report
     @report[:metrics] = metrics_by_category @report[:metrics]
   end
 

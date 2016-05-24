@@ -3,8 +3,8 @@
 </div>
 
 <div class="mui-panel" style="text-align: center">
-    <%= link_to "View this as an API call", "/api/v1/dactyl?id=#{params[:reference]}", class: "mui-btn mui-btn-raised" %>
-    <%= link_to "Analyze something else", "/", class: "mui-btn mui-btn-raised" %>
+    <%= link_to "Write more like this", dactylogram_ghost_path(@dactyl), class: "mui-btn mui-btn--raised mui-btn--primary" %>
+    <%= link_to "Analyze something else", "/", class: "mui-btn mui-btn--raised" %>
 </div>
 
 <% @report && @report[:metrics].keys.each do |category| %>
