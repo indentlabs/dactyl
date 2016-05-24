@@ -2,6 +2,7 @@ class Dactylogram < ActiveRecord::Base
     include Comparable
 
     belongs_to :corpus
+    belongs_to :user
 
     validates :metrics, presence: true
 

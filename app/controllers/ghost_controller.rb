@@ -1,4 +1,5 @@
 class GhostController < ApplicationController
+  before_action :authenticate_user!
 
   ALWAYS_SHOWING_METRICS = [
     'WordFrequencyService::word_count',

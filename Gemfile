@@ -3,6 +3,14 @@ ruby '2.2.3'
 # Architecture
 gem 'rails', '4.2.5'
 
+# Authentication
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-google'
+gem 'omniauth-facebook'
+# TODO: gem 'omniauth-indent'
+
 # Assets
 gem 'sass-rails', '~> 5.0'
 gem 'therubyracer'
