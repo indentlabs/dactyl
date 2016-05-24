@@ -1,4 +1,10 @@
 </div> <%# lol %>
+<%# TODO: give this page its own layout %>
+
+
+
+<script src="https://npmcdn.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>
+
 <div id="ghost-container">
   <h1>Ghost</h1>
   <div class="metrics">
@@ -7,6 +13,7 @@
     <% @metrics.each do |metric_name, metric_value| %>
       <div class="metric" id="<%= metric_name.split('::').last %>">
         <span class="goal">
+          <% metric_value *= 100 if metric_name.end_with? '_percentage' %>
           <span class="current"></span>/<span class="target"><%= metric_value.to_i %></span> <span class="delta"></span>
         </span>
         <span class="name">
@@ -23,6 +30,12 @@
 </div>
 
 <%= content_for :scripts do %>
+  <%# TODO: put this in nlp_compromise.js %>
+  var nlp = window.nlp_compromise;
+
+
+
+  <%# TODO: put this in editor.js %>
   var editor = new MediumEditor('.editor', {
   	<%# TODO: Define custom buttons here - https://github.com/yabwe/medium-editor#mediumeditor-options %>
 
@@ -95,7 +108,6 @@
             }
         ],
     },
-
     autoLink: true
 
 
@@ -137,6 +149,29 @@
     var paragraphs = (html.split("</p>") || []).length - 1; // TODO: wrong and inefficient
     var syllables = syllables_in(text); // TODO: probably need to sanitize first
 
+    // pos
+    var adjectives   = [],
+        conjunctions = [],
+        determiners  = [],
+        nouns        = [],
+        prepositions = [],
+        pronouns     = [],
+        verbs        = [];
+
+    // Populate the above in a single loop so it's not ungodly slow
+    nlp.text(text).terms().map(function (word) {
+      // TODO: abstract this out into PoSExtractor or something
+
+      let pos = word['pos'];
+
+      if (pos['Adjective'])   { adjectives.push(word); }
+      if (pos['Conjunction']) { conjunctions.push(word); }
+      if (pos['Determiner'])  { determiners.push(word); }
+      if (pos['Noun'])        { nouns.push(word); }
+      if (pos['Preposition']) { prepositions.push(word); }
+      if (pos['Pronoun'])     { pronouns.push(word); }
+      if (pos['Verb'])        { verbs.push(word); }
+    });
 
     // words per sentence
     metric = $('.metric#words_per_sentence');
@@ -197,5 +232,112 @@
     } else {
       metric.find('.tip').fadeOut();
     }
+
+    // adjective percentage
+    metric = $('.metric#adjective_percentage');
+    result = Math.round(adjectives.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to be more descriptive with rich adjectives.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to cut out any unneccessary adjectives.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // conjunction percentage
+    console.log(conjunctions);
+    metric = $('.metric#conjunction_percentage');
+    result = Math.round(conjunctions.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to segway between thoughts with conjunctions.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to use fewer conjunctions.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // determiner percentage
+    metric = $('.metric#determiner_percentage');
+    result = Math.round(determiners.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to use more determiners.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to use fewer determiners.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // noun percentage
+    metric = $('.metric#noun_percentage');
+    result = Math.round(nouns.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to use more nouns.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to use fewer nouns.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // prepositions percentage
+    metric = $('.metric#preposition_percentage');
+    result = Math.round(prepositions.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to use more prepositions.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to use fewer prepositions.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // pronouns percentage
+    metric = $('.metric#pronoun_percentage');
+    result = Math.round(pronouns.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to use more pronouns.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to use fewer pronouns.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
+    // verbs percentage
+    metric = $('.metric#verb_percentage');
+    result = Math.round(verbs.length / words.length * 100);
+    target = metric.find('.target').text();
+    dir = delta(result, target);
+    metric.find('.current').text(result);
+    metric.find('.delta').removeClass().addClass('delta').addClass(dir);
+    if (result < target * 0.6) {
+      metric.find('.tip').text('Try to use more verbs.').fadeIn();
+    } else if (result > target * 1.6) {
+      metric.find('.tip').text('Try to use fewer verbs.').fadeIn();
+    } else {
+      metric.find('.tip').fadeOut();
+    }
+
   });
 <% end %>
