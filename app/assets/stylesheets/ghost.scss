@@ -29,6 +29,16 @@
     background: white;
     border-left: 1px solid #cdcdcd;
 
+    .data {
+      border-bottom: 1px dotted #222;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+
+      .metric {
+        display: block !important;
+      }
+    }
+
     position: fixed;
     overflow-y: scroll;
     right: 0;

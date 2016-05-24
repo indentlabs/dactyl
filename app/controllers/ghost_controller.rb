@@ -1,5 +1,10 @@
 class GhostController < ApplicationController
 
+  ALWAYS_SHOWING_METRICS = [
+    'WordFrequencyService::word_count',
+    'ReadabilityService::estimated_reading_time'
+  ]
+
   METRICS_IN_EDITOR = [
     'ReadabilityService::flesch_kincaid_grade_level',
     # 'ReadabilityService::flesch_kincaid_age_minimum',
@@ -50,6 +55,8 @@ class GhostController < ApplicationController
     # TODO: let user specify which dactylogram to guide
     @dactyl = Dactylogram.find_by(reference: params[:reference])
 
+    # TODO: uhhh this name
+    @alwaysshowingmetrics = ALWAYS_SHOWING_METRICS
     @metrics = @dactyl.metrics.select { |k, v| METRICS_IN_EDITOR.include? k }
   end
 

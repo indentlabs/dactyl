@@ -16,7 +16,21 @@
     <% end %>
   </h2>
   <div class="metrics">
-
+    <div class="data">
+      <% @alwaysshowingmetrics.each do |metric_name| %>
+        <div class="metric" id="<%= metric_name.split('::').last %>">
+          <span class="goal">
+            <span class="current"></span>
+          </span>
+          <span class="name">
+            <%= metric_name.split('::').last.humanize %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <div id="magic-message">
+      <em>Magic will appear here when you have at least 20 words.</em>
+    </div>
     <%# TODO: editor/ partials %>
     <% @metrics.each do |metric_name, metric_value| %>
       <div class="metric" id="<%= metric_name.split('::').last %>">
@@ -27,9 +41,7 @@
         <span class="name">
           <%= metric_name.split('::').last.humanize %>
         </span>
-        <p class="tip">
-          Write differently to be different.
-        </p>
+        <p class="tip"></p>
       </div>
     <% end %>
 
@@ -151,14 +163,6 @@
     var text = $(editable).text() || '';
     var html = $(editable).html() || '';
 
-    // Don't start analyzing until users have at least 100 characters.
-    if (text.length < 50) {
-      $('.metric').fadeOut();
-      return;
-    } else {
-      $('.metric').fadeIn();
-    }
-
     // stuff to reuse
     var words = text.split(' '); // TODO: remove '  '
     var sentences = text.split('.'); // TODO: wrong
@@ -188,6 +192,30 @@
       if (pos['Pronoun'])     { pronouns.push(word); }
       if (pos['Verb'])        { verbs.push(word); }
     });
+
+    // ALWAYS_SHOWING metrics
+
+    // word count
+    metric = $('.metric#word_count');
+    result = words.length;
+    metric.find('.current').text(result);
+
+    // estimated reading time
+    metric = $('.metric#estimated_reading_time');
+    result = Math.round(words.length / (200 / 60));
+    metric.find('.current').text(result + ' seconds');
+
+    // Don't start analyzing other metrics until users have at least 50 characters.
+    if (words.length < 20) {
+      $('.metric').not('.data > .metric').fadeOut();
+      $('#magic-message').fadeIn();
+      return;
+    } else {
+      $('#magic-message').fadeOut();
+      $('.metric').not('.data > .metric').fadeIn();
+    }
+
+    // Other metrics
 
     // words per sentence
     metric = $('.metric#words_per_sentence');
