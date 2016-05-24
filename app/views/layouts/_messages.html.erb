@@ -1,2 +1,11 @@
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+<% if alert %>
+  <div class="mui-panel red">
+    <%= alert %>
+  </div>
+<% end %>
+
+<% if notice %>
+  <div class="mui-panel">
+    <%= notice %>
+  </div>
+<% end %>
