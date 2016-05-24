@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root 'dactylogram#new'
 
-  devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
+  devise_for :users, controllers: {
+                       omniauth_callbacks: 'callbacks',
+                       registrations:      'registrations'
+                     },
+                     class_name: 'OauthUser'
 
   resources :dactylogram do
     get '/ghost' => 'ghost#editor'
