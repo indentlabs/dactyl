@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
+
 # Architecture
 gem 'rails', '4.2.5'
 
@@ -20,6 +21,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'rails-html-sanitizer'
 gem 'material_icons'
+gem 'font-awesome-rails'
 
 # NLP
 gem 'birch', github: 'billthompson/birch', branch: 'birch-ruby22'

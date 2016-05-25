@@ -1,26 +1,32 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="mui-panel">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name),) do |f| %>
+    <legend>Sign in with email</legend>
+    <div class="mui-textfield mui-textfield--float-label">
+      <%= f.email_field :email, autofocus: true %>
+      <%= f.label :email %>
     </div>
-  <% end -%>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+    <div class="mui-textfield mui-textfield--float-label">
+      <%= f.password_field :password, autocomplete: "off" %>
+      <%= f.label :password %>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <% if devise_mapping.rememberable? -%>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end -%>
+
+    <div class="actions">
+      <%= f.submit 'Log in', class: 'mui-btn mui-btn--raised mui-btn--primary' %>
+      <%= render "devise/shared/links" %>
+    </div>
+  <% end %>
+
+</div>
+
+<div class="mui-panel">
+  <legend>Or sign in with</legend>
+  <%= render 'devise/shared/omniauths' %>
+</div>

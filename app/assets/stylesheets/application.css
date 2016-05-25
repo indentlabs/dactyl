@@ -14,5 +14,6 @@
  *= require_tree .
  *= require medium-editor/medium-editor
  *= require medium-editor/themes/tim
+ *= require font-awesome
  *= require_self
  */

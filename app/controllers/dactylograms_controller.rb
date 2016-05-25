@@ -21,7 +21,10 @@ class DactylogramsController < ApplicationController
 
   def create
     # TODO: clean this up
-    return unless @analysis_string.present?
+    unless @analysis_string.present?
+      redirect_to root_path
+      return
+    end
 
     #todo should probably break this out into separate post endpoint
     d = Dactylogram.new corpus: build_corpus_for(@analysis_string)
@@ -35,7 +38,10 @@ class DactylogramsController < ApplicationController
 
   def upload
     # TODO: clean this up
-    return unless @analysis_string.present?
+    unless @analysis_string.present?
+      redirect_to root_path
+      return
+    end
 
     d = Dactylogram.new(corpus: build_corpus_for(@analysis_string), identifier: params[:author])
     d.user = current_user if current_user

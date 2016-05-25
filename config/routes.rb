@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get '/ghost' => 'ghost#editor'
   end
 
+  # TODO: clean these up
   get '/upload' => 'dactylograms#upload'
   post '/upload' => 'dactylograms#upload'
 

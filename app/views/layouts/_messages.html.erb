@@ -1,11 +1,10 @@
-<% if alert %>
-  <div class="mui-panel red">
-    <%= alert %>
-  </div>
-<% end %>
-
-<% if notice %>
-  <div class="mui-panel">
-    <%= notice %>
+<% if notice || alert %>
+  <div class="mui-panel" id="message-panel">
+    <% if alert %>
+      <div>Alert: <%= alert %></div>
+    <% end %>
+    <% if notice %>
+      <div>Notice: <%= notice %></div>
+    <% end %>
   </div>
 <% end %>

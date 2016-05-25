@@ -1,0 +1,7 @@
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= link_to omniauth_authorize_path(resource_name, provider), class: 'mui-btn mui-btn--raised mui-btn--accent' do %>
+      <%= fa_icon provider %> <%= OmniAuth::Utils.camelize(provider) %>
+    <% end %>
+  <% end -%>
+<% end -%>
