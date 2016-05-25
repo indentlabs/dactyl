@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         :omniauthable, :omniauth_providers => [:twitter, :google, :facebook]
+         :omniauthable, :omniauth_providers => [
+            :twitter,
+            #:google,
+            :facebook
+          ]
 
   has_many :identities
   has_many :dactylograms
