@@ -1,0 +1,30 @@
+<div class="mui-panels">
+	<%= link_to 'Analyze something new', root_path, class: 'mui-btn mui-btn--primary' %>
+</div>
+<h1>Your recent dactylograms</h1>
+<% @dactylograms.each do |date, dactylogram_list_for_the_day| %>
+	<h2><%= date.strftime('%B %e, %Y') %></h2>
+	<% dactylogram_list_for_the_day.each do |dactylogram| %>
+		<div class="mui-panel">
+			<table class="mui-table">
+				<thead>
+					<tr>
+						<th>Word Count</th>
+						<th>Analyzed</th>
+						<th>Link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><%= dactylogram.metrics['WordFrequencyService::word_count'] %></td>
+						<td><%= dactylogram.created_at.strftime('%l:%M %p') %></td>
+						<td><%= link_to 'Full Report', dactylogram %></td>
+					</tr>
+				</tbody>
+			</table>
+			<div>
+				<em><%= truncate(dactylogram.corpus.text, length: 140)  %></em>
+			</div>
+		</div>
+	<% end %>
+<% end %>

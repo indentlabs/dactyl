@@ -1,4 +1,4 @@
-class DactylogramController < ApplicationController
+class DactylogramsController < ApplicationController
   include ParserHelper
 
   before_action :set_analysis_string
@@ -12,7 +12,7 @@ class DactylogramController < ApplicationController
   end
 
   def index
-    # TODO
+    @dactylograms = current_user.dactylograms.last(10).reverse.group_by { |d| d.created_at.to_date }
   end
 
   def new
@@ -25,6 +25,7 @@ class DactylogramController < ApplicationController
 
     #todo should probably break this out into separate post endpoint
     d = Dactylogram.new corpus: build_corpus_for(@analysis_string)
+    d.user = current_user if current_user
     d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
     d.compute_metrics!
     d.save!
@@ -37,6 +38,7 @@ class DactylogramController < ApplicationController
     return unless @analysis_string.present?
 
     d = Dactylogram.new(corpus: build_corpus_for(@analysis_string), identifier: params[:author])
+    d.user = current_user if current_user
     d.instance_variable_set(:@metrics, params[:metrics].map { |m| "#{m}_metric" }) if params[:metrics].present?
     d.compute_metrics!
     d.save!

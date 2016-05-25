@@ -5,6 +5,7 @@
       <span class="mui-caret"></span>
     </button>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">
+      <li><%= link_to 'Recent dactylograms', dactylograms_path, class: 'mui--text-white' %></li>
       <li><%= link_to 'Account settings', edit_user_registration_path, class: 'mui--text-white' %></li>
       <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: 'mui--text-white' %></li>
     </ul>

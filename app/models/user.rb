@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:twitter, :google, :facebook]
 
   has_many :identities
+  has_many :dactylograms
 
   def self.from_omniauth auth
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'dactylogram#new'
+  root 'dactylograms#new'
 
   devise_for :users, controllers: {
                        omniauth_callbacks: 'callbacks',
@@ -7,12 +7,12 @@ Rails.application.routes.draw do
                      },
                      class_name: 'OauthUser'
 
-  resources :dactylogram do
+  resources :dactylograms do
     get '/ghost' => 'ghost#editor'
   end
 
-  get '/upload' => 'dactylogram#upload'
-  post '/upload' => 'dactylogram#upload'
+  get '/upload' => 'dactylograms#upload'
+  post '/upload' => 'dactylograms#upload'
 
   scope :api do
     scope :v1 do
