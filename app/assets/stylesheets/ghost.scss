@@ -1,6 +1,5 @@
 #ghost-container {
 
-  width: 900px;
   margin: 0 auto;
 
   h1 {
@@ -14,43 +13,34 @@
   }
 
   .editor {
-    background: white;
     clear: both;
 
     font-size: 115%;
     padding: 30px 40px;
+    padding-bottom: 300px;
     width: 100%;
 
     margin-bottom: 100px;
-    text-indent: 50px;
+    text-indent: 40px;
+  }
+
+  .stats {
+    margin-bottom: 20px;
+
+    .metric {
+      margin-bottom: 5px;
+    }
+
+    .goal {
+      float: right;
+      font-size: 110%;
+    }
   }
 
   .metrics {
-    background: white;
-    border-left: 1px solid #cdcdcd;
-
-    .data {
-      border-bottom: 1px dotted #222;
-      padding-bottom: 20px;
-      margin-bottom: 20px;
-
-      .metric {
-        display: block !important;
-      }
-    }
-
-    position: fixed;
-    overflow-y: scroll;
-    right: 0;
-    top: 0;
-    height:100%;
-    width: 340px;
-    padding: 20px 15px;
-
     .metric {
-
-      display: none;
       clear: both;
+      margin-bottom: 5px;
 
       .goal {
         float: right;
@@ -82,6 +72,6 @@
 .stay {
   color: #333;
   &:before {
-    content: '~'
+    content: '☺'
   }
 }

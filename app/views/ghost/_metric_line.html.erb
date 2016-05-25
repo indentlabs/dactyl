@@ -1,0 +1,10 @@
+<div class="metric" id="<%= name %>">
+  <span class="goal">
+    <% value *= 100 if name.end_with? '_percentage' %>
+    <span class="current"></span>/<span class="target"><%= value.to_i %></span> <span class="delta"></span>
+  </span>
+  <span class="name">
+    <%= name.humanize %>
+  </span>
+  <p class="tip"></p>
+</div>
