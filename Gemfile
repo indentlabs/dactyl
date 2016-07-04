@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
 
 # Architecture
 gem 'rails', '4.2.5'
@@ -44,9 +43,12 @@ gem 'nokogiri', '~>1.6.7'
 gem 'medium-editor-rails'
 
 # Development
+group :development do
+  gem 'web-console', '~> 2.0'
+end
+
 group :development, :test do
   gem 'pry'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'sqlite3'
   #gem 'pg'
