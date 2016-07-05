@@ -48,6 +48,8 @@ group :development do
 end
 
 group :development, :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails', '~> 4.0', require: false
   gem 'pry'
   gem 'spring'
   gem 'sqlite3'
