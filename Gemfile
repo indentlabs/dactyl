@@ -47,6 +47,11 @@ group :development do
   gem 'web-console', '~> 2.0'
 end
 
+group :test do
+  gem 'coveralls', require: false
+  gem 'simplecov', require: false
+end
+
 group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 4.0', require: false
