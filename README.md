@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/indentlabs/dactyl.svg)](https://travis-ci.org/indentlabs/dactyl)
+[![Coverage Status](https://coveralls.io/repos/github/indentlabs/dactyl/badge.svg?branch=master)](https://coveralls.io/github/indentlabs/dactyl?branch=master)
 
 Linguistic fingerprinting as a service
 
