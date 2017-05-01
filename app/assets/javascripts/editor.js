@@ -124,7 +124,7 @@ editor.subscribe('editableInput', function (event, editable) {
   nlp.text(text).terms().map(function (word) {
     // TODO: abstract this out into PoSExtractor or something
 
-    let pos = word['pos'];
+    var pos = word['pos'];
 
     if (pos['Adjective'])   { adjectives.push(word); }
     if (pos['Conjunction']) { conjunctions.push(word); }
