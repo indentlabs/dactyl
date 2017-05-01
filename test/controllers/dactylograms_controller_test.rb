@@ -1,6 +1,13 @@
 require 'test_helper'
 
-class DactylogramControllerTest < ActionController::TestCase
+class DactylogramsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+  
+  setup do
+    request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in create(:user)
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -12,7 +19,7 @@ class DactylogramControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-    get :create
+    get :create, { text: "text" }
     assert_response :success
   end
 

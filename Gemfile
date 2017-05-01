@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
 
 # Architecture
 gem 'rails', '4.2.5'
@@ -44,9 +43,19 @@ gem 'nokogiri', '~>1.6.7'
 gem 'medium-editor-rails'
 
 # Development
-group :development, :test do
-  gem 'pry'
+group :development do
   gem 'web-console', '~> 2.0'
+end
+
+group :test do
+  gem 'coveralls', require: false
+  gem 'simplecov', require: false
+end
+
+group :development, :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails', '~> 4.0', require: false
+  gem 'pry'
   gem 'spring'
   gem 'sqlite3'
   #gem 'pg'

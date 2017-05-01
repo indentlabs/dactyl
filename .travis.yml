@@ -1,6 +1,8 @@
 language: ruby
-rvm: 2.1.5
 services:
-  - postgresql
+- postgresql
 before_script:
-  - createdb "db/test" -U postgres
+- createdb "db/test" -U postgres
+notifications:
+  slack:
+    secure: B7awGuTnRWqqnupizISq08ERHmsDuzIih09M1dirjz4FDko1yD1AA3n6kbDkyAvJ2Vd6aVrvzVxfmA0qoPPqXOMJ4kFStssmIe1r9vSjKtdOCZ3cEwvGacp1EIkbd/H1gKPXo67MvXGeFfeLxFVmKGUImx1PQLvbxcsJibgouS6FIEav5pKcOeT0oHtYchEwaDqVXl97sETJAaLZCEBkS5SI1fCq3kektrb0wgdrPmXBqQFpWPkmTCK8GOwwtCAMbnF++eTo5dT+tzcNxBEhbnb/ylXza53jlCgs0S43jgNl2U87yaqMD89nOFJX0wFigtB5Z4XMTtzmrw+yRDP2JrsCrTnR7ApNz3le1QPHd0Rv+Xk9ZcdXd8EHn9D54iV2ecg+Pqd8fw3Z3VEMyaJrGCgmbp5tKC6oShzWuvqt2fmyD6nTSbFXoR+kGfjRe0CwFAYPAWIJeAcutiQBQqAbx+5Sx0xF8rEaGfGfMhJAsGdttbI6vuwZdOesAYOF7wXcyFxcX6KwTR1DUsoq6yHVZ+h7qT7ZYKcjRyXadAdsNo3Ma44fulVAV4v4YRMpD19PJCh9wY5akEUF+m7HnTkRKh9ZvatJDjOrvO1B79gsljuCIBfCZJUS+i77akSHmxau1llLBVxDe73kUAB/O0Tf1K6mo8VAXZDGA2w02pMOa8A=

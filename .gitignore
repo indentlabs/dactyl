@@ -20,4 +20,5 @@ db/test
 !/log/.keep
 /tmp
 
-
+# Ignore Coveralls test coverage report
+/coverage
