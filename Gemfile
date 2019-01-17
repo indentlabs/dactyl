@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Architecture
-gem 'rails', '4.2.5'
+gem 'rails', '~> 5.2'
 
 # Authentication
 gem 'devise'
@@ -44,7 +44,7 @@ gem 'medium-editor-rails'
 
 # Development
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 end
 
 group :test do
