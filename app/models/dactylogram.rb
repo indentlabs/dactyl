@@ -1,4 +1,4 @@
-class Dactylogram < ActiveRecord::Base
+class Dactylogram < ApplicationRecord
     include Comparable
 
     belongs_to :corpus

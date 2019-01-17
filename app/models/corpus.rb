@@ -1,4 +1,4 @@
-class Corpus < ActiveRecord::Base
+class Corpus < ApplicationRecord
     include HasPartsOfSpeech
 
     SYLLABLE_COUNT_OVERRIDES = {
@@ -65,4 +65,3 @@ class Corpus < ActiveRecord::Base
     end
 
 end
-

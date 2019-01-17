@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_214707) do
+ActiveRecord::Schema.define(version: 2019_01_17_215304) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -104,18 +104,15 @@ ActiveRecord::Schema.define(version: 2019_01_17_214707) do
 
   create_table "metrics", force: :cascade do |t|
     t.string "name"
-    t.string "description"
+    t.string "value"
+    t.string "prose_type"
+    t.integer "prose_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["prose_type", "prose_id"], name: "index_metrics_on_prose_type_and_prose_id"
   end
 
   create_table "oauth_users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "publish_dates", force: :cascade do |t|
-    t.date "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
