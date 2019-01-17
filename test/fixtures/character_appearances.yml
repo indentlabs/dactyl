@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  character: one
+  prose: one
+  prose_type: Prose
+
+two:
+  character: two
+  prose: two
+  prose_type: Prose
