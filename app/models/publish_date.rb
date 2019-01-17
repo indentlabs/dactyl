@@ -1,2 +1,0 @@
-class PublishDate < ApplicationRecord
-end

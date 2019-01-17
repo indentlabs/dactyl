@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  resources :books
+  resources :characters
   resources :genres
-  resources :publish_dates
   resources :publishers
   resources :authors
   root 'dactylograms#new'
