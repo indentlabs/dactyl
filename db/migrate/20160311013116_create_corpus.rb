@@ -1,4 +1,4 @@
-class CreateCorpus < ActiveRecord::Migration
+class CreateCorpus < ActiveRecord::Migration[4.2]
   def change
     create_table :corpus do |t|
       t.string :text

@@ -5,7 +5,7 @@
 
 unless defined?(Spring)
   require "rubygems"
-  require "bundler"
+  require "sidenbundler"
 
   if match = Bundler.default_lockfile.read.match(/^GEM$.*?^    (?:  )*spring \((.*?)\)$.*?^$/m)
     ENV['GEM_PATH'] = ([Bundler.bundle_path.to_s] + Gem.path).join(File::PATH_SEPARATOR)

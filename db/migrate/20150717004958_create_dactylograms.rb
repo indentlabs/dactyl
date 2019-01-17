@@ -1,4 +1,4 @@
-class CreateDactylograms < ActiveRecord::Migration
+class CreateDactylograms < ActiveRecord::Migration[4.2]
   def change
     create_table :dactylograms do |t|
 

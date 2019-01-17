@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524220213) do
+ActiveRecord::Schema.define(version: 2019_01_17_213601) do
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "corpus", force: :cascade do |t|
-    t.string   "text"
+    t.string "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -22,39 +27,43 @@ ActiveRecord::Schema.define(version: 20160524220213) do
   create_table "dactylograms", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "metrics"
-    t.string   "identifier"
-    t.string   "reference"
-    t.integer  "corpus_id"
-    t.integer  "user_id"
+    t.string "metrics"
+    t.string "identifier"
+    t.string "reference"
+    t.integer "corpus_id"
+    t.integer "user_id"
+    t.index ["corpus_id"], name: "index_dactylograms_on_corpus_id"
+    t.index ["user_id"], name: "index_dactylograms_on_user_id"
   end
 
-  add_index "dactylograms", ["corpus_id"], name: "index_dactylograms_on_corpus_id"
-  add_index "dactylograms", ["user_id"], name: "index_dactylograms_on_user_id"
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "identities", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "accesstoken"
-    t.string   "refreshtoken"
-    t.string   "uid"
-    t.string   "name"
-    t.string   "email"
-    t.string   "nickname"
-    t.string   "image"
-    t.string   "phone"
-    t.string   "urls"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer "user_id"
+    t.string "provider"
+    t.string "accesstoken"
+    t.string "refreshtoken"
+    t.string "uid"
+    t.string "name"
+    t.string "email"
+    t.string "nickname"
+    t.string "image"
+    t.string "phone"
+    t.string "urls"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id"
-
   create_table "metrics", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "oauth_users", force: :cascade do |t|
@@ -62,24 +71,35 @@ ActiveRecord::Schema.define(version: 20160524220213) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "provider"
-    t.string   "uid"
+  create_table "publish_dates", force: :cascade do |t|
+    t.date "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table "publishers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "provider"
+    t.string "uid"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
 
 end
