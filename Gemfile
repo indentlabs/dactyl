@@ -12,7 +12,7 @@ gem 'omniauth-facebook'
 # TODO: gem 'omniauth-indent'
 
 # Assets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 gem 'therubyracer'
 gem 'uglifier'
 gem 'coffee-rails'
@@ -34,10 +34,10 @@ gem 'sentimental'
 gem 'alchemy-api-rb', :require => 'alchemy_api'
 
 # Document uploading and parsing
-gem 'ruby-rtf', '0.0.1'
-gem 'docx-html', '~> 0.1.0'
-gem 'pdf-reader', '1.3.3'
-gem 'nokogiri', '~>1.6.7'
+gem 'ruby-rtf'
+gem 'docx-html'
+gem 'pdf-reader'
+gem "nokogiri"
 
 # Editor
 gem 'medium-editor-rails'
@@ -54,7 +54,7 @@ end
 
 group :development, :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails', '~> 4.0', require: false
+  gem 'factory_girl_rails', require: false
   gem 'pry'
   gem 'spring'
   gem 'sqlite3'
