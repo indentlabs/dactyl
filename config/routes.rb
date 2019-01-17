@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :publish_dates
   resources :publishers
   resources :authors
   root 'dactylograms#new'

@@ -1,0 +1,2 @@
+class PublishDate < ApplicationRecord
+end

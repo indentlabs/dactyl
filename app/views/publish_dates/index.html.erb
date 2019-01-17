@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Publish Dates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Published at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @publish_dates.each do |publish_date| %>
+      <tr>
+        <td><%= publish_date.published_at %></td>
+        <td><%= link_to 'Show', publish_date %></td>
+        <td><%= link_to 'Edit', edit_publish_date_path(publish_date) %></td>
+        <td><%= link_to 'Destroy', publish_date, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Publish Date', new_publish_date_path %>

@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Published at:</strong>
+  <%= @publish_date.published_at %>
+</p>
+
+<%= link_to 'Edit', edit_publish_date_path(@publish_date) %> |
+<%= link_to 'Back', publish_dates_path %>
