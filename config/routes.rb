@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+               omniauth_callbacks: 'callbacks',
+               registrations:      'registrations'
+             },
+             class_name: 'OauthUser'
+
   resources :publish_dates
   resources :chapters
   resources :books
@@ -6,13 +12,6 @@ Rails.application.routes.draw do
   resources :genres
   resources :publishers
   resources :authors
-  root 'dactylograms#new'
-
-  devise_for :users, controllers: {
-                       omniauth_callbacks: 'callbacks',
-                       registrations:      'registrations'
-                     },
-                     class_name: 'OauthUser'
 
   resources :dactylograms do
     get '/ghost' => 'ghost#editor'
@@ -27,4 +26,6 @@ Rails.application.routes.draw do
       get '/dactyl' => 'api#dactyl'
     end
   end
+
+  root 'dactylograms#new'
 end

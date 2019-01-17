@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Architecture
 gem 'rails', '~> 5.2'
+gem 'puma'
 
 # Authentication
 gem 'devise'
