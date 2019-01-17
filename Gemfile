@@ -12,16 +12,21 @@ gem 'omniauth-google'
 gem 'omniauth-facebook'
 # TODO: gem 'omniauth-indent'
 
-# Assets
+# Base assets
 gem 'sass-rails'
-gem 'therubyracer'
+gem 'mini_racer'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'rails-html-sanitizer'
+
+# Icons
 gem 'material_icons'
 gem 'font-awesome-rails'
+
+# Design
+gem 'materialize-sass', '~> 1.0.0'
 
 # NLP
 gem 'birch', github: 'billthompson/birch', branch: 'birch-ruby22'
