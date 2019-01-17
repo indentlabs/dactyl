@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_213601) do
+ActiveRecord::Schema.define(version: 2019_01_17_214416) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "book_has_genres", force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_has_genres_on_book_id"
+    t.index ["genre_id"], name: "index_book_has_genres_on_genre_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.datetime "last_indexed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "characters", force: :cascade do |t|
+    t.string "name"
+    t.integer "notebook_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
