@@ -1,0 +1,37 @@
+<%= form_with(model: publish_date, local: true) do |form| %>
+  <% if publish_date.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(publish_date.errors.count, "error") %> prohibited this publish_date from being saved:</h2>
+
+      <ul>
+      <% publish_date.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :published_at %>
+    <%= form.date_select :published_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :publisher_id %>
+    <%= form.text_field :publisher_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :author_id %>
+    <%= form.text_field :author_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :book_id %>
+    <%= form.text_field :book_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

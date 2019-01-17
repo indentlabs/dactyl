@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Published at:</strong>
+  <%= @publish_date.published_at %>
+</p>
+
+<p>
+  <strong>Publisher:</strong>
+  <%= @publish_date.publisher %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @publish_date.author %>
+</p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @publish_date.book %>
+</p>
+
+<%= link_to 'Edit', edit_publish_date_path(@publish_date) %> |
+<%= link_to 'Back', publish_dates_path %>

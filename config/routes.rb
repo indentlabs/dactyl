@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :publish_dates
   resources :chapters
   resources :books
   resources :characters

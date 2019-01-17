@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_215304) do
+ActiveRecord::Schema.define(version: 2019_01_17_220150) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -115,6 +115,18 @@ ActiveRecord::Schema.define(version: 2019_01_17_215304) do
   create_table "oauth_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "publish_dates", force: :cascade do |t|
+    t.date "published_at"
+    t.integer "publisher_id"
+    t.integer "author_id"
+    t.integer "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_publish_dates_on_author_id"
+    t.index ["book_id"], name: "index_publish_dates_on_book_id"
+    t.index ["publisher_id"], name: "index_publish_dates_on_publisher_id"
   end
 
   create_table "publishers", force: :cascade do |t|
