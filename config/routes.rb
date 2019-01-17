@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :publishers
+  resources :authors
   root 'dactylograms#new'
 
   devise_for :users, controllers: {
