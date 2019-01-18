@@ -22,3 +22,6 @@ db/test
 
 # Ignore Coveralls test coverage report
 /coverage
+
+
+corpi/*
