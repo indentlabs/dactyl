@@ -1,35 +1,11 @@
-html {
-    height: 100%;
-}
-
 body {
     background: #EEF7FE;
     font-size: 12pt;
 }
 
-.content-panel {
-    width: 600px;
-    height: 100%;
-    padding: 30px 10px;
-}
-
-.logo {
-    text-align: center;
-    padding-bottom: 50px;
-}
-
-.logo img {
-    width: 200px;
-}
-
 thead {
     background: #F9CE55;
     font-weight: bold;
-}
-
-tr {
-	max-height: 10px;
-	overflow: scroll;
 }
 
 pre {
@@ -43,37 +19,6 @@ pre {
 
 .metric-value {
     font-size: 20px;
-}
-
-.scrolling-container {
-    max-height: 300px;
-    overflow: auto;
-}
-
-.read-more-link {
-    float: right;
-
-    a {
-        text-decoration: none;
-        i {
-            padding-top: 2px;
-        }
-    }
-}
-
-
-.form-container {
-    height: 95%;
-    display: flex;
-    flex-direction: column;
-
-    .mui-form-group {
-        height: 95%;
-
-        .mui-textfield {
-            height: 100%;
-        }
-    }
 }
 
 .buttons {
@@ -115,30 +60,11 @@ pre {
     height: 90%;
     width: 90%;
     overflow: auto;
+    background: white;
 }
 
 #input_text_area {
     min-height: 250px;
     height: 100%;
     resize: vertical;
-}
-
-.mui-appbar {
-    padding: 0 10px;
-    margin-bottom: 20px;
-
-    a {
-        padding-right: 10px;
-    }
-
-    .brand {
-        font-size: 150%;
-    }
-}
-
-#message-panel {
-    position: absolute;
-    top: 5px;
-    display: block;
-    background-color: #F9CE55;
 }

@@ -17,20 +17,11 @@
 
 <%= render 'layouts/navbar' %>
 
-<div class="mui-container content-panel">
+<div class="container">
   <%= render 'layouts/messages' %>
 
   <%= yield %>
-
-  <div style="text-align: center">
-      Proudly powered by <a href="http://indentlabs.com">Indent Labs</a>
-      - <a href="http://feedback.dactyl.in" target="_new">Provide feedback</a>
-  </div>
-
 </div>
-
-<script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.webui-popover/1.2.5/jquery.webui-popover.min.js"></script>
 
 <script type="text/javascript">
   <%= yield :scripts %>

@@ -3,8 +3,9 @@ class Book < ApplicationRecord
   has_many :genres, through: :book_has_genres
 
   has_many :publish_dates
-  has_many :publishers, through: :publish_dates
-  has_many :authors,    through: :publish_dates
+  has_many :publishers,    through: :publish_dates
+  has_many :authors,       through: :publish_dates
+  has_many :hosted_corpus, through: :publish_dates
 
   has_many :chapters
 
@@ -14,5 +15,5 @@ class Book < ApplicationRecord
   has_many :metrics, as: :prose
 
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :title, use: :slugged
 end

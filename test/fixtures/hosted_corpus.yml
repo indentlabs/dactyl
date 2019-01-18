@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  publish_date: one
+  url: MyString
+
+two:
+  publish_date: two
+  url: MyString

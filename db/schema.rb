@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_18_005818) do
+ActiveRecord::Schema.define(version: 2019_01_18_042949) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -98,6 +98,14 @@ ActiveRecord::Schema.define(version: 2019_01_18_005818) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hosted_corpus", force: :cascade do |t|
+    t.integer "publish_date_id"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publish_date_id"], name: "index_hosted_corpus_on_publish_date_id"
   end
 
   create_table "identities", force: :cascade do |t|
