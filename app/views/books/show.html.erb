@@ -1,8 +1,11 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @book.title %>
+</p>
+
+<p>
+  <strong>Authors:</strong>
+  <% @book.authors.each { |author| %><%= link_to author.name, author %><% } %>
 </p>
 
 <p>
@@ -11,9 +14,41 @@
 </p>
 
 <p>
+  <strong>Corpi available at:</strong>
+  <ul class="browser-default">
+    <% @book.hosted_corpus.each do |corpus| %>
+      <li><%= link_to corpus.url, corpus.url %></li>
+    <% end %>
+  </ul>
+  <%= @book.description %>
+</p>
+
+<%= link_to 'Edit this book info', edit_book_path(@book) %>
+
+<p>
   <strong>Last indexed:</strong>
   <%= @book.last_indexed %>
 </p>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
+<% @book.metric_groupings.each do |metric_grouping| %>
+  <table>
+    <thead>
+      <tr>
+        <td colspan="2"><%= metric_grouping.name %></td>
+      </tr>
+    </thead>
+    <% metric_grouping.metrics.each do |metric| %>
+      <tr>
+        <td width="50%"><%= metric.name.humanize %></td>
+        <td>
+          <% if metric.name.end_with?('_percentage') %>
+            <% metric.value = metric.value.to_f * 100 %>
+            <%= number_with_precision(metric.value, precision: 3) %> %
+          <% else %>
+            <%= number_with_precision(metric.value, precision: 3) %>
+          <% end %>
+        </td>
+      </td>
+    <% end %>
+  </table>
+<% end %>

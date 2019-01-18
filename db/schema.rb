@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_18_042949) do
+ActiveRecord::Schema.define(version: 2019_01_18_070825) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -125,6 +125,15 @@ ActiveRecord::Schema.define(version: 2019_01_18_042949) do
     t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
+  create_table "metric_groupings", force: :cascade do |t|
+    t.string "name"
+    t.string "prose_type"
+    t.integer "prose_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prose_type", "prose_id"], name: "index_metric_groupings_on_prose_type_and_prose_id"
+  end
+
   create_table "metrics", force: :cascade do |t|
     t.string "name"
     t.string "value"
@@ -132,6 +141,8 @@ ActiveRecord::Schema.define(version: 2019_01_18_042949) do
     t.integer "prose_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "metric_grouping_id"
+    t.index ["metric_grouping_id"], name: "index_metrics_on_metric_grouping_id"
     t.index ["prose_type", "prose_id"], name: "index_metrics_on_prose_type_and_prose_id"
   end
 

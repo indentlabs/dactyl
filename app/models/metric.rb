@@ -1,3 +1,3 @@
 class Metric < ApplicationRecord
-  belongs_to :prose, polymorphic: true
+  belongs_to :metric_grouping
 end

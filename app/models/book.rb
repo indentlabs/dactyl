@@ -12,7 +12,8 @@ class Book < ApplicationRecord
   has_many :character_appearances
   has_many :characters, through: :character_appearances
 
-  has_many :metrics, as: :prose
+  has_many :metric_groupings, as: :prose
+  has_many :metrics, through: :metric_groupings
 
   extend FriendlyId
   friendly_id :title, use: :slugged
