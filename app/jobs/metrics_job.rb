@@ -16,7 +16,7 @@ class MetricsJob < ApplicationJob
   end
 
   def compute(corpus, metric_group, computations_to_do)
-    computations_to_do.each do |service, method|
+    computations_to_do.each do |service, method, format_style|
       puts "Computing #{service}::#{method}..."
 
       start  = Time.now
@@ -25,7 +25,7 @@ class MetricsJob < ApplicationJob
 
       puts "Done in #{(finish - start).round(5)} seconds. Saving result."
       metric = metric_group.metrics.find_or_create_by(name: method)
-      metric.update!(value: result)
+      metric.update!(value: result, format_style: format_style)
     end
   end
 

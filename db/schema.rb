@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_18_070825) do
+ActiveRecord::Schema.define(version: 2019_01_18_231558) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 2019_01_18_070825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "metric_grouping_id"
+    t.string "format_style"
     t.index ["metric_grouping_id"], name: "index_metrics_on_metric_grouping_id"
     t.index ["prose_type", "prose_id"], name: "index_metrics_on_prose_type_and_prose_id"
   end
