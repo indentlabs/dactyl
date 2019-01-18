@@ -12,8 +12,6 @@
  *
  //= require material_icons
  *= require_tree .
- *= require medium-editor/medium-editor
- *= require medium-editor/themes/tim
- *= require font-awesome
+ *= require materialize
  *= require_self
  */

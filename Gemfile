@@ -23,7 +23,6 @@ gem 'rails-html-sanitizer'
 
 # Icons
 gem 'material_icons'
-gem 'font-awesome-rails'
 
 # Design
 gem 'materialize-sass', '~> 1.0.0'
@@ -47,6 +46,9 @@ gem "nokogiri"
 
 # Editor
 gem 'medium-editor-rails'
+
+# Quality of life
+gem 'friendly_id'
 
 # Development
 group :development do

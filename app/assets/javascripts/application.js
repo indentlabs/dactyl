@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require medium-editor
+//= require materialize
 //= require_tree .

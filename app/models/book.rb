@@ -12,4 +12,7 @@ class Book < ApplicationRecord
   has_many :characters, through: :character_appearances
 
   has_many :metrics, as: :prose
+
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 end
