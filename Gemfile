@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 # Architecture
+ruby '2.5.1'
 gem 'rails', '~> 5.2'
 gem 'puma'
 
