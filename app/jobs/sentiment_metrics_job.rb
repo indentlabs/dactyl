@@ -6,8 +6,8 @@ class SentimentMetricsJob < MetricsJob
     metric_group = book.metric_groupings.find_or_create_by(name: 'Sentiment')
 
     compute(corpus, metric_group, [
-      [SentimentService, :positive_words],
-      [SentimentService, :negative_words],
+      [SentimentService, :positive_words, :word_list],
+      [SentimentService, :negative_words, :word_list],
       [SentimentService, :sentiment],
       [SentimentService, :sentiment_score],
       [SentimentService, :sentiment_score_per_sentence],

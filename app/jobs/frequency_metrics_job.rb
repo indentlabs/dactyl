@@ -6,7 +6,7 @@ class FrequencyMetricsJob < MetricsJob
     metric_group = book.metric_groupings.find_or_create_by(name: 'Frequency')
 
     compute(corpus, metric_group, [
-      [FrequencyTableService, :word_frequency_table],
+      [FrequencyTableService, :word_frequency_table, :frequency_table],
     ])
   end
 end

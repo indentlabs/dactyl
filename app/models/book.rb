@@ -17,4 +17,18 @@ class Book < ApplicationRecord
 
   extend FriendlyId
   friendly_id :title, use: :slugged
+
+  def reindex
+    [
+      ContextMetricsJob,
+      FrequencyMetricsJob,
+      IntentMetricsJob,
+      JargonMetricsJob,
+      LanguageMetricsJob,
+      PartsOfSpeechMetricsJob,
+      ReadabilityMetricsJob,
+      SentimentMetricsJob,
+      WordFrequencyMetricsJob
+    ].each { |worker| worker.perform_later(self.id) }
+  end
 end

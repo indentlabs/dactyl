@@ -30,23 +30,18 @@
   <%= @book.last_indexed %>
 </p>
 
-<% @book.metric_groupings.each do |metric_grouping| %>
+<% @book.metric_groupings.order(:name).each do |metric_grouping| %>
   <table>
     <thead>
       <tr>
         <td colspan="2"><%= metric_grouping.name %></td>
       </tr>
     </thead>
-    <% metric_grouping.metrics.each do |metric| %>
+    <% metric_grouping.metrics.order(:name).each do |metric| %>
       <tr>
-        <td width="50%"><%= metric.name.humanize %></td>
+        <td width="50%" style="vertical-align: top"><%= metric.name.humanize %></td>
         <td>
-          <% if metric.format_style == "percentage" %>
-            <% metric.value = metric.value.to_f * 100 %>
-            <%= number_with_precision(metric.value, precision: 3) %> %
-          <% else %>
-            <%= number_with_precision(metric.value, precision: 3) %>
-          <% end %>
+          <%= render partial: "metrics/#{metric.format_style.presence || 'raw'}", locals: { metric: metric } %>
         </td>
       </td>
     <% end %>

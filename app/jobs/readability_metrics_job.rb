@@ -6,15 +6,15 @@ class ReadabilityMetricsJob < MetricsJob
     metric_group = book.metric_groupings.find_or_create_by(name: 'Readability')
 
     compute(corpus, metric_group, [
-      [ReadabilityService, :estimated_reading_time],
-      [ReadabilityService, :flesch_kincaid_grade_level],
-      [ReadabilityService, :flesch_kincaid_age_minimum],
-      [ReadabilityService, :flesch_kincaid_reading_ease],
-      [ReadabilityService, :forcast_grade_level],
-      [ReadabilityService, :coleman_liau_index],
-      [ReadabilityService, :automated_readability_index],
-      [ReadabilityService, :gunning_fog_index],
-      [ReadabilityService, :combined_average_grade_level],
+      [ReadabilityService, :estimated_reading_time, :time_estimate],
+      [ReadabilityService, :flesch_kincaid_grade_level, :grade_level_scale],
+      [ReadabilityService, :flesch_kincaid_age_minimum, :age_estimate],
+      [ReadabilityService, :flesch_kincaid_reading_ease, :readability_scale],
+      [ReadabilityService, :forcast_grade_level, :grade_level_scale],
+      [ReadabilityService, :coleman_liau_index, :readability_scale],
+      [ReadabilityService, :automated_readability_index, :readability_scale],
+      [ReadabilityService, :gunning_fog_index, :grade_level_scale],
+      [ReadabilityService, :combined_average_grade_level, :grade_level_scale],
     ])
   end
 end
