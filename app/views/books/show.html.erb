@@ -30,20 +30,31 @@
   <%= @book.last_indexed %>
 </p>
 
-<% @book.metric_groupings.order(:name).each do |metric_grouping| %>
-  <table>
-    <thead>
-      <tr>
-        <td colspan="2"><%= metric_grouping.name %></td>
-      </tr>
-    </thead>
-    <% metric_grouping.metrics.order(:name).each do |metric| %>
-      <tr>
-        <td width="50%" style="vertical-align: top"><%= metric.name.humanize %></td>
-        <td>
-          <%= render partial: "metrics/#{metric.format_style.presence || 'raw'}", locals: { metric: metric } %>
-        </td>
-      </td>
-    <% end %>
-  </table>
-<% end %>
+<ul class="collapsible">
+  <% @book.metric_groupings.order(:name).each do |metric_grouping| %>
+    <li>
+      <div class="collapsible-header amber">
+        <i class="material-icons">subdirectory_arrow_right</i>
+        <%= metric_grouping.name %>
+        (<%= metric_grouping.metrics.count %>)
+      </div>
+      <div class="collapsible-body">
+        <% metric_grouping.metrics.order(:name).each do |metric| %>
+          <div class="row">
+            <div class="col s12 m4">
+              <%= metric.name.humanize %>
+            </div>
+            <div class="col s12 m8">
+              <% if metric.value.present? %>
+                <%= render partial: "metrics/#{metric.format_style.presence || 'raw'}", locals: { metric: metric } %>
+              <% else %>
+                <%= render partial: "metrics/no_data", locals: { metric: metric } %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </li>
+
+  <% end %>
+</ul>

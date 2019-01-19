@@ -30,5 +30,7 @@ class Book < ApplicationRecord
       SentimentMetricsJob,
       WordFrequencyMetricsJob
     ].each { |worker| worker.perform_later(self.id) }
+
+    update(last_indexed: DateTime.current)
   end
 end
