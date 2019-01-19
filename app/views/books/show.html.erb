@@ -30,15 +30,15 @@
   <%= @book.last_indexed %>
 </p>
 
-<ul class="collapsible">
+<ul class="collapsible popout">
   <% @book.metric_groupings.order(:name).each do |metric_grouping| %>
     <li>
-      <div class="collapsible-header amber">
+      <div class="collapsible-header amber darken-1">
         <i class="material-icons">subdirectory_arrow_right</i>
         <%= metric_grouping.name %>
         (<%= metric_grouping.metrics.count %>)
       </div>
-      <div class="collapsible-body">
+      <div class="collapsible-body white">
         <% metric_grouping.metrics.order(:name).each do |metric| %>
           <div class="row">
             <div class="col s12 m4">

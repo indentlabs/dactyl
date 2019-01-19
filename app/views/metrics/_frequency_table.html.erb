@@ -1,1 +1,20 @@
-frequency table
+<% json = JSON.parse(metric.value) %>
+
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs tabs-fixed-width">
+      <li class="tab col s3"><a href="#ft-wordcloud-<%= metric.id %>" class="active">Wordcloud</a></li>
+      <li class="tab col s3"><a href="#ft-table-<%= metric.id %>">Table</a></li>
+    </ul>
+  </div>
+  <div id="ft-wordcloud-<%= metric.id %>" class="col s12">
+    word cloud here
+  </div>
+  <div id="ft-table-<%= metric.id %>" class="col s12" style="max-height: 240px; overflow-y: auto;">
+    <% json.each do |word, frequency| %>
+      <div>
+        <span class="blue word-badge"><%= word %></span> <span class="grey-text">x<%= frequency %></span>
+      </div>
+    <% end %>
+  </div>
+</div>

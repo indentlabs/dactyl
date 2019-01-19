@@ -1,1 +1,6 @@
-word list
+<% word_list_json = JSON.parse(metric.value) %>
+<div style="max-height: 240px; overflow-y: auto;">
+  <% word_list_json.each do |word| %>
+    <span class="blue white-text word-badge"><%= word %></span>
+  <% end %>
+</div>

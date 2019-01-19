@@ -25,7 +25,7 @@ class MetricsJob < ApplicationJob
 
       puts "Done in #{(finish - start).round(5)} seconds. Saving result."
       metric = metric_group.metrics.find_or_create_by(name: method)
-      metric.update!(value: result, format_style: format_style)
+      metric.update!(value: result.to_json, format_style: format_style)
     end
   end
 

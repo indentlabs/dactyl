@@ -90,6 +90,11 @@ GEM
       thor (~> 0.19.4)
       tins (~> 1.6)
     crass (1.0.4)
+    d3-cloud-rails (0.0.2)
+      d3-rails (~> 4.10)
+      rails (~> 5.0)
+    d3-rails (4.13.0)
+      railties (>= 3.1)
     database_cleaner (1.7.0)
     debugger-linecache (1.2.0)
     devise (4.5.0)
@@ -132,7 +137,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (2.1.0)
     jwt (2.1.0)
-    libv8 (6.7.288.46.1-x86_64-linux)
+    libv8 (6.7.288.46.1)
     loggability (0.14.0)
     loofah (2.2.3)
       crass (~> 1.0.2)
@@ -307,6 +312,8 @@ DEPENDENCIES
   byebug (= 3.4.0)
   coffee-rails
   coveralls
+  d3-cloud-rails
+  d3-rails
   database_cleaner
   devise
   docx-html

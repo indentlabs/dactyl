@@ -42,7 +42,7 @@ class WordFrequencyMetricsJob < MetricsJob
       [WordFrequencyService, :word_count, :integer],
       [WordFrequencyService, :words_per_paragraph],
       [WordFrequencyService, :words_per_sentence],
-      [WordFrequencyService, :one_syllable_words],
+      [WordFrequencyService, :one_syllable_words, :integer],
     ])
   end
 end

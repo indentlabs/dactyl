@@ -23,6 +23,7 @@ module HasPartsOfSpeech
         @numbers ||= text.strip
             .split(' ')
             .select { |w| is_numeric?(w) }
+            .uniq
     end
 
     def prepositions
@@ -34,7 +35,7 @@ module HasPartsOfSpeech
     end
 
     def stop_words
-        words.select { |word| I18n.t('stop-words').include? word }
+        words.select { |word| I18n.t('stop-words').include? word }.uniq
     end
 
     def verbs

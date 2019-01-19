@@ -3,11 +3,6 @@ body {
     font-size: 12pt;
 }
 
-thead {
-    background: #F9CE55;
-    font-weight: bold;
-}
-
 pre {
     white-space: pre-wrap;
 }
@@ -67,4 +62,9 @@ pre {
     min-height: 250px;
     height: 100%;
     resize: vertical;
+}
+
+.word-badge {
+  margin: 0;
+  padding: 2px 5px;
 }
