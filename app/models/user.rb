@@ -7,8 +7,8 @@ class User < ApplicationRecord
             :facebook
           ]
 
-  has_many :identities
-  has_many :dactylograms
+  has_many :identities, dependent: :destroy
+  has_many :dactylograms, dependent: :destroy
 
   def self.from_omniauth auth
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
