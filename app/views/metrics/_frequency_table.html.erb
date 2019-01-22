@@ -14,7 +14,7 @@
 
   <div id="ft-table-<%= metric.id %>" class="col s12" style="max-height: 240px; overflow-y: auto;">
     <% json.each do |word, frequency| %>
-      <div>
+      <div class="left" style="margin-right: 15px;">
         <span class="blue word-badge"><%= word %></span> <span class="grey-text">x<%= frequency %></span>
       </div>
     <% end %>
