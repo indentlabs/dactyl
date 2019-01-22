@@ -166,6 +166,8 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
+    nouislider-rails (8.2.1)
+      railties (>= 3.1)
     oauth (0.5.4)
     oauth2 (1.4.1)
       faraday (>= 0.8, < 0.16.0)
@@ -326,6 +328,7 @@ DEPENDENCIES
   medium-editor-rails
   mini_racer
   nokogiri
+  nouislider-rails
   omniauth
   omniauth-facebook
   omniauth-google

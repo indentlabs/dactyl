@@ -11,9 +11,10 @@ class ReadabilityMetricsJob < MetricsJob
       [ReadabilityService, :flesch_kincaid_age_minimum, :age_estimate],
       [ReadabilityService, :flesch_kincaid_reading_ease, :readability_scale],
       [ReadabilityService, :forcast_grade_level, :grade_level_scale],
-      [ReadabilityService, :coleman_liau_index, :readability_scale],
+      [ReadabilityService, :coleman_liau_index, :grade_level_scale],
       [ReadabilityService, :automated_readability_index, :readability_scale],
       [ReadabilityService, :gunning_fog_index, :grade_level_scale],
+      [ReadabilityService, :smog_grade, :grade_level_scale],
       [ReadabilityService, :combined_average_grade_level, :grade_level_scale],
     ])
   end

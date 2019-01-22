@@ -29,6 +29,7 @@ gem 'material_icons'
 gem 'materialize-sass', '~> 1.0.0'
 gem 'd3-rails'
 gem 'd3-cloud-rails'
+gem 'nouislider-rails'
 
 # NLP
 gem 'birch', github: 'billthompson/birch', branch: 'birch-ruby22'

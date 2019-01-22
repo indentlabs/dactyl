@@ -1,6 +1,10 @@
 <% word_list_json = JSON.parse(metric.value) %>
+
+<% positive_word = metric.name.downcase.start_with?('positive') %>
+<% negative_word = metric.name.downcase.start_with?('negative') %>
+
 <div style="max-height: 240px; overflow-y: auto;">
   <% word_list_json.each do |word| %>
-    <span class="blue white-text word-badge"><%= word %></span>
+    <span class="<%= positive_word ? 'green' : (negative_word ? 'red' : 'blue') %> white-text word-badge"><%= word %></span>
   <% end %>
 </div>

@@ -13,5 +13,6 @@
  //= require material_icons
  *= require_tree .
  *= require materialize
+ *= require nouislider
  *= require_self
  */

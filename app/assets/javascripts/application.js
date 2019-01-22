@@ -12,4 +12,5 @@
 //
 //= require jquery
 //= require materialize
+//= require nouislider
 //= require_tree .
