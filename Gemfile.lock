@@ -257,7 +257,7 @@ GEM
     schiphol (1.0.2)
       progressbar (>= 0.10.0)
       rubyzip (~> 0.9.9)
-    sentimental (1.4.1)
+    sentimental (1.5.0)
     sequel (5.16.0)
     simplecov (0.16.1)
       docile (~> 1.1)
