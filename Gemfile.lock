@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: https://github.com/indentlabs/treat-gem.git
-  revision: 58911ce969c244a336cd37d812a295fe8c2b9d27
+  revision: 7a09852b530c9835797ed25a1a54423f479441ba
   specs:
-    treat (2.1.0)
+    treat (2.1.1)
       birch
       schiphol
       yomu
