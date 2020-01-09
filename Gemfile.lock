@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/billthompson/birch.git
+  remote: https://github.com/billthompson/birch.git
   revision: dc6c8e5d667f6c946c989f4d8f159f622d3bf77a
   branch: birch-ruby22
   specs:
@@ -137,7 +137,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (2.1.0)
     jwt (2.1.0)
-    libv8 (6.7.288.46.1)
+    libv8 (7.3.492.27.1)
     loggability (0.14.0)
     loofah (2.2.3)
       crass (~> 1.0.2)
@@ -157,8 +157,8 @@ GEM
     mimemagic (0.3.3)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
-    mini_racer (0.2.4)
-      libv8 (>= 6.3)
+    mini_racer (0.2.9)
+      libv8 (>= 6.9.411)
     minitest (5.11.3)
     multi_json (1.13.1)
     multi_xml (0.6.0)
