@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/billthompson/birch.git
+  remote: https://github.com/billthompson/birch.git
   revision: dc6c8e5d667f6c946c989f4d8f159f622d3bf77a
   branch: birch-ruby22
   specs:
@@ -233,7 +233,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
-    rake (12.3.2)
+    rake (13.0.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
