@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/billthompson/birch.git
+  remote: https://github.com/billthompson/birch.git
   revision: dc6c8e5d667f6c946c989f4d8f159f622d3bf77a
   branch: birch-ruby22
   specs:
@@ -112,7 +112,7 @@ GEM
       html_writer (~> 0.1.0)
     engtagger (0.2.1)
     erubi (1.8.0)
-    excon (0.62.0)
+    excon (0.75.0)
     execjs (2.7.0)
     factory_girl (4.9.0)
       activesupport (>= 3.0.0)
