@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: excon
+    versions:
+    - 0.78.1
+    - 0.79.0
+    - 0.80.1
+  - dependency-name: loofah
+    versions:
+    - 2.9.0
+  - dependency-name: mini_racer
+    versions:
+    - 0.3.1
