@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/billthompson/birch.git
+  remote: https://github.com/billthompson/birch.git
   revision: dc6c8e5d667f6c946c989f4d8f159f622d3bf77a
   branch: birch-ruby22
   specs:
@@ -154,7 +154,9 @@ GEM
       railties (>= 3.0)
     method_source (0.9.2)
     mime-types (1.25.1)
-    mimemagic (0.3.3)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     mini_racer (0.2.4)
@@ -233,7 +235,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
-    rake (12.3.2)
+    rake (13.0.4)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
